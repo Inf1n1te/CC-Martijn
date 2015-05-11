@@ -115,3 +115,7 @@ crashlytics.properties
 crashlytics-build.properties
 
 cp/
+src/pp/block1/cp
+src/pp/block2/cp
+src/pp/block3/cp
+src/pp/block4/cp
