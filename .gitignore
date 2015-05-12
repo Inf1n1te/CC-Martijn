@@ -137,3 +137,16 @@ src/pp/block2/cc/antlr/arithmetic/ArithmeticLexer.java
 src/pp/block2/cc/ll/Sentence.java
 src/pp/block2/cc/ll/If.java
 src/pp/block2/cc/ll/Abc.java
+src/pp/block3/cc/antlr/CalcAttrListener.java
+src/pp/block3/cc/antlr/CalcAttrLexer.java
+src/pp/block3/cc/antlr/CalcBaseListener.java
+src/pp/block3/cc/antlr/CalcLexer.java
+src/pp/block3/cc/antlr/CalcParser.java
+src/pp/block3/cc/antlr/CalcAttrParser.java
+src/pp/block3/cc/antlr/CalcListener.java
+src/pp/block3/cc/antlr/CalcVocab.java
+src/pp/block3/cc/antlr/CalcAttrBaseListener.java
+src/pp/block3/cc/symbol/DeclUseLexer.java
+src/pp/block3/cc/symbol/DeclUseListener.java
+src/pp/block3/cc/symbol/DeclUseParser.java
+src/pp/block3/cc/symbol/DeclUseBaseListener.java
