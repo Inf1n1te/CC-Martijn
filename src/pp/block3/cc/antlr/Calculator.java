@@ -43,7 +43,7 @@ public class Calculator extends CalcBaseListener {
 
 	@Override
 	public void exitNeg(@NotNull CalcParser.NegContext ctx) {
-		set(ctx, -val(ctx.expr()));
+		set(ctx, -Integer.parseInt(ctx.NUMBER().getText()));
 	}
 
 	/**
