@@ -23,7 +23,7 @@ import pp.block3.cc.antlr.Type;}
 			if (t0 == Type.NUM && t1 == Type.NUM) {
 				int base = Integer.parseInt(v0);
 				int exp = Integer.parseInt(v1);
-				return new Double(Math.pow(base, exp)).toString();
+				return new Integer(new Double(Math.pow(base, exp)).intValue()).toString();
 			} else if (t0 == Type.STR && t1 == Type.NUM) {
 				int exp = Integer.parseInt(v1);
 				String result = "";
