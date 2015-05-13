@@ -1,5 +1,6 @@
 package pp.block3.cc.antlr;
 
+import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
@@ -44,6 +45,11 @@ public class Calculator extends CalcBaseListener {
 	
 	@Override
 	public void exitNeg(NegContext ctx) {
+		set(ctx, -Integer.parseInt(ctx.NUMBER().getText()));
+	}
+
+	@Override
+	public void exitNeg(@NotNull CalcParser.NegContext ctx) {
 		set(ctx, -Integer.parseInt(ctx.NUMBER().getText()));
 	}
 
