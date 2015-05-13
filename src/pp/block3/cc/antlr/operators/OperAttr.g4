@@ -1,9 +1,9 @@
 grammar OperAttr;
 
 import OperVocab;
-@header {
-	import pp.block3.cc.antlr.Type;
-}
+
+@header{package pp.block3.cc.antlr.operators;
+import pp.block3.cc.antlr.Type;}
 
 @members {
 	private Type getType(String input) {
