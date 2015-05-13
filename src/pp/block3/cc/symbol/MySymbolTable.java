@@ -1,9 +1,9 @@
 package pp.block3.cc.symbol;
 
-/**
- * Created by inf1n1te on 13-5-15.
- */
 public class MySymbolTable implements SymbolTable {
+
+//	private Stack<Map<String, >>
+
 	/**
 	 * Adds a next deeper scope level.
 	 */

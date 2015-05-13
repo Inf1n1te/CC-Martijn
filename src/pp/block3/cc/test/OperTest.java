@@ -25,6 +25,9 @@ public class OperTest {
 		test("10", "2 ^ 3 + 2");
 		test("64", "2 ^ 3 ^ 2"); // Power not right associative
 		test("\"ababab\"", "\"ab\"^3");
+		test("true", "2=2=true");
+		test("true", "\"x^2\"^3=\"x^2\"+\"x^2\"+\"x^2\"");
+		test("true", "(\"x^2\"^3=\"x^2\"+\"x^2\"+\"x^2\")+false");
 	}
 
 	private void test(String expected, String expr) {
