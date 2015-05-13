@@ -4,84 +4,84 @@ import OperVocab;
 
 @members {
 	private Type getType(String input) {
-		switch (input) {
-			case "NUM":
-				return Type.NUM;
-			case "BOOL":
-				return Type.BOOL;
-			case "STR":
-				return Type.STR;
-			default:
-				return Type.ERR;
-		}
-	}
-
-	private String getHatString(Type t0, String v0, Type t1, String v1) {
-		if (t0 == Type.NUM && t1 == Type.NUM) {
-			int base = Integer.parseInt(v0);
-			int exp = Integer.parseInt(v1);
-			return Math.pow(base, exp).toString();
-		} else if (t0 == Type.STR && t1 == Type.NUM) {
-			int exp = Integer.parseInt(v1);
-			String result = "";
-			for (int i = 0; i < exp; i++) {
-				result = result + v0;
+			switch (input) {
+				case "NUM":
+					return Type.NUM;
+				case "BOOL":
+					return Type.BOOL;
+				case "STR":
+					return Type.STR;
+				default:
+					return Type.ERR;
 			}
-			return result;
-		} else {
-			return "";
 		}
-	}
 
-	private Type getHatType(Type t0, Type t1) {
-		if (t0 == Type.NUM && t1 == Type.NUM) {
-			return Type.NUM;
-		} else if (t0 == Type.STR && t1 == Type.NUM) {
-			return Type.STR;
-		} else {
-			return Type.ERR;
+		private String getHatString(Type t0, String v0, Type t1, String v1) {
+			if (t0 == Type.NUM && t1 == Type.NUM) {
+				int base = Integer.parseInt(v0);
+				int exp = Integer.parseInt(v1);
+				return new Double(Math.pow(base, exp)).toString();
+			} else if (t0 == Type.STR && t1 == Type.NUM) {
+				int exp = Integer.parseInt(v1);
+				String result = "";
+				for (int i = 0; i < exp; i++) {
+					result = result + v0;
+				}
+				return result;
+			} else {
+				return "";
+			}
 		}
-	}
 
-	private String getPlusString(Type t0, String v0, Type t1, String v1){
-		if (t0 == Type.NUM && t1 == Type.NUM) {
-        	int x = Integer.parseInt(v0);
-        	int y = Integer.parseInt(v1);
-        	return (x+y).toString();
-        } else if (t0 == Type.STR && t1 == Type.STR) {
-        	return v0 + v1;
-        } else if (t0 == Type.BOOL && t1 == Type.BOOL) {
-			return (v0 || v1).toString();
-        } else {
-        	return "";
-        }
-	}
-
-	private Type getPlusType(Type t0, Type t1) {
-		if (t0 == t1) {
-			return t0;
-		} else {
-			return Type.ERR;
+		private Type getHatType(Type t0, Type t1) {
+			if (t0 == Type.NUM && t1 == Type.NUM) {
+				return Type.NUM;
+			} else if (t0 == Type.STR && t1 == Type.NUM) {
+				return Type.STR;
+			} else {
+				return Type.ERR;
+			}
 		}
-	}
 
-	private String getEqualsString(Type t0, String v0, Type t1, String v1){
-		if ((t0 == Type.NUM && t1 == Type.NUM) || (t0 == Type.STR && t1 == Type.STR)) {
-			return v0.equals(v1).toString();
-		} else if (t0 == Type.BOOL && t1 == Type.BOOL) {
-			return (v0 == v1).toString();
-		} else {
-			return "";
+		private String getPlusString(Type t0, String v0, Type t1, String v1){
+			if (t0 == Type.NUM && t1 == Type.NUM) {
+	        	int x = Integer.parseInt(v0);
+	        	int y = Integer.parseInt(v1);
+	        	return new Integer((x+y)).toString();
+	        } else if (t0 == Type.STR && t1 == Type.STR) {
+	        	return v0 + v1;
+	        } else if (t0 == Type.BOOL && t1 == Type.BOOL) {
+				return new Boolean(new Boolean(v0) || new Boolean(v1)).toString();
+	        } else {
+	        	return "";
+	        }
 		}
-	}
 
-	private Type getEqualsType(Type t0, Type t1) {
-		if (t0 == t1) {
-			return Type.BOOL;
-		} else {
-			return Type.ERR;
+		private Type getPlusType(Type t0, Type t1) {
+			if (t0 == t1) {
+				return t0;
+			} else {
+				return Type.ERR;
+			}
 		}
-	}
+
+		private String getEqualsString(Type t0, String v0, Type t1, String v1){
+			if ((t0 == Type.NUM && t1 == Type.NUM) || (t0 == Type.STR && t1 == Type.STR)) {
+				return new Boolean(v0.equals(v1)).toString();
+			} else if (t0 == Type.BOOL && t1 == Type.BOOL) {
+				return new Boolean(v0 == v1).toString();
+			} else {
+				return "";
+			}
+		}
+
+		private Type getEqualsType(Type t0, Type t1) {
+			if (t0 == t1) {
+				return Type.BOOL;
+			} else {
+				return Type.ERR;
+			}
+		}
 }
 
 t returns [Type type, String value]

@@ -48,11 +48,6 @@ public class Calculator extends CalcBaseListener {
 		set(ctx, -Integer.parseInt(ctx.NUMBER().getText()));
 	}
 
-	@Override
-	public void exitNeg(@NotNull CalcParser.NegContext ctx) {
-		set(ctx, -Integer.parseInt(ctx.NUMBER().getText()));
-	}
-
 	/**
 	 * Sets the val attribute of a given node.
 	 */
