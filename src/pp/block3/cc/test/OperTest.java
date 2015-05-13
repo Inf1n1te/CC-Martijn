@@ -5,7 +5,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.Test;
 import pp.block3.cc.antlr.*;
-import pp.block3.cc.antlr.CalcAttrParser.ExprContext;
+import pp.block3.cc.antlr.OperAttrParser.ExprContext;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,11 +19,11 @@ public class OperTest {
 		test(5, "3+2");
 		test(7, "1+2*3");
 		test(9, "(1+2)*3");
-		test(62, "-16 * -4 + - 2");
+		test(66, "16 * 4 + 2");
 	}
 
 	private void test(int expected, String expr) {
-		assertEquals(expected, parseCalcAttr(expr).val);
+		assertEquals(expected, parseOperAttr(expr).val);
 		ParseTree tree = parseCalc(expr);
 		calc.init();
 		walker.walk(calc, tree);
@@ -38,11 +38,11 @@ public class OperTest {
 		return parser.expr();
 	}
 
-	private ExprContext parseCalcAttr(String text) {
+	private ExprContext parseOperAttr(String text) {
 		CharStream chars = new ANTLRInputStream(text);
-		Lexer lexer = new CalcAttrLexer(chars);
+		Lexer lexer = new OperAttrLexer(chars);
 		TokenStream tokens = new CommonTokenStream(lexer);
-		CalcAttrParser parser = new CalcAttrParser(tokens);
+		OperAttrParser parser = new OperAttrParser(tokens);
 		return parser.expr();
 	}
 }
