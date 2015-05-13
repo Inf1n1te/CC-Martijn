@@ -1,9 +1,9 @@
 grammar OperAttr;
 
 import OperVocab;
-@header {
-	import pp.block3.cc.antlr.Type;
-}
+
+@header{package pp.block3.cc.antlr.operators;
+import pp.block3.cc.antlr.Type;}
 
 @members {
 	private Type getType(String input) {
@@ -23,14 +23,15 @@ import OperVocab;
 			if (t0 == Type.NUM && t1 == Type.NUM) {
 				int base = Integer.parseInt(v0);
 				int exp = Integer.parseInt(v1);
-				return new Double(Math.pow(base, exp)).toString();
+				return new Integer(new Double(Math.pow(base, exp)).intValue()).toString();
 			} else if (t0 == Type.STR && t1 == Type.NUM) {
 				int exp = Integer.parseInt(v1);
 				String result = "";
+				String temp = v0.substring(1,v0.length()-1);
 				for (int i = 0; i < exp; i++) {
-					result = result + v0;
+					result = result + temp;
 				}
-				return result;
+				return "\"" + result + "\"";
 			} else {
 				return "";
 			}
@@ -52,7 +53,7 @@ import OperVocab;
 	        	int y = Integer.parseInt(v1);
 	        	return new Integer((x+y)).toString();
 	        } else if (t0 == Type.STR && t1 == Type.STR) {
-	        	return v0 + v1;
+	        	return "\"" + v0.substring(1, v0.length()-1) + v1.substring(1, v1.length() -1) + "\"";
 	        } else if (t0 == Type.BOOL && t1 == Type.BOOL) {
 				return new Boolean(new Boolean(v0) || new Boolean(v1)).toString();
 	        } else {
