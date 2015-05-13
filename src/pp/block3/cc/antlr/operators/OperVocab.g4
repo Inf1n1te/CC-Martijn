@@ -4,7 +4,7 @@ lexer grammar OperVocab;
 
 NUM		: '0' | (('1'..'9')('0'..'9')*);
 BOOL	: 'true' | 'false';
-STR		: (('a'..'z') | ('A'..'Z'))+;
+STR		: '\"' .*? '\"';
 
 HAT 	: '^';
 PLUS	: '+';
