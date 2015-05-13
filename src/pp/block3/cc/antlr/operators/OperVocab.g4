@@ -11,3 +11,5 @@ PLUS	: '+';
 EQUALS	: '=';
 LPAR	: '(';
 RPAR	: ')';
+
+WS		: [ \n\r\t] -> skip;

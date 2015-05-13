@@ -56,7 +56,7 @@ public class OperCalculator extends OperBaseListener {
 		
 		if (type(t0) == Type.NUM && type(t1) == Type.NUM) {
 			setValue(ctx, new BigInteger(value(t0)).add(
-					new BigInteger(value(t1))).toString());
+					new BigInteger(value(t1))).intValue() + "");
 			setType(ctx,Type.NUM);
 		}
 		else if (type(t0) == Type.BOOL && type(t1) == Type.BOOL) {
@@ -79,7 +79,7 @@ public class OperCalculator extends OperBaseListener {
 		
 		if (type(t0) == Type.NUM && type(t1) == Type.NUM) {
 			setValue(ctx, new BigInteger(value(t0)).pow(
-					new BigInteger(value(t1)).intValue()).toString());
+					new BigInteger(value(t1)).intValue()).intValue() + "");
 			setType(ctx,Type.NUM);
 		}
 		else if (type(t0) == Type.STR && type(t1) == Type.NUM) {
@@ -100,11 +100,11 @@ public class OperCalculator extends OperBaseListener {
 		ParseTree t1 = ctx.t(1);
 		
 		if (type(t0) == Type.NUM && type(t1) == Type.NUM) {
-			setValue(ctx, Boolean.toString(value(t0) == value(t1)));
+			setValue(ctx, Boolean.toString(Integer.parseInt(value(t0)) == Integer.parseInt(value(t1))));
 			setType(ctx,Type.BOOL);
 		}
 		else if (type(t0) == Type.BOOL && type(t1) == Type.BOOL) {
-			setValue(ctx,Boolean.toString(value(t0) == value(t1)));
+			setValue(ctx,Boolean.toString(new Boolean(value(t0)) == new Boolean (value(t1))));
 			setType(ctx,Type.BOOL);
 		}
 		else if (type(t0) == Type.STR && type(t1) == Type.STR) {
