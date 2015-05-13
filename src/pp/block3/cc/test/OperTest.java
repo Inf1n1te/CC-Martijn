@@ -5,7 +5,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.Test;
 import pp.block3.cc.antlr.*;
-import pp.block3.cc.antlr.OperAttrParser.ExprContext;
+import pp.block3.cc.antlr.operators.*;
 
 import static org.junit.Assert.assertEquals;
 

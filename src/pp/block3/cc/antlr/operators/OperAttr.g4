@@ -1,9 +1,11 @@
 grammar OperAttr;
 
 import OperVocab;
+@header {
+	import pp.block3.cc.antlr.Type;
+}
 
 @members {
-	import pp.block3.cc.antlr.Type;
 	private Type getType(String input) {
 			switch (input) {
 				case "NUM":
