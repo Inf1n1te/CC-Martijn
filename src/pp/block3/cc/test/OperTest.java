@@ -24,7 +24,7 @@ public class OperTest {
 		test("27", "(1+2)^3");
 		test("10", "2 ^ 3 + 2");
 		test("64", "2 ^ 3 ^ 2"); // Power not right associative
-		test("ababab", "\"ab\"^3");
+		test("\"ababab\"", "\"ab\"^3");
 	}
 
 	private void test(String expected, String expr) {
