@@ -4,15 +4,15 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.Test;
-import pp.block3.cc.antlr.*;
-import pp.block3.cc.antlr.operators.*;
 
+import pp.block3.cc.antlr.operators.*;
+import pp.block3.cc.antlr.operators.OperAttrParser.TContext;
 import static org.junit.Assert.assertEquals;
 
 public class OperTest {
 
 	private final ParseTreeWalker walker = new ParseTreeWalker();
-	private final Calculator calc = new Calculator();
+	private final OperCalculator calc = new OperCalculator();
 
 	@Test
 	public void operTest() {
@@ -23,26 +23,27 @@ public class OperTest {
 	}
 
 	private void test(int expected, String expr) {
-		assertEquals(expected, parseOperAttr(expr).val);
-		ParseTree tree = parseCalc(expr);
+		assertEquals(expected, parseOperAttr(expr).value);
+		ParseTree tree = parseOper(expr);
 		calc.init();
 		walker.walk(calc, tree);
-		assertEquals(expected, calc.val(tree));
+		assertEquals(expected, calc.value
+				(tree));
 	}
 
-	private ParseTree parseCalc(String text) {
+	private ParseTree parseOper(String text) {
 		CharStream chars = new ANTLRInputStream(text);
-		Lexer lexer = new CalcLexer(chars);
+		Lexer lexer = new OperLexer(chars);
 		TokenStream tokens = new CommonTokenStream(lexer);
-		CalcParser parser = new CalcParser(tokens);
-		return parser.expr();
+		OperParser parser = new OperParser(tokens);
+		return parser.t();
 	}
 
-	private ExprContext parseOperAttr(String text) {
+	private TContext parseOperAttr(String text) {
 		CharStream chars = new ANTLRInputStream(text);
 		Lexer lexer = new OperAttrLexer(chars);
 		TokenStream tokens = new CommonTokenStream(lexer);
 		OperAttrParser parser = new OperAttrParser(tokens);
-		return parser.expr();
+		return parser.t();
 	}
 }
