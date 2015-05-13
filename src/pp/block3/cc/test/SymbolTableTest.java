@@ -3,6 +3,7 @@ package pp.block3.cc.test;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import pp.block3.cc.symbol.MySymbolTable;
 import pp.block3.cc.symbol.SymbolTable;
 
 import static org.junit.Assert.assertFalse;
@@ -13,7 +14,7 @@ public class SymbolTableTest {
 
 	@Before
 	public void initTable() {
-		table = null;// construct an instance of your implementation
+		table = new MySymbolTable(); // construct an instance of your implementation
 	}
 
 	@Test

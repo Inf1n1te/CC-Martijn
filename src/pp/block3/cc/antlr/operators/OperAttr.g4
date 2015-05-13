@@ -70,10 +70,8 @@ import pp.block3.cc.antlr.Type;}
 		}
 
 		private String getEqualsString(Type t0, String v0, Type t1, String v1){
-			if ((t0 == Type.NUM && t1 == Type.NUM) || (t0 == Type.STR && t1 == Type.STR)) {
+			if (t0 == t1) {
 				return new Boolean(v0.equals(v1)).toString();
-			} else if (t0 == Type.BOOL && t1 == Type.BOOL) {
-				return new Boolean(v0 == v1).toString();
 			} else {
 				return "";
 			}
