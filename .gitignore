@@ -151,5 +151,12 @@ src/pp/block3/cc/symbol/DeclUseListener.java
 src/pp/block3/cc/symbol/DeclUseParser.java
 src/pp/block3/cc/symbol/DeclUseBaseListener.java
 src/pp/homework/q1_5
-src/pp/block3/cp/serverclient
-src/pp/block1/cp/annotation
+src/pp/block3/cc/antlr/operators/OperListener.java
+src/pp/block3/cc/antlr/operators/OperParser.java
+src/pp/block3/cc/antlr/operators/OperAttrBaseListener.java
+src/pp/block3/cc/antlr/operators/OperBaseListener.java
+src/pp/block3/cc/antlr/operators/OperLexer.java
+src/pp/block3/cc/antlr/operators/OperAttrListener.java
+src/pp/block3/cc/antlr/operators/OperAttrLexer.java
+src/pp/block3/cc/antlr/operators/OperVocab.java
+src/pp/block3/cc/antlr/operators/OperAttrParser.java

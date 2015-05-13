@@ -5,7 +5,7 @@ import OperVocab;
 t 	: t HAT t
 	| t PLUS t
 	| t EQUALS t
-	| '(' t ')'
+	| LPAR t RPAR
 	| NUM
 	| BOOL
 	| STR

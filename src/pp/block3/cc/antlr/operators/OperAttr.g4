@@ -84,7 +84,7 @@ import OperVocab;
 	}
 }
 
-t returns [(Type type, String value)]
+t returns [Type type, String value]
 	: 	t0=t HAT t1=t
 		{ $type = getHatType($t0.type, $t1.type); }
 		{ $value = getHatString($t0.type, $t0.value, $t1.type, $t1.value); }
@@ -94,8 +94,9 @@ t returns [(Type type, String value)]
 	|	t0=t EQUALS t1=t
 		{ $type = getEqualsType($t0.type, $t1.type); }
 		{ $value = getEqualsString($t0.type, $t0.value, $t1.type, $t1.value); }
-	|	'(' t=t ')'
-		{}
+	|	LPAR t0=t RPAR
+		{ $type = $t0.type; }
+		{ $value = $t0.value; }
 	|	NUM
 		{ $type = getType("NUM"); }
 		{ $value = $NUM.text; }

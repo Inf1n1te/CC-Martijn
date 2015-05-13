@@ -9,3 +9,5 @@ STR		: '\"' .*? '\"';
 HAT 	: '^';
 PLUS	: '+';
 EQUALS	: '=';
+LPAR	: '(';
+RPAR	: ')';
