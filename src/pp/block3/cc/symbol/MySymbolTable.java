@@ -1,15 +1,26 @@
 package pp.block3.cc.symbol;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+import java.util.Vector;
+
 public class MySymbolTable implements SymbolTable {
 
-//	private Stack<Map<String, >>
+	private Map<String, Object> global = new HashMap<String, Object>();
+	private Stack<Map<String, Object>> stack = new Stack<Map<String, Object>>();
+	
 
 	/**
 	 * Adds a next deeper scope level.
 	 */
 	@Override
 	public void openScope() {
-
+//		if (!stack.isEmpty()) {
+//			stack.add(new HashMap<String, Object>(stack.peek()));
+//		} else {
+		stack.add(new HashMap<String, Object>());
+//		}
 	}
 
 	/**
@@ -19,7 +30,7 @@ public class MySymbolTable implements SymbolTable {
 	 */
 	@Override
 	public void closeScope() {
-
+		stack.pop();
 	}
 
 	/**
@@ -31,7 +42,15 @@ public class MySymbolTable implements SymbolTable {
 	 */
 	@Override
 	public boolean add(String id) {
-		return false;
+		boolean isGood = false;
+		if (!stack.isEmpty() && !stack.peek().containsKey(id)) {
+			stack.peek().put(id, null);
+			isGood = true;
+		} else if (stack.isEmpty() && global.containsKey(id)) {
+			global.put(id, null);
+			isGood = true;
+		}
+		return isGood;
 	}
 
 	/**
@@ -43,6 +62,13 @@ public class MySymbolTable implements SymbolTable {
 	 */
 	@Override
 	public boolean contains(String id) {
-		return false;
+		boolean contained = false;
+		for (int i = 0; i < stack.size(); i++) {
+			if (stack.get(i).containsKey(id)) {
+				contained = true;
+			}
+		}
+		contained = contained || global.containsKey(id);
+		return contained;
 	}
 }
