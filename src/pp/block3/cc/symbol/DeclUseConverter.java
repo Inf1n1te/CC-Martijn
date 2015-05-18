@@ -40,12 +40,12 @@ public class DeclUseConverter extends DeclUseBaseListener {
 	}
 	
 	public void enterDecl(DeclContext ctx) {
-		symbolTable.add(ctx.getText());
+		symbolTable.add(ctx.ID().getText());
 	};
 	
 	@Override
 	public void enterUse(UseContext ctx) {
-		if (!symbolTable.contains(ctx.getText())) {
+		if (!symbolTable.contains(ctx.ID().getText())) {
 			errors.add(new Error(ctx.getText() + " not declared", 
 					ctx.ID().getSymbol().getLine(), 
 					ctx.ID().getSymbol().getCharPositionInLine()));
