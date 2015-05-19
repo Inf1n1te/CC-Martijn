@@ -9,9 +9,12 @@ import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 import pp.block3.cc.symbol.DeclUseParser;
-import pp.block3.cc.tabular.TabularParser.RowsContext;
+import pp.block3.cc.tabular.TabularParser.ColContext;
+import pp.block3.cc.tabular.TabularParser.LastcolContext;
+import pp.block3.cc.tabular.TabularParser.RowContext;
 import pp.block3.cc.tabular.TabularParser.TableContext;
 
 public class HTMLGenerator extends TabularBaseListener {
@@ -41,24 +44,50 @@ public class HTMLGenerator extends TabularBaseListener {
 	
 	@Override
 	public void enterTable(TableContext ctx) {
-		htmlfile += "<table border = \"1\">\n";
+		htmlfile += "<html>\n<body>\n<table border = \"1\">\n";
 	}
 	
 	@Override
 	public void exitTable(TableContext ctx) {
-		htmlfile += "</table>\n";
+		htmlfile += "</table>\n</body>\n</html>";
 	}
 	
 	@Override
-	public void enterRow(RowsContext ctx) {
+	public void enterRow(RowContext ctx) {
 		htmlfile += "<tr>\n";
 	}
 	
 	@Override
-	public void exitRow(RowsContext ctx) {
+	public void exitRow(RowContext ctx) {
 		htmlfile += "</tr>\n";
 	}
 	
+	@Override
+	public void enterCol(ColContext ctx) {
+		htmlfile += "<td>";
+	}
+	
+	@Override
+	public void exitCol(ColContext ctx) {
+		htmlfile += "</td>";
+	}
+	
+	@Override
+	public void enterLastcol(LastcolContext ctx) {
+		htmlfile += "<td>";
+	}
+	
+	@Override
+	public void exitLastcol(LastcolContext ctx) {
+		htmlfile += "</td>";
+	}
+	
+	@Override
+	public void visitTerminal(TerminalNode node) {
+		if (node.getSymbol().getType() == TabularParser.STRING) {
+			htmlfile += node.getText();
+		}
+	}
 	
 	
 	
