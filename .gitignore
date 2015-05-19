@@ -160,3 +160,7 @@ src/pp/block3/cc/antlr/operators/OperAttrListener.java
 src/pp/block3/cc/antlr/operators/OperAttrLexer.java
 src/pp/block3/cc/antlr/operators/OperVocab.java
 src/pp/block3/cc/antlr/operators/OperAttrParser.java
+src/pp/block3/cc/tabular/TabularLexer.java
+src/pp/block3/cc/tabular/TabularBaseListener.java
+src/pp/block3/cc/tabular/TabularParser.java
+src/pp/block3/cc/tabular/TabularListener.java
