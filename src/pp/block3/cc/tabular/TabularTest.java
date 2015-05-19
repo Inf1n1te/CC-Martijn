@@ -1,23 +1,14 @@
 package pp.block3.cc.tabular;
 
-import static org.junit.Assert.*;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.junit.Test;
+import pp.block3.cc.antlr.CalcParser;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.BaseErrorListener;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.junit.Test;
-
-import pp.block3.cc.antlr.CalcLexer;
-import pp.block3.cc.antlr.CalcParser;
-import pp.block3.cc.antlr.Calculator;
+import static org.junit.Assert.assertFalse;
 
 public class TabularTest {
 
@@ -28,9 +19,9 @@ public class TabularTest {
 
 	@Test
 	public void test() {
-		test("/home/martijn/UT/M8/workspace/PP/src/pp/block3/cc/tabular/tabular-1.tex");
-		test("/home/martijn/UT/M8/workspace/PP/src/pp/block3/cc/tabular/tabular-2.tex");
-		test("/home/martijn/UT/M8/workspace/PP/src/pp/block3/cc/tabular/tabular-3.tex");
+		test("src/pp/block3/cc/tabular/tabular-1.tex");
+		test("src/pp/block3/cc/tabular/tabular-2.tex");
+		test("src/pp/block3/cc/tabular/tabular-3.tex");
 	}
 
 	private void test(String filename) {
