@@ -49,6 +49,9 @@ public class TabularTest {
 		TokenStream tokens = new CommonTokenStream(lexer);
 		CalcParser parser = new CalcParser(tokens);
 		parser.expr();
+		
+		System.out.println(tel.getAllErrors().toString());
+		
 		assertFalse(tel.hasErrors());
 				
 		
