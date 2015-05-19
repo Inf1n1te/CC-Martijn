@@ -40,7 +40,11 @@ public class DeclUseConverter extends DeclUseBaseListener {
 	}
 	
 	public void enterDecl(DeclContext ctx) {
-		symbolTable.add(ctx.ID().getText());
+		if (!symbolTable.add(ctx.ID().getText())) {
+			errors.add(new Error(ctx.getText() + " already declared", 
+					ctx.ID().getSymbol().getLine(), 
+					ctx.ID().getSymbol().getCharPositionInLine()));
+		}
 	};
 	
 	@Override
@@ -70,7 +74,7 @@ public class DeclUseConverter extends DeclUseBaseListener {
 		@Override
 		public boolean equals(Object obj) {
 			if (obj instanceof Error) {
-				return ((Error)obj).text == this.text && ((Error)obj).line == this.line && ((Error)obj).row == this.row;
+				return ((Error)obj).text.equals(this.text) && ((Error)obj).line == this.line && ((Error)obj).row == this.row;
 			} else {
 				return false;
 			} 

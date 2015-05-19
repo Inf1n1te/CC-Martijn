@@ -24,15 +24,19 @@ public class DeclUseConverterTest {
 	@Test
 	public void test() {
 		test("(D:aap (U:aap D:noot D:aap (U:noot) (D:noot U:noot)) U:aap)");
+		test("(\n\tD:aap \n\t(\n\t\tU:aap \n\t\tD:noot \n\t\tD:aap \n\t\t(\n\t\t\tU:noot\n\t\t) \n\t\t(\n\t\t\tD:noot \n\t\t\tU:noot\n\t\t)\n\t) \n\tU:aap\n)");
+		test("(D:Foo (U:Foo D:Bar) D:Baz (((U:Baz))))");
+		test("(D:Foo (U:Foo U:Bar) D:Baz (((U:Bas))))", decl.new Error("U:Bar not declared" , 1, 16), decl.new Error("U:Bas not declared" , 1, 32));
+		test("(\n\tD:aap \n\t(\n\t\tU:aap \n\t\tD:noot \n\t\tD:aap \n\t\t(\n\t\t\tU:noot\n\t\t) \n\t\t(\n\t\t\tD:noot \n\t\t\tU:noot\n\t\t)\n\t) \n\tD:aap\n)", decl.new Error("D:aap already declared" , 15, 3));
 	}
 
 	private void test(String expr, Error ... expected ) {
 		Boolean ok = true;
 		List<Error> errors = parseDeclUse(expr);
+		System.out.println(expr);
 		for (Error e : errors) {
 			System.out.println(e.toString());
 		}
-		System.out.println(expected.length + " " + errors.size());
 		assertTrue(expected.length == errors.size());
 		for (int i = 0; i < expected.length; i++) {
 			if (!errors.get(i).equals(expected[i])) {
