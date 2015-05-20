@@ -61,6 +61,7 @@ public class CalcCompiler extends CalcBaseListener {
 	 */
 	public Program compile(ParseTree tree) {
 		// Fill in
+		return null;
 	}
 
 	/**
