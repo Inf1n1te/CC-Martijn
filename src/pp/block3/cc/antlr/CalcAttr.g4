@@ -25,6 +25,6 @@ expr returns [ int val ]
        NUMBER
        { $val = getValue($NUMBER.text); }
      | { System.out.println("Evaluating Negative NUMBER"); }
-     	MINUS NUMBER
-     	{ $val = -getValue($NUMBER.text); }
+       MINUS NUMBER
+       { $val = -getValue($NUMBER.text); }
      ;
