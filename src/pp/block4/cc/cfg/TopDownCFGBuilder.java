@@ -69,6 +69,7 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
 	public Graph build(ProgramContext tree) {
 		this.graph = new Graph();
 		// Fill in
+		return null;
 	}
 
 	/**

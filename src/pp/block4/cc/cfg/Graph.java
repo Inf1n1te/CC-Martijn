@@ -23,6 +23,21 @@ public class Graph implements Iterable<Node> {
 	}
 
 	/**
+	 * Builds a simple CFG and prints it out.
+	 */
+	public static void main(String[] args) {
+		Graph g = new Graph();
+		Node n0 = g.addNode("First");
+		Node n1 = g.addNode();
+		Node n2 = g.addNode("Last");
+		n0.addEdge(n1);
+		n1.addEdge(n2);
+		n2.addEdge(n0);
+		n2.addEdge(n2);
+		System.out.println(g);
+	}
+
+	/**
 	 * Adds a new node to this graph and returns it.
 	 * The new node number equals the number of nodes at the
 	 * time of invocation.
@@ -92,32 +107,5 @@ public class Graph implements Iterable<Node> {
 		}
 		Graph other = (Graph) obj;
 		return this.nodes.equals(other.nodes);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof Graph)) {
-			return false;
-		}
-		Graph other = (Graph) obj;
-		return this.nodes.equals(other.nodes);
-	}
-
-	/**
-	 * Builds a simple CFG and prints it out.
-	 */
-	public static void main(String[] args) {
-		Graph g = new Graph();
-		Node n0 = g.addNode("First");
-		Node n1 = g.addNode();
-		Node n2 = g.addNode("Last");
-		n0.addEdge(n1);
-		n1.addEdge(n2);
-		n2.addEdge(n0);
-		n2.addEdge(n2);
-		System.out.println(g);
 	}
 }

@@ -69,6 +69,7 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 	public Graph build(ParseTree tree) {
 		this.graph = new Graph();
 		// Fill in
+		return null;
 	}
 
 	/**
