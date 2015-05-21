@@ -3,7 +3,6 @@ package pp.block4.cc.cfg;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-
 import pp.block4.cc.ErrorListener;
 
 import java.io.File;
@@ -74,8 +73,6 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 		
 		return graph;
 	}
-	
-	
 
 	/**
 	 * Adds a node to he CGF, based on a given parse tree node.
