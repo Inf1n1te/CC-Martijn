@@ -1,4 +1,4 @@
-// Generated from /home/inf1n1te/workspace/Programming Paradigms/CC/src/pp/block2/cc/antlr/arithmetic/Arithmetic.g4 by ANTLR 4.5
+// Generated from Arithmetic.g4 by ANTLR 4.4
 package pp.block2.cc.antlr.arithmetic;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -29,25 +29,13 @@ public class ArithmeticBaseListener implements ArithmeticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprPar(@NotNull ArithmeticParser.ExprParContext ctx) { }
+	@Override public void enterNumPos(@NotNull ArithmeticParser.NumPosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprPar(@NotNull ArithmeticParser.ExprParContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterExprOpR(@NotNull ArithmeticParser.ExprOpRContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExprOpR(@NotNull ArithmeticParser.ExprOpRContext ctx) { }
+	@Override public void exitNumPos(@NotNull ArithmeticParser.NumPosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -65,13 +53,13 @@ public class ArithmeticBaseListener implements ArithmeticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprMin(@NotNull ArithmeticParser.ExprMinContext ctx) { }
+	@Override public void enterExprPar(@NotNull ArithmeticParser.ExprParContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprMin(@NotNull ArithmeticParser.ExprMinContext ctx) { }
+	@Override public void exitExprPar(@NotNull ArithmeticParser.ExprParContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -89,13 +77,13 @@ public class ArithmeticBaseListener implements ArithmeticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNumPos(@NotNull ArithmeticParser.NumPosContext ctx) { }
+	@Override public void enterExprMin(@NotNull ArithmeticParser.ExprMinContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNumPos(@NotNull ArithmeticParser.NumPosContext ctx) { }
+	@Override public void exitExprMin(@NotNull ArithmeticParser.ExprMinContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -108,6 +96,18 @@ public class ArithmeticBaseListener implements ArithmeticListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNumNeg(@NotNull ArithmeticParser.NumNegContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprOpR(@NotNull ArithmeticParser.ExprOpRContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprOpR(@NotNull ArithmeticParser.ExprOpRContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

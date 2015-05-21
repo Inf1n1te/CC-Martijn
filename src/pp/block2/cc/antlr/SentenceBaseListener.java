@@ -1,4 +1,4 @@
-// Generated from /home/inf1n1te/workspace/Programming Paradigms/CC/src/pp/block2/cc/antlr/Sentence.g4 by ANTLR 4.5
+// Generated from Sentence.g4 by ANTLR 4.4
 package pp.block2.cc.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -17,13 +17,13 @@ public class SentenceBaseListener implements SentenceListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSentence(@NotNull SentenceParser.SentenceContext ctx) { }
+	@Override public void enterModifier(@NotNull SentenceParser.ModifierContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSentence(@NotNull SentenceParser.SentenceContext ctx) { }
+	@Override public void exitModifier(@NotNull SentenceParser.ModifierContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -53,6 +53,18 @@ public class SentenceBaseListener implements SentenceListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSentence(@NotNull SentenceParser.SentenceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSentence(@NotNull SentenceParser.SentenceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterObject(@NotNull SentenceParser.ObjectContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -60,18 +72,6 @@ public class SentenceBaseListener implements SentenceListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitObject(@NotNull SentenceParser.ObjectContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterModifier(@NotNull SentenceParser.ModifierContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitModifier(@NotNull SentenceParser.ModifierContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

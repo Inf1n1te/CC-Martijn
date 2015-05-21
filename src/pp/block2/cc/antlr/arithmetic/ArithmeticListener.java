@@ -1,4 +1,4 @@
-// Generated from /home/inf1n1te/workspace/Programming Paradigms/CC/src/pp/block2/cc/antlr/arithmetic/Arithmetic.g4 by ANTLR 4.5
+// Generated from Arithmetic.g4 by ANTLR 4.4
 package pp.block2.cc.antlr.arithmetic;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
@@ -21,29 +21,17 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 */
 	void exitExprOpL2(@NotNull ArithmeticParser.ExprOpL2Context ctx);
 	/**
-	 * Enter a parse tree produced by the {@code exprPar}
-	 * labeled alternative in {@link ArithmeticParser#expr}.
+	 * Enter a parse tree produced by the {@code numPos}
+	 * labeled alternative in {@link ArithmeticParser#num}.
 	 * @param ctx the parse tree
 	 */
-	void enterExprPar(@NotNull ArithmeticParser.ExprParContext ctx);
+	void enterNumPos(@NotNull ArithmeticParser.NumPosContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code exprPar}
-	 * labeled alternative in {@link ArithmeticParser#expr}.
+	 * Exit a parse tree produced by the {@code numPos}
+	 * labeled alternative in {@link ArithmeticParser#num}.
 	 * @param ctx the parse tree
 	 */
-	void exitExprPar(@NotNull ArithmeticParser.ExprParContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code exprOpR}
-	 * labeled alternative in {@link ArithmeticParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterExprOpR(@NotNull ArithmeticParser.ExprOpRContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code exprOpR}
-	 * labeled alternative in {@link ArithmeticParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitExprOpR(@NotNull ArithmeticParser.ExprOpRContext ctx);
+	void exitNumPos(@NotNull ArithmeticParser.NumPosContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code exprOpL1}
 	 * labeled alternative in {@link ArithmeticParser#expr}.
@@ -57,17 +45,17 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 */
 	void exitExprOpL1(@NotNull ArithmeticParser.ExprOpL1Context ctx);
 	/**
-	 * Enter a parse tree produced by the {@code exprMin}
+	 * Enter a parse tree produced by the {@code exprPar}
 	 * labeled alternative in {@link ArithmeticParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterExprMin(@NotNull ArithmeticParser.ExprMinContext ctx);
+	void enterExprPar(@NotNull ArithmeticParser.ExprParContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code exprMin}
+	 * Exit a parse tree produced by the {@code exprPar}
 	 * labeled alternative in {@link ArithmeticParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitExprMin(@NotNull ArithmeticParser.ExprMinContext ctx);
+	void exitExprPar(@NotNull ArithmeticParser.ExprParContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code exprNum}
 	 * labeled alternative in {@link ArithmeticParser#expr}.
@@ -81,17 +69,17 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 */
 	void exitExprNum(@NotNull ArithmeticParser.ExprNumContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code numPos}
-	 * labeled alternative in {@link ArithmeticParser#num}.
+	 * Enter a parse tree produced by the {@code exprMin}
+	 * labeled alternative in {@link ArithmeticParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterNumPos(@NotNull ArithmeticParser.NumPosContext ctx);
+	void enterExprMin(@NotNull ArithmeticParser.ExprMinContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code numPos}
-	 * labeled alternative in {@link ArithmeticParser#num}.
+	 * Exit a parse tree produced by the {@code exprMin}
+	 * labeled alternative in {@link ArithmeticParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitNumPos(@NotNull ArithmeticParser.NumPosContext ctx);
+	void exitExprMin(@NotNull ArithmeticParser.ExprMinContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code numNeg}
 	 * labeled alternative in {@link ArithmeticParser#num}.
@@ -104,4 +92,16 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumNeg(@NotNull ArithmeticParser.NumNegContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code exprOpR}
+	 * labeled alternative in {@link ArithmeticParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprOpR(@NotNull ArithmeticParser.ExprOpRContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code exprOpR}
+	 * labeled alternative in {@link ArithmeticParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprOpR(@NotNull ArithmeticParser.ExprOpRContext ctx);
 }

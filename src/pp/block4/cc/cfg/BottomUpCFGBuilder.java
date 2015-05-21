@@ -4,7 +4,6 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-
 import pp.block4.cc.ErrorListener;
 import pp.block4.cc.cfg.FragmentParser.AssignStatContext;
 import pp.block4.cc.cfg.FragmentParser.BlockStatContext;
@@ -66,9 +65,7 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 			ParseTree tree = parser.program();
 			if (listener.hasErrors()) {
 				System.out.printf("Parse errors in %s:%n", file.getPath());
-				for (String error : listener.getErrors()) {
-					System.err.println(error);
-				}
+				listener.getErrors().forEach(System.err::println);
 			} else {
 				result = build(tree);
 			}
@@ -84,7 +81,7 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 	public Graph build(ParseTree tree) {
 		this.graph = new Graph();
 		new ParseTreeWalker().walk(this, tree);
-		
+
 		return graph;
 	}
 	

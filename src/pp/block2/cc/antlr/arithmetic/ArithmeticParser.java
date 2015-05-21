@@ -1,4 +1,4 @@
-// Generated from /home/inf1n1te/workspace/Programming Paradigms/CC/src/pp/block2/cc/antlr/arithmetic/Arithmetic.g4 by ANTLR 4.5
+// Generated from Arithmetic.g4 by ANTLR 4.4
 package pp.block2.cc.antlr.arithmetic;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -11,62 +11,29 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class ArithmeticParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.5", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.4", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, NUMBER=3, OPERATORL1=4, OPERATORL2=5, OPERATORMIN=6, OPERATORR=7, 
+		T__1=1, T__0=2, NUMBER=3, OPERATORL1=4, OPERATORL2=5, OPERATORMIN=6, OPERATORR=7, 
 		WS=8, TYPO=9;
+	public static final String[] tokenNames = {
+		"<INVALID>", "')'", "'('", "NUMBER", "OPERATORL1", "'+'", "'-'", "'^'", 
+		"WS", "TYPO"
+	};
 	public static final int
 		RULE_expr = 0, RULE_num = 1;
 	public static final String[] ruleNames = {
 		"expr", "num"
 	};
 
-	private static final String[] _LITERAL_NAMES = {
-		null, "'('", "')'", null, null, "'+'", "'-'", "'^'"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, "NUMBER", "OPERATORL1", "OPERATORL2", "OPERATORMIN", 
-		"OPERATORR", "WS", "TYPO"
-	};
-	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
-
-	/**
-	 * @deprecated Use {@link #VOCABULARY} instead.
-	 */
-	@Deprecated
-	public static final String[] tokenNames;
-	static {
-		tokenNames = new String[_SYMBOLIC_NAMES.length];
-		for (int i = 0; i < tokenNames.length; i++) {
-			tokenNames[i] = VOCABULARY.getLiteralName(i);
-			if (tokenNames[i] == null) {
-				tokenNames[i] = VOCABULARY.getSymbolicName(i);
-			}
-
-			if (tokenNames[i] == null) {
-				tokenNames[i] = "<INVALID>";
-			}
-		}
-	}
-
-	@Override
-	@Deprecated
-	public String[] getTokenNames() {
-		return tokenNames;
-	}
-
-	@Override
-	@NotNull
-	public Vocabulary getVocabulary() {
-		return VOCABULARY;
-	}
-
 	@Override
 	public String getGrammarFileName() { return "Arithmetic.g4"; }
+
+	@Override
+	public String[] getTokenNames() { return tokenNames; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -110,6 +77,38 @@ public class ArithmeticParser extends Parser {
 			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitExprOpL2(this);
 		}
 	}
+	public static class ExprOpL1Context extends ExprContext {
+		public TerminalNode OPERATORL1() { return getToken(ArithmeticParser.OPERATORL1, 0); }
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public ExprOpL1Context(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterExprOpL1(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitExprOpL1(this);
+		}
+	}
+	public static class ExprNumContext extends ExprContext {
+		public NumContext num() {
+			return getRuleContext(NumContext.class,0);
+		}
+		public ExprNumContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterExprNum(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitExprNum(this);
+		}
+	}
 	public static class ExprParContext extends ExprContext {
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
@@ -122,42 +121,6 @@ public class ArithmeticParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitExprPar(this);
-		}
-	}
-	public static class ExprOpRContext extends ExprContext {
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode OPERATORR() { return getToken(ArithmeticParser.OPERATORR, 0); }
-		public ExprOpRContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterExprOpR(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitExprOpR(this);
-		}
-	}
-	public static class ExprOpL1Context extends ExprContext {
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode OPERATORL1() { return getToken(ArithmeticParser.OPERATORL1, 0); }
-		public ExprOpL1Context(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterExprOpL1(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitExprOpL1(this);
 		}
 	}
 	public static class ExprMinContext extends ExprContext {
@@ -178,18 +141,22 @@ public class ArithmeticParser extends Parser {
 			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitExprMin(this);
 		}
 	}
-	public static class ExprNumContext extends ExprContext {
-		public NumContext num() {
-			return getRuleContext(NumContext.class,0);
+	public static class ExprOpRContext extends ExprContext {
+		public TerminalNode OPERATORR() { return getToken(ArithmeticParser.OPERATORR, 0); }
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
 		}
-		public ExprNumContext(ExprContext ctx) { copyFrom(ctx); }
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public ExprOpRContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterExprNum(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterExprOpR(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitExprNum(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitExprOpR(this);
 		}
 	}
 
@@ -216,12 +183,9 @@ public class ArithmeticParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(5); 
-				match(T__0);
-				setState(6); 
-				expr(0);
-				setState(7); 
-				match(T__1);
+				setState(5); match(T__0);
+				setState(6); expr(0);
+				setState(7); match(T__1);
 				}
 				break;
 			case NUMBER:
@@ -230,8 +194,7 @@ public class ArithmeticParser extends Parser {
 				_localctx = new ExprNumContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(9); 
-				num();
+				setState(9); num();
 				}
 				break;
 			default:
@@ -254,10 +217,8 @@ public class ArithmeticParser extends Parser {
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(12);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
-						setState(13); 
-						match(OPERATORR);
-						setState(14); 
-						expr(5);
+						setState(13); match(OPERATORR);
+						setState(14); expr(5);
 						}
 						break;
 					case 2:
@@ -266,10 +227,8 @@ public class ArithmeticParser extends Parser {
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(15);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(16); 
-						match(OPERATORL1);
-						setState(17); 
-						expr(5);
+						setState(16); match(OPERATORL1);
+						setState(17); expr(5);
 						}
 						break;
 					case 3:
@@ -278,10 +237,8 @@ public class ArithmeticParser extends Parser {
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(18);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-						setState(19); 
-						match(OPERATORL2);
-						setState(20); 
-						expr(4);
+						setState(19); match(OPERATORL2);
+						setState(20); expr(4);
 						}
 						break;
 					case 4:
@@ -290,10 +247,8 @@ public class ArithmeticParser extends Parser {
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(21);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-						setState(22); 
-						match(OPERATORMIN);
-						setState(23); 
-						expr(3);
+						setState(22); match(OPERATORMIN);
+						setState(23); expr(3);
 						}
 						break;
 					}
@@ -327,6 +282,18 @@ public class ArithmeticParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class NumPosContext extends NumContext {
+		public TerminalNode NUMBER() { return getToken(ArithmeticParser.NUMBER, 0); }
+		public NumPosContext(NumContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterNumPos(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitNumPos(this);
+		}
+	}
 	public static class NumNegContext extends NumContext {
 		public NumContext num() {
 			return getRuleContext(NumContext.class,0);
@@ -341,18 +308,6 @@ public class ArithmeticParser extends Parser {
 			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitNumNeg(this);
 		}
 	}
-	public static class NumPosContext extends NumContext {
-		public TerminalNode NUMBER() { return getToken(ArithmeticParser.NUMBER, 0); }
-		public NumPosContext(NumContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterNumPos(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitNumPos(this);
-		}
-	}
 
 	public final NumContext num() throws RecognitionException {
 		NumContext _localctx = new NumContext(_ctx, getState());
@@ -364,18 +319,15 @@ public class ArithmeticParser extends Parser {
 				_localctx = new NumPosContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(29); 
-				match(NUMBER);
+				setState(29); match(NUMBER);
 				}
 				break;
 			case OPERATORMIN:
 				_localctx = new NumNegContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(30); 
-				match(OPERATORMIN);
-				setState(31); 
-				num();
+				setState(30); match(OPERATORMIN);
+				setState(31); num();
 				}
 				break;
 			default:
@@ -395,21 +347,16 @@ public class ArithmeticParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 0: 
-			return expr_sempred((ExprContext)_localctx, predIndex);
+		case 0: return expr_sempred((ExprContext)_localctx, predIndex);
 		}
 		return true;
 	}
 	private boolean expr_sempred(ExprContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 0: 
-			return precpred(_ctx, 5);
-		case 1: 
-			return precpred(_ctx, 4);
-		case 2: 
-			return precpred(_ctx, 3);
-		case 3: 
-			return precpred(_ctx, 2);
+		case 0: return precpred(_ctx, 5);
+		case 1: return precpred(_ctx, 4);
+		case 2: return precpred(_ctx, 3);
+		case 3: return precpred(_ctx, 2);
 		}
 		return true;
 	}
@@ -418,8 +365,8 @@ public class ArithmeticParser extends Parser {
 		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13%\4\2\t\2\4\3\t"+
 		"\3\3\2\3\2\3\2\3\2\3\2\3\2\5\2\r\n\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3"+
 		"\2\3\2\3\2\3\2\7\2\33\n\2\f\2\16\2\36\13\2\3\3\3\3\3\3\5\3#\n\3\3\3\2"+
-		"\3\2\4\2\4\2\2(\2\f\3\2\2\2\4\"\3\2\2\2\6\7\b\2\1\2\7\b\7\3\2\2\b\t\5"+
-		"\2\2\2\t\n\7\4\2\2\n\r\3\2\2\2\13\r\5\4\3\2\f\6\3\2\2\2\f\13\3\2\2\2\r"+
+		"\3\2\4\2\4\2\2(\2\f\3\2\2\2\4\"\3\2\2\2\6\7\b\2\1\2\7\b\7\4\2\2\b\t\5"+
+		"\2\2\2\t\n\7\3\2\2\n\r\3\2\2\2\13\r\5\4\3\2\f\6\3\2\2\2\f\13\3\2\2\2\r"+
 		"\34\3\2\2\2\16\17\f\7\2\2\17\20\7\t\2\2\20\33\5\2\2\7\21\22\f\6\2\2\22"+
 		"\23\7\6\2\2\23\33\5\2\2\7\24\25\f\5\2\2\25\26\7\7\2\2\26\33\5\2\2\6\27"+
 		"\30\f\4\2\2\30\31\7\b\2\2\31\33\5\2\2\5\32\16\3\2\2\2\32\21\3\2\2\2\32"+

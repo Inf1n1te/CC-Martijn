@@ -1,4 +1,4 @@
-// Generated from /home/inf1n1te/workspace/Programming Paradigms/CC/src/pp/block2/cc/antlr/arithmetic/Arithmetic.g4 by ANTLR 4.5
+// Generated from Arithmetic.g4 by ANTLR 4.4
 package pp.block2.cc.antlr.arithmetic;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -11,62 +11,26 @@ import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class ArithmeticLexer extends Lexer {
-	static { RuntimeMetaData.checkVersion("4.5", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.4", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, NUMBER=3, OPERATORL1=4, OPERATORL2=5, OPERATORMIN=6, OPERATORR=7, 
+		T__1=1, T__0=2, NUMBER=3, OPERATORL1=4, OPERATORL2=5, OPERATORMIN=6, OPERATORR=7, 
 		WS=8, TYPO=9;
 	public static String[] modeNames = {
 		"DEFAULT_MODE"
 	};
 
+	public static final String[] tokenNames = {
+		"'\\u0000'", "'\\u0001'", "'\\u0002'", "'\\u0003'", "'\\u0004'", "'\\u0005'", 
+		"'\\u0006'", "'\\u0007'", "'\b'", "'\t'"
+	};
 	public static final String[] ruleNames = {
-		"T__0", "T__1", "NUMBER", "OPERATORL1", "OPERATORL2", "OPERATORMIN", "OPERATORR", 
+		"T__1", "T__0", "NUMBER", "OPERATORL1", "OPERATORL2", "OPERATORMIN", "OPERATORR", 
 		"WS", "TYPO"
 	};
-
-	private static final String[] _LITERAL_NAMES = {
-		null, "'('", "')'", null, null, "'+'", "'-'", "'^'"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, "NUMBER", "OPERATORL1", "OPERATORL2", "OPERATORMIN", 
-		"OPERATORR", "WS", "TYPO"
-	};
-	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
-
-	/**
-	 * @deprecated Use {@link #VOCABULARY} instead.
-	 */
-	@Deprecated
-	public static final String[] tokenNames;
-	static {
-		tokenNames = new String[_SYMBOLIC_NAMES.length];
-		for (int i = 0; i < tokenNames.length; i++) {
-			tokenNames[i] = VOCABULARY.getLiteralName(i);
-			if (tokenNames[i] == null) {
-				tokenNames[i] = VOCABULARY.getSymbolicName(i);
-			}
-
-			if (tokenNames[i] == null) {
-				tokenNames[i] = "<INVALID>";
-			}
-		}
-	}
-
-	@Override
-	@Deprecated
-	public String[] getTokenNames() {
-		return tokenNames;
-	}
-
-	@Override
-	@NotNull
-	public Vocabulary getVocabulary() {
-		return VOCABULARY;
-	}
 
 
 	public ArithmeticLexer(CharStream input) {
@@ -76,6 +40,9 @@ public class ArithmeticLexer extends Lexer {
 
 	@Override
 	public String getGrammarFileName() { return "Arithmetic.g4"; }
+
+	@Override
+	public String[] getTokenNames() { return tokenNames; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -98,7 +65,7 @@ public class ArithmeticLexer extends Lexer {
 		"\17\"\"\4\2C\\c|\66\2\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3\2\2\2\2"+
 		"\13\3\2\2\2\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3\2\2\2\3\25\3"+
 		"\2\2\2\5\27\3\2\2\2\7!\3\2\2\2\t#\3\2\2\2\13%\3\2\2\2\r\'\3\2\2\2\17)"+
-		"\3\2\2\2\21+\3\2\2\2\23\60\3\2\2\2\25\26\7*\2\2\26\4\3\2\2\2\27\30\7+"+
+		"\3\2\2\2\21+\3\2\2\2\23\60\3\2\2\2\25\26\7+\2\2\26\4\3\2\2\2\27\30\7*"+
 		"\2\2\30\6\3\2\2\2\31\"\7\62\2\2\32\36\4\63;\2\33\35\4\62;\2\34\33\3\2"+
 		"\2\2\35 \3\2\2\2\36\34\3\2\2\2\36\37\3\2\2\2\37\"\3\2\2\2 \36\3\2\2\2"+
 		"!\31\3\2\2\2!\32\3\2\2\2\"\b\3\2\2\2#$\t\2\2\2$\n\3\2\2\2%&\7-\2\2&\f"+
