@@ -52,9 +52,7 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 			ParseTree tree = parser.program();
 			if (listener.hasErrors()) {
 				System.out.printf("Parse errors in %s:%n", file.getPath());
-				for (String error : listener.getErrors()) {
-					System.err.println(error);
-				}
+				listener.getErrors().forEach(System.err::println);
 			} else {
 				result = build(tree);
 			}
@@ -70,9 +68,10 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 	public Graph build(ParseTree tree) {
 		this.graph = new Graph();
 		new ParseTreeWalker().walk(this, tree);
-		
+
 		return graph;
 	}
+
 
 	/**
 	 * Adds a node to he CGF, based on a given parse tree node.
