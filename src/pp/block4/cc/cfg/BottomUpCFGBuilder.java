@@ -2,9 +2,20 @@ package pp.block4.cc.cfg;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeProperty;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import pp.block4.cc.ErrorListener;
+import pp.block4.cc.cfg.FragmentParser.AssignStatContext;
+import pp.block4.cc.cfg.FragmentParser.BlockStatContext;
+import pp.block4.cc.cfg.FragmentParser.BreakStatContext;
+import pp.block4.cc.cfg.FragmentParser.ContStatContext;
+import pp.block4.cc.cfg.FragmentParser.DeclContext;
+import pp.block4.cc.cfg.FragmentParser.IfStatContext;
+import pp.block4.cc.cfg.FragmentParser.PrintStatContext;
+import pp.block4.cc.cfg.FragmentParser.ProgramContext;
+import pp.block4.cc.cfg.FragmentParser.StatContext;
+import pp.block4.cc.cfg.FragmentParser.WhileStatContext;
 
 import java.io.File;
 import java.io.FileReader;
@@ -18,6 +29,8 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 	 * The CFG being built.
 	 */
 	private Graph graph;
+	
+	private ParseTreeProperty<Node[]> nodes = new ParseTreeProperty<Node[]>();
 
 	/**
 	 * Main method to build and print the CFG of a simple Java program.
@@ -75,6 +88,71 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 		return graph;
 	}
 	
+	@Override
+	public void exitProgram(ProgramContext ctx) {
+		
+	}
+	@Override
+	public void exitDecl(DeclContext ctx) {
+		Node n = addNode(ctx, "decl");
+		nodes.put(ctx, new Node[] {n,n});
+	}
+	
+	
+	@Override
+	public void exitAssignStat(AssignStatContext ctx) {
+		Node n = addNode(ctx, "assign");
+		nodes.put(ctx, new Node[] {n,n});
+	}
+	
+	@Override
+	public void exitIfStat(IfStatContext ctx) {
+		Node[] exprNode = nodes.get(ctx.expr());
+		Node ifExit = addNode(ctx, "ifExit");
+		for (StatContext s : ctx.stat()) {
+			Node thenelse[] = nodes.get(s);
+			exprNode[1].addEdge(thenelse[0]);
+			thenelse[1].addEdge(ifExit);
+		}
+		nodes.put(ctx, new Node [] { exprNode[0], ifExit });
+	}
+	
+
+	@Override
+	public void exitWhileStat(WhileStatContext ctx) {
+		Node[] exprNode = nodes.get(ctx.expr());
+		Node[] whileNode = nodes.get(ctx.stat());
+		exprNode[1].addEdge(whileNode[0]);
+		whileNode[1].addEdge(exprNode[0]);
+		nodes.put(ctx, exprNode);
+	}
+	
+	@Override
+	public void exitBlockStat(BlockStatContext ctx) {
+		// TODO Auto-generated method stub
+		super.exitBlockStat(ctx);
+	}
+	
+	@Override
+	public void exitPrintStat(PrintStatContext ctx) {
+		Node n = addNode(ctx, "print");
+		nodes.put(ctx, new Node[] {n,n});
+	}
+	@Override
+	public void exitBreakStat(BreakStatContext ctx) {
+		Node n = addNode(ctx, "decl");
+		Node exit = nodes.get(ctx.getParent())[1];
+		n.addEdge(exit);
+		nodes.put(ctx, new Node[] {n,exit});
+	}
+	
+	@Override
+	public void exitContStat(ContStatContext ctx) {
+		Node n = addNode(ctx, "decl");
+		Node exit = nodes.get(ctx.getParent())[0];
+		n.addEdge(exit);
+		nodes.put(ctx, new Node[] {n,exit});
+	}
 	
 
 	/**
