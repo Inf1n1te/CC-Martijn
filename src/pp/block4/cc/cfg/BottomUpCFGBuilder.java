@@ -65,7 +65,7 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 			ParseTree tree = parser.program();
 			if (listener.hasErrors()) {
 				System.out.printf("Parse errors in %s:%n", file.getPath());
-				listener.getErrors().forEach(System.err::println);
+//				listener.getErrors().forEach(System.err::println);
 			} else {
 				result = build(tree);
 			}
@@ -104,24 +104,24 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 	
 	@Override
 	public void exitIfStat(IfStatContext ctx) {
-		Node[] exprNode = nodes.get(ctx.expr());
+		Node exprNode = addNode(ctx.expr(), "ifExpr");
 		Node ifExit = addNode(ctx, "ifExit");
 		for (StatContext s : ctx.stat()) {
 			Node thenelse[] = nodes.get(s);
-			exprNode[1].addEdge(thenelse[0]);
+			exprNode.addEdge(thenelse[0]);
 			thenelse[1].addEdge(ifExit);
 		}
-		nodes.put(ctx, new Node [] { exprNode[0], ifExit });
+		nodes.put(ctx, new Node [] { exprNode, ifExit });
 	}
 	
 
 	@Override
 	public void exitWhileStat(WhileStatContext ctx) {
-		Node[] exprNode = nodes.get(ctx.expr());
+		Node exprNode = addNode(ctx.expr(), "whileExpr");
 		Node[] whileNode = nodes.get(ctx.stat());
-		exprNode[1].addEdge(whileNode[0]);
-		whileNode[1].addEdge(exprNode[0]);
-		nodes.put(ctx, exprNode);
+		exprNode.addEdge(whileNode[0]);
+		whileNode[1].addEdge(exprNode);
+		nodes.put(ctx, new Node[] {exprNode, exprNode});
 	}
 	
 	@Override
@@ -150,6 +150,7 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 		n.addEdge(exit);
 		nodes.put(ctx, new Node[] {n,exit});
 	}
+	
 	
 
 	/**
