@@ -4,7 +4,9 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+
 import pp.block4.cc.ErrorListener;
+import pp.block4.cc.cfg.FragmentParser.AddExprContext;
 import pp.block4.cc.cfg.FragmentParser.AssignStatContext;
 import pp.block4.cc.cfg.FragmentParser.BlockStatContext;
 import pp.block4.cc.cfg.FragmentParser.BreakStatContext;
@@ -87,7 +89,12 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 	
 	@Override
 	public void exitProgram(ProgramContext ctx) {
-		
+		for (int i = 0; i < ctx.stat().size() - 1; i++) {
+			Node[] stat1 = nodes.get(ctx.stat(i));
+			Node[] stat2 = nodes.get(ctx.stat(i + 1));
+			stat1[1].addEdge(stat2[0]);
+			
+		}
 	}
 	@Override
 	public void exitDecl(DeclContext ctx) {
@@ -104,30 +111,42 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 	
 	@Override
 	public void exitIfStat(IfStatContext ctx) {
-		Node exprNode = addNode(ctx.expr(), "ifExpr");
+		Node exprNode = addNode(ctx.expr(), "ifStat");
 		Node ifExit = addNode(ctx, "ifExit");
 		for (StatContext s : ctx.stat()) {
 			Node thenelse[] = nodes.get(s);
 			exprNode.addEdge(thenelse[0]);
 			thenelse[1].addEdge(ifExit);
 		}
+		if (ctx.stat().size() < 2) {
+			exprNode.addEdge(ifExit);
+		}
+		
 		nodes.put(ctx, new Node [] { exprNode, ifExit });
 	}
 	
 
 	@Override
 	public void exitWhileStat(WhileStatContext ctx) {
-		Node exprNode = addNode(ctx.expr(), "whileExpr");
+		Node exprNode = addNode(ctx.expr(), "whileStat");
 		Node[] whileNode = nodes.get(ctx.stat());
 		exprNode.addEdge(whileNode[0]);
 		whileNode[1].addEdge(exprNode);
-		nodes.put(ctx, new Node[] {exprNode, exprNode});
+		Node exitNode = addNode(ctx.expr(), "whileExit");
+		exprNode.addEdge(exitNode);
+		nodes.put(ctx, new Node [] { exprNode, exitNode });
 	}
 	
 	@Override
 	public void exitBlockStat(BlockStatContext ctx) {
-		// TODO Auto-generated method stub
-		super.exitBlockStat(ctx);
+		for (int i = 0; i < ctx.stat().size() - 1; i++) {
+			Node[] stat1 = nodes.get(ctx.stat(i));
+			Node[] stat2 = nodes.get(ctx.stat(i + 1));
+			System.out.println(stat1 + " |\n " + ctx.stat(i).getText());
+			System.out.println(stat2 + " " + ctx.stat(i + 1).getText());
+			stat1[1].addEdge(stat2[0]);
+		}
+		nodes.put(ctx, new Node[] {nodes.get(ctx.stat(0))[0], nodes.get(ctx.stat(ctx.stat().size() - 1))[1]});
 	}
 	
 	@Override
@@ -137,7 +156,7 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 	}
 	@Override
 	public void exitBreakStat(BreakStatContext ctx) {
-		Node n = addNode(ctx, "decl");
+		Node n = addNode(ctx, "break");
 		Node exit = nodes.get(ctx.getParent())[1];
 		n.addEdge(exit);
 		nodes.put(ctx, new Node[] {n,exit});
@@ -145,12 +164,16 @@ public class BottomUpCFGBuilder extends FragmentBaseListener {
 	
 	@Override
 	public void exitContStat(ContStatContext ctx) {
-		Node n = addNode(ctx, "decl");
+		Node n = addNode(ctx, "cont");
 		Node exit = nodes.get(ctx.getParent())[0];
 		n.addEdge(exit);
 		nodes.put(ctx, new Node[] {n,exit});
 	}
 	
+	private void simpleExpr(ParserRuleContext ctx) {
+		Node n = addNode(ctx, "simple");
+		nodes.put(ctx, new Node[] {n,n});
+	}
 	
 
 	/**
