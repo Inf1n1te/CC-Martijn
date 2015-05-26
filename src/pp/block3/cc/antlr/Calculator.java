@@ -1,14 +1,8 @@
 package pp.block3.cc.antlr;
 
-import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
-
-import pp.block3.cc.antlr.CalcParser.NegContext;
-import pp.block3.cc.antlr.CalcParser.NumberContext;
-import pp.block3.cc.antlr.CalcParser.ParContext;
-import pp.block3.cc.antlr.CalcParser.PlusContext;
-import pp.block3.cc.antlr.CalcParser.TimesContext;
+import pp.block3.cc.antlr.CalcParser.*;
 
 public class Calculator extends CalcBaseListener {
 	/**
@@ -42,7 +36,7 @@ public class Calculator extends CalcBaseListener {
 	public void exitPlus(PlusContext ctx) {
 		set(ctx, val(ctx.expr(0)) + val(ctx.expr(1)));
 	}
-	
+
 	@Override
 	public void exitNeg(NegContext ctx) {
 		set(ctx, -Integer.parseInt(ctx.NUMBER().getText()));

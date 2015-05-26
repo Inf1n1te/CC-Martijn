@@ -1,6 +1,9 @@
 package pp.block4.cc.cfg;
 
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.antlr.v4.runtime.tree.ParseTreeProperty;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import pp.block4.cc.ErrorListener;
 import pp.block4.cc.cfg.FragmentParser.ProgramContext;
 
@@ -16,6 +19,9 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
 	 * The CFG being built.
 	 */
 	private Graph graph;
+
+	private ParseTreeProperty<Node> entrances = new ParseTreeProperty<>();
+	private ParseTreeProperty<Node> exits = new ParseTreeProperty<>();
 
 	/**
 	 * Main method to build and print the CFG of a simple Java program.
@@ -51,9 +57,7 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
 			ProgramContext tree = parser.program();
 			if (listener.hasErrors()) {
 				System.out.printf("Parse errors in %s:%n", file.getPath());
-				for (String error : listener.getErrors()) {
-					System.err.println(error);
-				}
+				listener.getErrors().forEach(System.err::println);
 			} else {
 				result = build(tree);
 			}
@@ -68,8 +72,88 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
 	 */
 	public Graph build(ProgramContext tree) {
 		this.graph = new Graph();
-		// Fill in
-		return null;
+		ParseTreeWalker walker = new ParseTreeWalker();
+		walker.walk(this, tree);
+		return graph;
+	}
+
+	@Override
+	public void enterProgram(@NotNull ProgramContext ctx) {
+		Node node = new Node(0, "program");
+		for (FragmentParser.StatContext stat : ctx.stat()) {
+			Node childEntry = addNode(stat, stat.getText() + " entrance");
+			Node childExit = addNode(stat, stat.getText() + " exit");
+			entrances.put(stat, childEntry);
+			exits.put(stat, childExit);
+			node.addEdge(childEntry);
+			node = childExit;
+		}
+	}
+
+	@Override
+	public void enterDecl(@NotNull FragmentParser.DeclContext ctx) {
+		entrances.get(ctx).addEdge(exits.get(ctx));
+	}
+
+	@Override
+	public void enterAssignStat(@NotNull FragmentParser.AssignStatContext ctx) {
+		entrances.get(ctx).addEdge(exits.get(ctx));
+	}
+
+	@Override
+	public void enterIfStat(@NotNull FragmentParser.IfStatContext ctx) {
+		Node entrance = entrances.get(ctx);
+		Node exit = exits.get(ctx);
+		Node ifEntry = addNode(ctx.stat(0), ctx.stat(0).getText() + " entrance");
+		Node ifExit = addNode(ctx.stat(0), ctx.stat(0).getText() + " exit");
+		entrances.put(ctx.stat(0), ifEntry);
+		exits.put(ctx.stat(0), ifExit);
+		if (ctx.stat(1) == null) {
+			entrance.addEdge(ifEntry);
+			ifExit.addEdge(exit);
+		} else {
+			Node elseEntry = addNode(ctx.stat(1), ctx.stat(1).getText() + " entrance");
+			Node elseExit = addNode(ctx.stat(1), ctx.stat(1).getText() + " exit");
+			entrances.put(ctx.stat(1), elseEntry);
+			exits.put(ctx.stat(1), elseExit);
+			entrance.addEdge(ifEntry);
+			ifExit.addEdge(exit);
+			elseExit.addEdge(exit);
+		}
+	}
+
+	@Override
+	public void enterWhileStat(@NotNull FragmentParser.WhileStatContext ctx) {
+		Node entrance = entrances.get(ctx);
+		Node exit = exits.get(ctx);
+		Node whileEntry = addNode(ctx.stat(), ctx.stat().getText() + " entrance");
+		Node whileExit = addNode(ctx.stat(), ctx.stat().getText() + " exit");
+		entrances.put(ctx.stat(), whileEntry);
+		exits.put(ctx.stat(), whileExit);
+		entrance.addEdge(whileEntry);
+		entrance.addEdge(exit);
+		whileExit.addEdge(entrance);
+	}
+
+	@Override
+	public void enterBlockStat(@NotNull FragmentParser.BlockStatContext ctx) {
+		Node entrance = entrances.get(ctx);
+		Node exit = exits.get(ctx);
+		Node node = entrance;
+		for (FragmentParser.StatContext stat : ctx.stat()) {
+			Node blockEntry = addNode(stat, stat.getText() + " entrance");
+			Node blockExit = addNode(stat, stat.getText() + " exit");
+			entrances.put(stat, blockEntry);
+			exits.put(stat, blockExit);
+			node.addEdge(blockEntry);
+			node = blockExit;
+		}
+		node.addEdge(exit);
+	}
+
+	@Override
+	public void enterPrintStat(@NotNull FragmentParser.PrintStatContext ctx) {
+		entrances.get(ctx).addEdge(exits.get(ctx));
 	}
 
 	/**
