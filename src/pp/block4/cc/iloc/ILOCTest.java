@@ -15,7 +15,7 @@ import static org.junit.Assert.fail;
 
 public class ILOCTest {
 
-
+	//	@Test
 	public void testMax() {
 		Program p = parse("src/pp/block4/cc/iloc/max");
 		Simulator s = new Simulator(p);
@@ -29,12 +29,36 @@ public class ILOCTest {
 
 	@Test
 	public void testFib() {
-		Program p = parse("src/pp/block4/cc/iloc/fib");
+		int[] testValues = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 44, 45/*,46*/};
+		int[] testResults = new int[]{1, 1, 2, 3, 5, 8, 13, 21, 1134903170, 1836311903/*,2971215073*/};
+		for (int i = 0; i < testValues.length; i++) {
+			assertEquals(testResults[i], testFibMem(testValues[i]));
+			assertEquals(testResults[i], testFibReg(testValues[i]));
+		}
+	}
+
+	private int testFibReg(int input) {
+		Program p = parse("src/pp/block4/cc/iloc/fib_reg");
 		Simulator s = new Simulator(p);
 		Machine vm = s.getVM();
-		vm.setNum("n", 2);
+		vm.setNum("n", input);
 		s.run();
 		System.out.println("R_FIB: " + vm.getReg("r_z"));
+		return vm.getReg("r_z");
+	}
+
+	private int testFibMem(int input) {
+		Program p = parse("src/pp/block4/cc/iloc/fib_mem");
+		Simulator s = new Simulator(p);
+		Machine vm = s.getVM();
+		vm.init("x", 1);
+		vm.init("y", 1);
+		vm.init("z", 1);
+		vm.init("n", input);
+		vm.setReg("r_arp", 0);
+		s.run();
+		System.out.println("R_FIB: " + vm.getReg("r_z"));
+		return vm.getReg("r_z");
 	}
 
 	private Program parse(String filename) {
