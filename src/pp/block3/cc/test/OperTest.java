@@ -4,14 +4,9 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.Test;
-import pp.block3.cc.antlr.CalcLexer;
-import pp.block3.cc.antlr.CalcParser;
-import pp.block3.cc.antlr.Calculator;
-import pp.block3.cc.antlr.operators.OperAttrLexer;
-import pp.block3.cc.antlr.operators.OperAttrParser;
-
 import pp.block3.cc.antlr.operators.*;
 import pp.block3.cc.antlr.operators.OperAttrParser.TContext;
+
 import static org.junit.Assert.assertEquals;
 
 public class OperTest {

@@ -1,0 +1,13 @@
+start: 	loadI 1 => r_x
+		loadI 1 => r_y
+		loadI 1 => r_z
+		loadI @n => r_n
+		loadI 1 => r_1
+while:	cmp_GT r_n, r_1 => r_cmp
+		cbr r_cmp -> body, end
+body:	add r_x, r_y => r_z
+		addI r_y, 0 => r_x
+		addI r_z, 0 => r_y
+endw:	subI r_n, 1 => r_n
+		jumpI -> while
+end:	out "Fib: ", r_z
