@@ -1,8 +1,6 @@
 package pp.iloc.model;
 
-/**
- * Register operand
- *
+/** Register operand
  * @author Arend Rensink
  */
 public class Reg extends Operand {
@@ -17,9 +15,7 @@ public class Reg extends Operand {
 		this.name = name;
 	}
 
-	/**
-	 * Returns the name of this register.
-	 */
+	/** Returns the name of this register. */
 	public String getName() {
 		return this.name;
 	}

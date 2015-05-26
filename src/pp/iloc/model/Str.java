@@ -1,9 +1,7 @@
 package pp.iloc.model;
 
-/**
- * Literal string operand.
+/** Literal string operand.
  * This is not part of official ILOC
- *
  * @author Arend Rensink
  */
 public class Str extends Operand {
@@ -19,9 +17,7 @@ public class Str extends Operand {
 		this.text = value;
 	}
 
-	/**
-	 * Returns the text of this string.
-	 */
+	/** Returns the text of this string. */
 	public String getText() {
 		return this.text;
 	}

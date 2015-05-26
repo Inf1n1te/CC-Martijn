@@ -1,8 +1,6 @@
 package pp.iloc.model;
 
-/**
- * Label operand.
- *
+/** Label operand.
  * @author Arend Rensink
  */
 public class Label extends Operand {
@@ -18,9 +16,7 @@ public class Label extends Operand {
 		this.value = value;
 	}
 
-	/**
-	 * Returns the value of this label.
-	 */
+	/** Returns the value of this label. */
 	public String getValue() {
 		return this.value;
 	}
@@ -47,9 +43,7 @@ public class Label extends Operand {
 		return getValue().equals(other.getValue());
 	}
 
-	/**
-	 * Tests if a string value is a well-formed label.
-	 */
+	/** Tests if a string value is a well-formed label. */
 	private boolean wellformed(String value) {
 		if (value == null) {
 			return false;

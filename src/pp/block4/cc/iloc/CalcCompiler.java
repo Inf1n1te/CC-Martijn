@@ -9,13 +9,15 @@ import pp.iloc.model.OpCode;
 import pp.iloc.model.Operand;
 import pp.iloc.model.Program;
 
+/**
+ * Compiler from Calc.g4 to ILOC.
+ */
 public class CalcCompiler extends CalcBaseListener {
-	/**
-	 * Program under construction.
-	 */
+	/** Program under construction. */
 	private Program prog;
 	// Attribute maps and other fields
 
+	/** Calls the compiler, and simulates and prints the compiled program. */
 	public static void main(String[] args) {
 		if (args.length == 0) {
 			System.err.println("Usage: [expr]+");
@@ -30,9 +32,7 @@ public class CalcCompiler extends CalcBaseListener {
 		}
 	}
 
-	/**
-	 * Compiles a given expression string into an ILOC program.
-	 */
+	/** Compiles a given expression string into an ILOC program. */
 	public Program compile(String text) {
 		Program result = null;
 		ErrorListener listener = new ErrorListener();
@@ -44,7 +44,7 @@ public class CalcCompiler extends CalcBaseListener {
 		CalcParser parser = new CalcParser(tokens);
 		parser.removeErrorListeners();
 		parser.addErrorListener(listener);
-		ParseTree tree = parser.expr();
+		ParseTree tree = parser.complete();
 		if (listener.hasErrors()) {
 			System.out.printf("Parse errors in %s:%n", text);
 			for (String error : listener.getErrors()) {
@@ -56,18 +56,14 @@ public class CalcCompiler extends CalcBaseListener {
 		return result;
 	}
 
-	/**
-	 * Compiles a given Calc-parse tree into an ILOC program.
-	 */
+	/** Compiles a given Calc-parse tree into an ILOC program. */
 	public Program compile(ParseTree tree) {
-		// Fill in
-		return null;
+		// TODO Fill in
+		throw new UnsupportedOperationException("Fill in");
 	}
 
-	/**
-	 * Constructs an operation from the parameters
-	 * and adds it to the program under construction.
-	 */
+	/** Constructs an operation from the parameters
+	 * and adds it to the program under construction. */
 	private void emit(OpCode opCode, Operand... args) {
 		this.prog.addInstr(new Op(opCode, args));
 	}

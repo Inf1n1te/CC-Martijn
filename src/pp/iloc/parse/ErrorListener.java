@@ -12,9 +12,7 @@ import java.util.List;
  * Antlr error listener to collect errors rather than send them to stderr.
  */
 public class ErrorListener extends BaseErrorListener {
-	/**
-	 * Errors collected by the listener.
-	 */
+	/** Errors collected by the listener. */
 	private final List<String> errors = new ArrayList<>();
 
 	@Override
@@ -28,24 +26,20 @@ public class ErrorListener extends BaseErrorListener {
 	/**
 	 * Adds an error message during the tree visit stage.
 	 */
-	public void visitError(Token token, String msg) {
+	public void visitError(Token token, String msg, Object... args) {
 		int line = token.getLine();
 		int charPositionInLine = token.getCharPositionInLine();
-		this.errors.add(String.format("Line %d:%d - %s", line,
-				charPositionInLine,
-				msg));
+		msg = String.format(msg, args);
+		msg = String.format("Line %d:%d - %s", line, charPositionInLine, msg);
+		this.errors.add(msg);
 	}
 
-	/**
-	 * Indicates if the listener has collected any errors.
-	 */
+	/** Indicates if the listener has collected any errors. */
 	public boolean hasErrors() {
 		return !this.errors.isEmpty();
 	}
 
-	/**
-	 * Returns the (possibly empty) list of errors collected by the listener.
-	 */
+	/** Returns the (possibly empty) list of errors collected by the listener. */
 	public List<String> getErrors() {
 		return this.errors;
 	}

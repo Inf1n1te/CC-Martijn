@@ -10,29 +10,21 @@ import java.util.List;
 public class OpList extends Instr {
 	private final static String LIST_PREFIX = "[   ";
 	private final static String LIST_POSTFIX = "]";
-	/**
-	 * The internally stored list of operations.
-	 */
+	/** The internally stored list of operations. */
 	private final List<Op> opList;
 
-	/**
-	 * Constructs an operation list with an optional label.
-	 */
+	/** Constructs an operation list with an optional label. */
 	public OpList() {
 		this.opList = new ArrayList<>();
 	}
 
-	/**
-	 * Adds an operation to this list.
-	 */
+	/** Adds an operation to this list. */
 	public void addOp(Op op) {
 		assert !hasLine() : "Line numer set; do not add new operations";
 		this.opList.add(op);
 	}
 
-	/**
-	 * Returns the list of operations.
-	 */
+	/** Returns the list of operations. */
 	public List<Op> getOps() {
 		return this.opList;
 	}
@@ -57,11 +49,9 @@ public class OpList extends Instr {
 		}
 	}
 
-	/**
-	 * Returns a string consisting of this operation list in a nice layout.
-	 *
+	/** Returns a string consisting of this operation list in a nice layout.
 	 * @param indent the number of columns by which the string should be indented.
-	 *               All lines except the first will be indented by this number of spaces.
+	 * All lines except the first will be indented by this number of spaces.
 	 */
 	@Override
 	public String prettyPrint(int labelSize, int sourceSize, int targetSize) {

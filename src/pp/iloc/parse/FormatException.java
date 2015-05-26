@@ -3,10 +3,8 @@ package pp.iloc.parse;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Exception class to collect errors found during
+/** Exception class to collect errors found during
  * scanning, parsing and assembly of an ILOC program.
- *
  * @author Arend Rensink
  */
 public class FormatException extends Exception {
@@ -19,20 +17,16 @@ public class FormatException extends Exception {
 		// empty
 	}
 
-	/**
-	 * Constructs an exception with a formatted message.
-	 *
+	/** Constructs an exception with a formatted message.
 	 * @param message format string in {@link String#format(String, Object...)} syntax
-	 * @param args    arguments for the format string
+	 * @param args arguments for the format string
 	 */
 	public FormatException(String message, Object... args) {
 		super(String.format(message, args));
 		this.messages.add(getMessage());
 	}
 
-	/**
-	 * Constructs an exception from a list of messages.
-	 */
+	/** Constructs an exception from a list of messages. */
 	public FormatException(List<String> messages) {
 		super(concat(messages));
 		this.messages.addAll(messages);

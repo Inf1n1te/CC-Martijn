@@ -6,7 +6,6 @@ import static pp.iloc.model.OpClaz.COMMENT;
 
 /**
  * ILOC operation
- *
  * @author Arend Rensink
  */
 public class Op extends Instr {
@@ -14,9 +13,7 @@ public class Op extends Instr {
 	 * Comment separator.
 	 */
 	private final static String COMMENT_SEP = "// ";
-	/**
-	 * Operand separator.
-	 */
+	/** Operand separator. */
 	private final static String OP_SEP = ",";
 	private final OpCode opCode;
 	private final List<Operand> sources;
@@ -24,30 +21,22 @@ public class Op extends Instr {
 	private final List<Operand> opnds;
 	private String comment;
 
-	/**
-	 * Constructs an unlabelled operation with a given opcode and arguments.
-	 */
+	/** Constructs an unlabelled operation with a given opcode and arguments. */
 	public Op(OpCode opCode, Operand... args) {
 		this(null, opCode, args);
 	}
 
-	/**
-	 * Constructs an unlabelled operation with a given opcode and arguments.
-	 */
+	/** Constructs an unlabelled operation with a given opcode and arguments. */
 	public Op(OpCode opCode, List<Operand> args) {
 		this(null, opCode, args);
 	}
 
-	/**
-	 * Constructs a labelled operation with a given opcode and arguments.
-	 */
+	/** Constructs a labelled operation with a given opcode and arguments. */
 	public Op(Label label, OpCode opCode, Operand... args) {
 		this(label, opCode, Arrays.asList(args));
 	}
 
-	/**
-	 * Constructs a labelled operation with a given opcode and arguments.
-	 */
+	/** Constructs a labelled operation with a given opcode and arguments. */
 	public Op(Label label, OpCode opCode, List<Operand> args) {
 		if (label != null) {
 			super.setLabel(label);
@@ -71,86 +60,62 @@ public class Op extends Instr {
 		this.opnds = new ArrayList<>(args);
 	}
 
-	/**
-	 * Returns the class of operation (normal or control flow).
-	 */
+	/** Returns the class of operation (normal or control flow). */
 	public OpClaz getClaz() {
 		return this.opCode.getClaz();
 	}
 
-	/**
-	 * Returns the opcode of this operation.
-	 */
+	/** Returns the opcode of this operation. */
 	public OpCode getOpCode() {
 		return this.opCode;
 	}
 
-	/**
-	 * Returns the list of source arguments.
-	 */
+	/** Returns the list of source arguments. */
 	public List<Operand> getSources() {
 		return this.sources;
 	}
 
-	/**
-	 * Returns the list of target arguments.
-	 */
+	/** Returns the list of target arguments. */
 	public List<Operand> getTargets() {
 		return this.targets;
 	}
 
-	/**
-	 * Returns the list of all (source + target) operands.
-	 */
+	/** Returns the list of all (source + target) operands. */
 	public List<Operand> getOpnds() {
 		return this.opnds;
 	}
 
-	/**
-	 * Convenience method to retrieve a given operand as {@link Reg}.
-	 */
+	/** Convenience method to retrieve a given operand as {@link Reg}. */
 	public Reg reg(int i) {
 		return (Reg) this.opnds.get(i);
 	}
 
-	/**
-	 * Convenience method to retrieve a given operand as {@link Str}.
-	 */
+	/** Convenience method to retrieve a given operand as {@link Str}. */
 	public Str str(int i) {
 		return (Str) this.opnds.get(i);
 	}
 
-	/**
-	 * Convenience method to retrieve a given operand as {@link Num}.
-	 */
+	/** Convenience method to retrieve a given operand as {@link Num}. */
 	public Num num(int i) {
 		return (Num) this.opnds.get(i);
 	}
 
-	/**
-	 * Convenience method to retrieve a given operand as {@link Label}.
-	 */
+	/** Convenience method to retrieve a given operand as {@link Label}. */
 	public Label label(int i) {
 		return (Label) this.opnds.get(i);
 	}
 
-	/**
-	 * Indicates if this operation has a comment.
-	 */
+	/** Indicates if this operation has a comment. */
 	public boolean hasComment() {
 		return getComment() != null;
 	}
 
-	/**
-	 * Returns the optional comment for this operation.
-	 */
+	/** Returns the optional comment for this operation. */
 	public String getComment() {
 		return this.comment;
 	}
 
-	/**
-	 * Sets a comment for this operation.
-	 */
+	/** Sets a comment for this operation. */
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
@@ -213,9 +178,7 @@ public class Op extends Instr {
 		return result.toString();
 	}
 
-	/**
-	 * Returns the string representation of the optional label.
-	 */
+	/** Returns the string representation of the optional label. */
 	String toArrowString() {
 		if (getTargets().size() > 0 && getClaz() != COMMENT) {
 			return ' ' + getClaz().getArrow() + ' ';
@@ -224,9 +187,7 @@ public class Op extends Instr {
 		}
 	}
 
-	/**
-	 * Returns the string representation of the optional comment.
-	 */
+	/** Returns the string representation of the optional comment. */
 	String toCommentString() {
 		if (hasComment()) {
 			return COMMENT_SEP + getComment();
@@ -235,9 +196,7 @@ public class Op extends Instr {
 		}
 	}
 
-	/**
-	 * Returns the string representation of the source operands.
-	 */
+	/** Returns the string representation of the source operands. */
 	String toSourceString() {
 		StringBuilder result = new StringBuilder();
 		boolean first = true;
@@ -252,9 +211,7 @@ public class Op extends Instr {
 		return result.toString();
 	}
 
-	/**
-	 * Returns the string representation of the target operands.
-	 */
+	/** Returns the string representation of the target operands. */
 	String toTargetString() {
 		StringBuilder result = new StringBuilder();
 		boolean first = true;

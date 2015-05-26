@@ -10,32 +10,20 @@ abstract public class Operand {
 		this.type = type;
 	}
 
-	/**
-	 * Returns the type of this operand.
-	 */
+	/** Returns the type of this operand. */
 	public Type getType() {
 		return this.type;
 	}
 
-	/**
-	 * Enumeration of all available operand types.
-	 */
+	/** Enumeration of all available operand types. */
 	public enum Type {
-		/**
-		 * Register-type operand; class {@link Reg}.
-		 */
+		/** Register-type operand; class {@link Reg}. */
 		REG,
-		/**
-		 * Numeric operand; class {@link Num} or {@link Symb}.
-		 */
+		/** Numeric operand; class {@link Num} or {@link Symb}. */
 		NUM,
-		/**
-		 * Label operand; class {@link Label}.
-		 */
+		/** Label operand; class {@link Label}. */
 		LABEL,
-		/**
-		 * Literal string operand; class {@link Str}.
-		 */
+		/** Literal string operand; class {@link Str}. */
 		STR
 	}
 }
