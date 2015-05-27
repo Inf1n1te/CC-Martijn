@@ -1,17 +1,14 @@
 Program gauss;
 
-Var x: Integer;
-	i: Integer;
-	t: Integer;
+Var arg, result, i: Integer;
 
 Begin
-	In("Upper bound? ", x);
+	In("Upper bound? ", arg);
 	i := 1;
-	t := 0;
 	While i < x Do
 	Begin
-		t := t + i;
+		result := result + i;
 		i := i + 1
 	End;
-	Out("Total = ", t)
+	Out("Sum = ", result)
 End.
