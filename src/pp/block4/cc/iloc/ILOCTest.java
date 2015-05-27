@@ -15,16 +15,17 @@ import static org.junit.Assert.fail;
 
 public class ILOCTest {
 
-	//	@Test
+	@Test
 	public void testMax() {
 		Program p = parse("src/pp/block4/cc/iloc/max");
 		Simulator s = new Simulator(p);
 		Machine vm = s.getVM();
 		vm.init("a", 1, 2, 3, 4, 5, 6);
-		vm.init("alength", 6);
+		vm.setNum("alength", 6);
 		vm.setReg("r_arp", 0);
 		s.run();
 		System.out.println("R_MAX: " + vm.getReg("r_max"));
+		assertEquals(6, vm.getReg("r_max"));
 	}
 
 	@Test

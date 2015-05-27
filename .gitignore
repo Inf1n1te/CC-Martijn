@@ -207,3 +207,14 @@ src/pp/block5/cc/pascal/SimplePascalBaseListener.java
 src/pp/block5/cc/pascal/SimplePascalLexer.java
 src/pp/block5/cc/pascal/SimplePascalListener.java
 src/pp/block5/cc/pascal/SimplePascalParser.java
+
+src/pp/block5/cc/antlr/BuildingVisitor.java
+src/pp/block5/cc/antlr/BuildingBaseVisitor.java
+src/pp/block5/cc/antlr/NumWordVisitor.java
+src/pp/block5/cc/antlr/NumWordBaseVisitor.java
+src/pp/block5/cc/pascal/SimplePascalBaseVisitor.java
+src/pp/block5/cc/pascal/ArrayPascalVisitor.java
+src/pp/block5/cc/pascal/ArrayPascalBaseVisitor.java
+src/pp/block5/cc/pascal/ProcPascalVisitor.java
+src/pp/block5/cc/pascal/SimplePascalVisitor.java
+src/pp/block5/cc/pascal/ProcPascalBaseVisitor.java
