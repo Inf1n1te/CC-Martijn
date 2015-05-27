@@ -1,12 +1,7 @@
 package pp.block5.cc.antlr;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
-
 import pp.block5.cc.ErrorListener;
 import pp.block5.cc.ParseException;
 import pp.block5.cc.antlr.BuildingParser.BuildingContext;
@@ -73,7 +68,8 @@ public class Elevator extends BuildingBaseVisitor<Integer> {
 	@Override
 	public Integer visitFloor(FloorContext ctx) {
 		System.out.printf("--> Visiting %s", ctx.FLOOR().getText());
-		int result = ctx.room() == null ? 0 : ctx.room().size();
+		int result;
+		result = ctx.room() == null ? 0 : ctx.room().size();
 		// the rooms are not visited individually
 		System.out.printf(" (%d rooms)%n", result);
 		return result;
