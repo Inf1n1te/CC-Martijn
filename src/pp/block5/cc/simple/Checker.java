@@ -5,8 +5,16 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.antlr.v4.runtime.tree.TerminalNode;
+
 import pp.block5.cc.ParseException;
 import pp.block5.cc.pascal.SimplePascalBaseListener;
+import pp.block5.cc.pascal.SimplePascalParser.AssStatContext;
+import pp.block5.cc.pascal.SimplePascalParser.BoolTypeContext;
+import pp.block5.cc.pascal.SimplePascalParser.IdTargetContext;
+import pp.block5.cc.pascal.SimplePascalParser.IfStatContext;
+import pp.block5.cc.pascal.SimplePascalParser.IntTypeContext;
+import pp.block5.cc.pascal.SimplePascalParser.VarContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,6 +137,45 @@ public class Checker extends SimplePascalBaseListener {
 	public void exitTrueExpr(TrueExprContext ctx) {
 		setType(ctx, Type.BOOL);
 		setEntry(ctx, ctx);
+	}
+	
+	@Override
+	public void exitVar(VarContext ctx) {
+		for ( TerminalNode id : ctx.ID()) {
+			setType(id, getType(ctx.type()));
+			this.scope.put(id.getText(), getType(ctx.type()));
+		}
+		setEntry(ctx,ctx);
+	}
+	
+	@Override
+	public void exitAssStat(AssStatContext ctx) {
+		checkType(ctx.expr(), getType(ctx.target()));
+		setEntry(ctx, ctx.expr());
+	}
+	
+	@Override
+	public void exitIfStat(IfStatContext ctx) {
+		checkType(ctx.expr(), Type.BOOL);
+		
+		for (StatContext stat : ctx.stat()) {
+			setEntry(stat, ctx);
+		}
+	}
+	
+	@Override
+	public void exitIdTarget(IdTargetContext ctx) {
+		setType(ctx, this.scope.type(ctx.ID().getText()));
+	}
+	
+	@Override
+	public void exitBoolType(BoolTypeContext ctx) {
+		setType(ctx, Type.BOOL);
+	}
+	
+	@Override
+	public void exitIntType(IntTypeContext ctx) {
+		setType(ctx, Type.INT);
 	}
 
 	@Override
