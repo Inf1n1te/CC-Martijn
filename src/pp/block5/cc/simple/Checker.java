@@ -2,6 +2,7 @@ package pp.block5.cc.simple;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import pp.block5.cc.ParseException;
@@ -127,6 +128,27 @@ public class Checker extends SimplePascalBaseListener {
 	@Override
 	public void exitTrueExpr(TrueExprContext ctx) {
 		setType(ctx, Type.BOOL);
+		setEntry(ctx, ctx);
+	}
+
+	@Override
+	public void exitVarDecl(@NotNull VarDeclContext ctx) {
+		for (VarContext var : ctx.var()) {
+			setType(var, getType(var.type()));
+			setEntry(var, var);
+		}
+		setEntry(ctx, ctx);
+	}
+
+	@Override
+	public void exitBoolType(@NotNull BoolTypeContext ctx) {
+		setType(ctx, Type.BOOL);
+		setEntry(ctx, ctx);
+	}
+
+	@Override
+	public void exitIntType(@NotNull IntTypeContext ctx) {
+		setType(ctx, Type.INT);
 		setEntry(ctx, ctx);
 	}
 
