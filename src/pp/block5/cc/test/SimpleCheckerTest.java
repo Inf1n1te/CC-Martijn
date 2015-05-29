@@ -15,7 +15,7 @@ import static org.junit.Assert.fail;
 
 @SuppressWarnings("javadoc")
 public class SimpleCheckerTest {
-	private final static String BASE_DIR = "pp/block5/cc/sample";
+	private final static String BASE_DIR = "src/pp/block5/cc/sample";
 	private final static String EXT = ".pascal";
 	private final SimplePascalCompiler compiler = SimplePascalCompiler
 			.instance();
