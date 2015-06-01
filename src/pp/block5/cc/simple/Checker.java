@@ -178,27 +178,6 @@ public class Checker extends SimplePascalBaseListener {
 		setType(ctx, Type.INT);
 	}
 
-	@Override
-	public void exitVarDecl(@NotNull VarDeclContext ctx) {
-		for (VarContext var : ctx.var()) {
-			setType(var, getType(var.type()));
-			setEntry(var, var);
-		}
-		setEntry(ctx, ctx);
-	}
-
-	@Override
-	public void exitBoolType(@NotNull BoolTypeContext ctx) {
-		setType(ctx, Type.BOOL);
-		setEntry(ctx, ctx);
-	}
-
-	@Override
-	public void exitIntType(@NotNull IntTypeContext ctx) {
-		setType(ctx, Type.INT);
-		setEntry(ctx, ctx);
-	}
-
 	/**
 	 * Indicates if any errors were encountered in this tree listener.
 	 */
