@@ -6,18 +6,12 @@ import java.util.Arrays;
  * Simulated memory.
  */
 public class Memory {
-	/**
-	 * The default size of the memory, in number of bytes.
-	 */
+	/** The default size of the memory, in number of bytes. */
 	public final static int DEFAULT_SIZE = 10000;
-	/**
-	 * The memory array.
-	 */
+	/** The memory array. */
 	private byte[] mem = new byte[DEFAULT_SIZE];
 
-	/**
-	 * Reinitialises the memory to a certain size.
-	 */
+	/** Reinitialises the memory to a certain size. */
 	public void setSize(int size) {
 		this.mem = new byte[size];
 	}

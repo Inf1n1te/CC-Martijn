@@ -23,9 +23,7 @@ public class ErrorListener extends BaseErrorListener {
 				charPositionInLine, offendingSymbol, msg));
 	}
 
-	/**
-	 * Adds an error message during the tree visit stage.
-	 */
+	/** Adds an error message during the tree visit stage. */
 	public void visitError(Token token, String msg, Object... args) {
 		int line = token.getLine();
 		int charPositionInLine = token.getCharPositionInLine();

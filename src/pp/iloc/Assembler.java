@@ -80,17 +80,11 @@ public class Assembler {
 	}
 
 	private static class ILOCWalker extends ILOCBaseListener {
-		/**
-		 * The program to be built.
-		 */
+		/** The program to be built. */
 		private Program program;
-		/**
-		 * Instructions associated with @{code instr} parse nodes.
-		 */
+		/** Instructions associated with @{code instr} parse nodes. */
 		private ParseTreeProperty<Instr> instrs;
-		/**
-		 * Operations associated with @{code op} parse nodes.
-		 */
+		/** Operations associated with @{code op} parse nodes. */
 		private ParseTreeProperty<Op> ops;
 		/** Operands associated with @{code operand} parse nodes. */
 		private ParseTreeProperty<Operand> operands;
@@ -100,9 +94,7 @@ public class Assembler {
 		private ParseTreeProperty<List<Operand>> targets;
 		/** Mapping of labels to place of declaration. */
 		private Map<Label, Token> labelMap;
-		/**
-		 * Mapping of symbolic constants to place of initialisation.
-		 */
+		/** Mapping of symbolic constants to place of initialisation. */
 		private Map<Num, Token> symbolMap;
 		/** The error listener of this walker. */
 		private ErrorListener errors;
@@ -359,10 +351,8 @@ public class Assembler {
 			return oldToken == null;
 		}
 
-		/**
-		 * Registers a symbol initialisation. Signals an error if the
+		/** Registers a symbol initialisation. Signals an error if the 
 		 * symbol was already initialised.
-		 *
 		 * @return {@code true} if the symbol was new
 		 */
 		private boolean addSymbol(Token token, Num symbol) {

@@ -15,9 +15,7 @@ public abstract class Instr implements Iterable<Op> {
 	private int line = -1;
 	/** The label of this instruction. */
 	private Label label;
-	/**
-	 * The program in which this instruction occurs.
-	 */
+	/** The program in which this instruction occurs. */
 	private Program prog;
 
 	/** Returns the number of operations in this instruction. */
@@ -39,9 +37,7 @@ public abstract class Instr implements Iterable<Op> {
 		return this.line;
 	}
 
-	/**
-	 * Sets the line number of this instruction.
-	 */
+	/** Sets the line number of this instruction. */
 	void setLine(int line) {
 		assert this.line < 0 && line >= 0;
 		this.line = line;
@@ -72,7 +68,7 @@ public abstract class Instr implements Iterable<Op> {
 			this.label = label;
 			if (this.prog != null) {
 				this.prog.registerLabel(this);
-			}
+		}
 		}
 	}
 

@@ -22,38 +22,24 @@ public class Machine {
 	 * This is initialised to start at address 0.
 	 */
 	public static final String ARP = "r_arp";
-	/**
-	 * The allocation pointer register (see {@link #ARP}).
-	 */
+	/** The allocation pointer register (see {@link #ARP}). */
 	public static final Reg ARP_REG = new Reg(ARP);
 	/** Name of the stack pointer register.
 	 * This is initialised to start at the top of memory. 
 	 */
 	public static final String SP = "sp";
-	/**
-	 * The stack pointer register (see {@link #SP}).
-	 */
+	/** The stack pointer register (see {@link #SP}). */
 	public static final Reg SP_REG = new Reg(SP);
 
-	/**
-	 * Mapping from register names to register numbers.
-	 */
+	/** Mapping from register names to register numbers. */
 	private final Map<String, Integer> registers;
-	/**
-	 * Mapping from symbolic constants to actual values.
-	 */
+	/** Mapping from symbolic constants to actual values. */
 	private final Map<Num, Integer> symbMap;
-	/**
-	 * Memory of the machine.
-	 */
+	/** Memory of the machine. */
 	private final Memory memory;
-	/**
-	 * Counter of reserved memory cells.
-	 */
+	/** Counter of reserved memory cells. */
 	private int reserved;
-	/**
-	 * Program counter.
-	 */
+	/** Program counter. */
 	private int pc;
 
 	/** Constructs a new, initially empty machine 
@@ -65,10 +51,8 @@ public class Machine {
 		clear();
 	}
 
-	/**
-	 * Reinitialises the machine memory to a certain size (in bytes).
+	/** Reinitialises the machine memory to a certain size (in bytes).
 	 * This also resets the stack pointer (to the top of the memory).
-	 *
 	 * @param size
 	 */
 	public void setSize(int size) {
@@ -101,7 +85,7 @@ public class Machine {
 	 * @throws IllegalArgumentException if the symbolic name is known
 	 */
 	public int alloc(String cst, int length) {
-		if (this.symbMap.get(cst) != null) {
+		if (this.symbMap.get(new Num(cst)) != null) {
 			throw new IllegalArgumentException("Duplicate symbolic name '"
 					+ cst + "'");
 		}
@@ -121,7 +105,7 @@ public class Machine {
 	 * @throws IllegalArgumentException if the symbolic name is known
 	 */
 	public int init(String cst, int... vals) {
-		if (this.symbMap.get(cst) != null) {
+		if (this.symbMap.get(new Num(cst)) != null) {
 			throw new IllegalArgumentException("Duplicate symbolic name '"
 					+ cst + "'");
 		}
@@ -207,6 +191,13 @@ public class Machine {
 		return result;
 	}
 
+	/**
+	 * Returns the byte value at a given memory location.
+	 */
+	public byte loadC(int loc) {
+		return this.memory.get(loc);
+	}
+
 	/** Stores an integer value in memory, starting at a given location.
 	 * The value is stored at the four successive bytes starting
 	 * at that location (most significant first).
@@ -218,14 +209,20 @@ public class Machine {
 		}
 	}
 
+	/**
+	 * Stores the least significant byte of an integer in memory,
+	 * at a given location.
+	 */
+	public void storeC(int val, int loc) {
+		this.memory.set(loc, (byte) val);
+	}
+
 	/** Returns the current program counter value. */
 	public int getPC() {
 		return this.pc;
 	}
 
-	/**
-	 * sets the program counter to a given line number.
-	 */
+	/** sets the program counter to a given line number. */
 	public void setPC(int line) {
 		if (line < 0) {
 			throw new IllegalArgumentException("Trying to jump to line " + line);
