@@ -9,11 +9,16 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import pp.block5.cc.ParseException;
 import pp.block5.cc.pascal.SimplePascalBaseListener;
 import pp.block5.cc.pascal.SimplePascalParser.AssStatContext;
+import pp.block5.cc.pascal.SimplePascalParser.BlockContext;
+import pp.block5.cc.pascal.SimplePascalParser.BlockStatContext;
 import pp.block5.cc.pascal.SimplePascalParser.BoolTypeContext;
 import pp.block5.cc.pascal.SimplePascalParser.IdTargetContext;
 import pp.block5.cc.pascal.SimplePascalParser.IfStatContext;
+import pp.block5.cc.pascal.SimplePascalParser.InStatContext;
 import pp.block5.cc.pascal.SimplePascalParser.IntTypeContext;
+import pp.block5.cc.pascal.SimplePascalParser.OutStatContext;
 import pp.block5.cc.pascal.SimplePascalParser.VarContext;
+import pp.block5.cc.pascal.SimplePascalParser.WhileStatContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,10 +146,11 @@ public class Checker extends SimplePascalBaseListener {
 	@Override
 	public void exitVar(VarContext ctx) {
 		for ( TerminalNode id : ctx.ID()) {
-			setType(id, getType(ctx.type()));
-			this.scope.put(id.getText(), getType(ctx.type()));
+//			setType(id, getType(ctx.type()));
+			if (!this.scope.put(id.getText(), getType(ctx.type()))) {
+				addError(ctx, "already declared");
+			}
 		}
-		setEntry(ctx,ctx);
 	}
 	
 	@Override
@@ -152,19 +158,48 @@ public class Checker extends SimplePascalBaseListener {
 		checkType(ctx.expr(), getType(ctx.target()));
 		setEntry(ctx, ctx.expr());
 	}
+	@Override
+	public void exitInStat(InStatContext ctx) {
+		checkType(ctx.target(), Type.INT);
+		setEntry(ctx, ctx.target());
+	}
+
+	@Override
+	public void exitOutStat(OutStatContext ctx) {
+		setEntry(ctx, ctx);
+	}
 	
 	@Override
 	public void exitIfStat(IfStatContext ctx) {
 		checkType(ctx.expr(), Type.BOOL);
-		
-		for (StatContext stat : ctx.stat()) {
-			setEntry(stat, ctx);
-		}
+		setEntry(ctx, ctx.expr());
 	}
 	
 	@Override
 	public void exitIdTarget(IdTargetContext ctx) {
-		setType(ctx, this.scope.type(ctx.ID().getText()));
+		Type type = this.scope.type(ctx.ID().getText());
+		if (type == null) {
+			addError(ctx, "Not declared");
+		} else {
+			setType(ctx, type);
+			setOffset(ctx,this.scope.offset(ctx.ID().getText()));
+		}
+	}
+	
+	@Override
+	public void exitWhileStat(WhileStatContext ctx) {
+		checkType(ctx.expr(), Type.BOOL);
+		setEntry(ctx, ctx.expr());
+	}
+	
+	@Override
+	public void exitBlock(BlockContext ctx) {
+		setEntry(ctx, entry(ctx.stat(0)));
+	}
+	
+	@Override
+	public void exitBlockStat(BlockStatContext ctx) {
+		setEntry(ctx, entry(ctx.block()));
 	}
 	
 	@Override
