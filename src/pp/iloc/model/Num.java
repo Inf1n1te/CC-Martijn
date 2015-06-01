@@ -11,13 +11,9 @@ public class Num extends Operand {
 	private final int value;
 	/** Name of the numeric operand, if it is a symbolic constant. */
 	private final String name;
-	/**
-	 * Label wrapped in the numeric operand, if it is label-based.
-	 */
+	/** Label wrapped in the numeric operand, if it is label-based. */
 	private final Label label;
-	/**
-	 * The kind of numeric operand.
-	 */
+	/** The kind of numeric operand. */
 	private final NumKind kind;
 
 	/** Constructs a literal numeric operand. */
@@ -41,9 +37,7 @@ public class Num extends Operand {
 		this.label = null;
 	}
 
-	/**
-	 * Constructs a label-based numeric operand.
-	 */
+	/** Constructs a label-based numeric operand. */
 	public Num(Label label) {
 		super(Type.NUM);
 		this.kind = NumKind.LAB;
@@ -52,17 +46,13 @@ public class Num extends Operand {
 		this.name = null;
 	}
 
-	/**
-	 * Returns the kind of this numeric operand.
-	 */
+	/** Returns the kind of this numeric operand. */
 	public NumKind getKind() {
 		return this.kind;
 	}
 
-	/**
-	 * Returns the label on which this operand is based,
-	 * if it is label-based.
-	 */
+	/** Returns the label on which this operand is based, 
+	 * if it is label-based. */
 	public Label getLabel() {
 		return this.label;
 	}
@@ -102,7 +92,7 @@ public class Num extends Operand {
 				break;
 			case LIT:
 				result += getValue();
-				break;
+			break;
 		case SYMB:
 			result += getName().hashCode();
 		}
@@ -154,9 +144,7 @@ public class Num extends Operand {
 		return true;
 	}
 
-	/**
-	 * Type class for numeric operands.
-	 */
+	/** Type class for numeric operands. */
 	public enum NumKind {
 		/** Literal constant. */
 		LIT,

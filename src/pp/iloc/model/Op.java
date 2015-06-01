@@ -1,5 +1,7 @@
 package pp.iloc.model;
 
+import pp.iloc.model.Operand.Type;
+
 import java.util.*;
 
 import static pp.iloc.model.OpClaz.COMMENT;
@@ -15,10 +17,14 @@ public class Op extends Instr {
 	private final static String COMMENT_SEP = "// ";
 	/** Operand separator. */
 	private final static String OP_SEP = ",";
+
+	/** The operation code. */
 	private final OpCode opCode;
-	private final List<Operand> sources;
-	private final List<Operand> targets;
-	private final List<Operand> opnds;
+	/**
+	 * The list of arguments of this operation.
+	 */
+	private final List<Operand> args;
+	/** The optional comment for this operation. */
 	private String comment;
 
 	/** Constructs an unlabelled operation with a given opcode and arguments. */
@@ -36,28 +42,35 @@ public class Op extends Instr {
 		this(label, opCode, Arrays.asList(args));
 	}
 
-	/** Constructs a labelled operation with a given opcode and arguments. */
-	public Op(Label label, OpCode opCode, List<Operand> args) {
+	/**
+	 * Constructs a labelled operation with a given opcode and arguments.
+	 *
+	 * @throws IllegalArgumentException if one of the arguments
+	 *                                  is not of the expected type
+	 */
+	public Op(Label label, OpCode opCode, List<Operand> args)
+			throws IllegalArgumentException {
 		if (label != null) {
 			super.setLabel(label);
 		}
 		this.opCode = opCode;
-		int sourceCount = opCode.getSourceSig().size();
-		int targetCount = opCode.getTargetSig().size();
-		assert args.size() == sourceCount + targetCount;
-		this.sources = new ArrayList<>(sourceCount);
-		for (int i = 0; i < sourceCount; i++) {
+		int argsCount = opCode.getSigSize();
+		if (args.size() != argsCount) {
+			throw new IllegalArgumentException(String.format(
+					"Operation '%s' expects %d arguments but has %d", opCode,
+					argsCount, args.size()));
+		}
+		for (int i = 0; i < argsCount; i++) {
 			Operand arg = args.get(i);
-			assert arg.getType() == opCode.getSourceSig().get(i);
-			this.sources.add(arg);
+			Type expected = opCode.getSig().get(i);
+			if (arg.getType() != expected) {
+				throw new IllegalArgumentException(
+						String.format(
+								"Operation '%s' argument %d should be '%s' but is '%s'",
+								this.opCode, i, expected, arg.getType()));
+			}
 		}
-		this.targets = new ArrayList<>(targetCount);
-		for (int i = 0; i < targetCount; i++) {
-			Operand arg = args.get(sourceCount + i);
-			assert arg.getType() == opCode.getTargetSig().get(i);
-			this.targets.add(arg);
-		}
-		this.opnds = new ArrayList<>(args);
+		this.args = new ArrayList<>(args);
 	}
 
 	/** Returns the class of operation (normal or control flow). */
@@ -70,39 +83,29 @@ public class Op extends Instr {
 		return this.opCode;
 	}
 
-	/** Returns the list of source arguments. */
-	public List<Operand> getSources() {
-		return this.sources;
+	/** Returns the list of all (source + target) arguments. */
+	public List<Operand> getArgs() {
+		return this.args;
 	}
 
-	/** Returns the list of target arguments. */
-	public List<Operand> getTargets() {
-		return this.targets;
-	}
-
-	/** Returns the list of all (source + target) operands. */
-	public List<Operand> getOpnds() {
-		return this.opnds;
-	}
-
-	/** Convenience method to retrieve a given operand as {@link Reg}. */
+	/** Convenience method to retrieve a given argument as {@link Reg}. */
 	public Reg reg(int i) {
-		return (Reg) this.opnds.get(i);
+		return (Reg) this.args.get(i);
 	}
 
-	/** Convenience method to retrieve a given operand as {@link Str}. */
+	/** Convenience method to retrieve a given argument as {@link Str}. */
 	public Str str(int i) {
-		return (Str) this.opnds.get(i);
+		return (Str) this.args.get(i);
 	}
 
-	/** Convenience method to retrieve a given operand as {@link Num}. */
+	/** Convenience method to retrieve a given argument as {@link Num}. */
 	public Num num(int i) {
-		return (Num) this.opnds.get(i);
+		return (Num) this.args.get(i);
 	}
 
 	/** Convenience method to retrieve a given operand as {@link Label}. */
 	public Label label(int i) {
-		return (Label) this.opnds.get(i);
+		return (Label) this.args.get(i);
 	}
 
 	/** Indicates if this operation has a comment. */
@@ -137,15 +140,23 @@ public class Op extends Instr {
 			result.append(String
 					.format("%-" + labelSize + "s", toLabelString()));
 		}
+		int arrowSize = 4;
 		if (getClaz() == COMMENT) {
+			result.append(toCommentString());
+		}
+		if (getOpCode() == OpCode.out) {
+			int size = sourceSize + targetSize + arrowSize;
+			result.append(String.format("%-8s", getOpCode().name()));
+			result.append(String.format("%-" + size + "s ", toSourceString()));
 			result.append(toCommentString());
 		} else {
 			result.append(String.format("%-8s", getOpCode().name()));
 			if (sourceSize > 0) {
-				result.append(String.format("%-" + sourceSize + "s ",
+				result.append(String.format("%-" + sourceSize + "s",
 						toSourceString()));
 			}
-			result.append(String.format("%-4s", toArrowString()));
+			result.append(String
+					.format("%-" + arrowSize + "s", toArrowString()));
 			if (targetSize > 0) {
 				result.append(String.format("%-" + targetSize + "s ",
 						toTargetString()));
@@ -162,11 +173,11 @@ public class Op extends Instr {
 		result.append(toLabelString());
 		if (getClaz() != COMMENT) {
 			result.append(getOpCode());
-			if (!getSources().isEmpty()) {
+			if (getOpCode().getSourceCount() > 0) {
 				result.append(' ');
 				result.append(toSourceString());
 			}
-			if (!getTargets().isEmpty()) {
+			if (getOpCode().getTargetCount() > 0) {
 				result.append(' ');
 				result.append(getClaz().getArrow());
 				result.append(' ');
@@ -178,9 +189,9 @@ public class Op extends Instr {
 		return result.toString();
 	}
 
-	/** Returns the string representation of the optional label. */
+	/** Returns the string representation of the arrow symbol. */
 	String toArrowString() {
-		if (getTargets().size() > 0 && getClaz() != COMMENT) {
+		if (getOpCode().getTargetCount() > 0 && getClaz() != COMMENT) {
 			return ' ' + getClaz().getArrow() + ' ';
 		} else {
 			return "";
@@ -200,7 +211,8 @@ public class Op extends Instr {
 	String toSourceString() {
 		StringBuilder result = new StringBuilder();
 		boolean first = true;
-		for (Operand o : getSources()) {
+		for (int i = 0; i < getOpCode().getSourceCount(); i++) {
+			Operand o = getArgs().get(i);
 			if (first) {
 				first = false;
 			} else {
@@ -215,7 +227,9 @@ public class Op extends Instr {
 	String toTargetString() {
 		StringBuilder result = new StringBuilder();
 		boolean first = true;
-		for (Operand o : getTargets()) {
+		for (int i = getOpCode().getSourceCount(); i < getOpCode()
+				.getSigSize(); i++) {
+			Operand o = getArgs().get(i);
 			if (first) {
 				first = false;
 			} else {
@@ -234,8 +248,7 @@ public class Op extends Instr {
 		result = prime * result
 				+ ((this.comment == null) ? 0 : this.comment.hashCode());
 		result = prime * result + this.opCode.hashCode();
-		result = prime * result + this.sources.hashCode();
-		result = prime * result + this.targets.hashCode();
+		result = prime * result + this.args.hashCode();
 		return result;
 	}
 
@@ -258,9 +271,6 @@ public class Op extends Instr {
 		if (this.opCode != other.opCode) {
 			return false;
 		}
-		if (!this.sources.equals(other.sources)) {
-			return false;
-		}
-		return this.targets.equals(other.targets);
+		return this.args.equals(other.args);
 	}
 }

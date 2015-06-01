@@ -5,25 +5,12 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
-
 import pp.block5.cc.ParseException;
 import pp.block5.cc.pascal.SimplePascalBaseListener;
-import pp.block5.cc.pascal.SimplePascalParser.AssStatContext;
-import pp.block5.cc.pascal.SimplePascalParser.BlockContext;
-import pp.block5.cc.pascal.SimplePascalParser.BlockStatContext;
-import pp.block5.cc.pascal.SimplePascalParser.BoolTypeContext;
-import pp.block5.cc.pascal.SimplePascalParser.IdTargetContext;
-import pp.block5.cc.pascal.SimplePascalParser.IfStatContext;
-import pp.block5.cc.pascal.SimplePascalParser.InStatContext;
-import pp.block5.cc.pascal.SimplePascalParser.IntTypeContext;
-import pp.block5.cc.pascal.SimplePascalParser.OutStatContext;
-import pp.block5.cc.pascal.SimplePascalParser.VarContext;
-import pp.block5.cc.pascal.SimplePascalParser.WhileStatContext;
+import pp.block5.cc.pascal.SimplePascalParser.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static pp.block5.cc.pascal.SimplePascalParser.*;
 
 /**
  * Class to type check and calculate flow entries and variable offsets.
@@ -142,7 +129,7 @@ public class Checker extends SimplePascalBaseListener {
 		setType(ctx, Type.BOOL);
 		setEntry(ctx, ctx);
 	}
-	
+
 	@Override
 	public void exitVar(VarContext ctx) {
 		for ( TerminalNode id : ctx.ID()) {
@@ -152,12 +139,13 @@ public class Checker extends SimplePascalBaseListener {
 			}
 		}
 	}
-	
+
 	@Override
 	public void exitAssStat(AssStatContext ctx) {
 		checkType(ctx.expr(), getType(ctx.target()));
 		setEntry(ctx, ctx.expr());
 	}
+	
 	@Override
 	public void exitInStat(InStatContext ctx) {
 		checkType(ctx.target(), Type.INT);
@@ -174,7 +162,7 @@ public class Checker extends SimplePascalBaseListener {
 		checkType(ctx.expr(), Type.BOOL);
 		setEntry(ctx, ctx.expr());
 	}
-	
+
 	@Override
 	public void exitIdTarget(IdTargetContext ctx) {
 		Type type = this.scope.type(ctx.ID().getText());
@@ -201,12 +189,12 @@ public class Checker extends SimplePascalBaseListener {
 	public void exitBlockStat(BlockStatContext ctx) {
 		setEntry(ctx, entry(ctx.block()));
 	}
-	
+
 	@Override
 	public void exitBoolType(BoolTypeContext ctx) {
 		setType(ctx, Type.BOOL);
 	}
-	
+
 	@Override
 	public void exitIntType(IntTypeContext ctx) {
 		setType(ctx, Type.INT);
