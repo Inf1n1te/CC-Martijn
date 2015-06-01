@@ -4,8 +4,19 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
+import pp.block5.cc.pascal.ArrayPascalParser.VarContext;
 import pp.block5.cc.pascal.SimplePascalBaseVisitor;
+import pp.block5.cc.pascal.SimplePascalParser.AssStatContext;
+import pp.block5.cc.pascal.SimplePascalParser.BlockContext;
+import pp.block5.cc.pascal.SimplePascalParser.BlockStatContext;
+import pp.block5.cc.pascal.SimplePascalParser.BodyContext;
+import pp.block5.cc.pascal.SimplePascalParser.IfStatContext;
+import pp.block5.cc.pascal.SimplePascalParser.ParExprContext;
+import pp.block5.cc.pascal.SimplePascalParser.ProgramContext;
+import pp.block5.cc.pascal.SimplePascalParser.StatContext;
+import pp.block5.cc.pascal.SimplePascalParser.VarDeclContext;
 import pp.iloc.Simulator;
 import pp.iloc.model.Label;
 import pp.iloc.model.Num;
@@ -45,6 +56,70 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	}
 
 	// Override the visitor methods
+//	
+//	@Override
+//	public Op visitVar(pp.block5.cc.pascal.SimplePascalParser.VarContext ctx) {
+//		for (TerminalNode id : ctx.ID()) {
+//			emit(OpCode.loadI, arp, offset(ctx), reg(ctx));
+//		}
+//		return null;
+//	}
+	
+	@Override
+	public Op visitProgram(ProgramContext ctx) {
+		return visit(ctx.body());
+	}
+	
+	@Override
+	public Op visitBody(BodyContext ctx) {
+		return visit(ctx.block());
+	}
+	
+	@Override
+	public Op visitBlockStat(BlockStatContext ctx) {
+		return visit(ctx.block());
+	}
+	
+	@Override
+	public Op visitBlock(BlockContext ctx) {
+		Op result = visit(ctx.stat(0));
+		
+		for (int i = 1; i < ctx.stat().size(); i++) {
+			visit(ctx.stat(i));
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public Op visitAssStat(AssStatContext ctx) {
+		visit(ctx.expr());
+		return emit(OpCode.storeAI, reg(ctx.expr()), arp, offset(ctx.target()));
+	}
+	
+	@Override
+	public Op visitIfStat(IfStatContext ctx) {
+		visit(ctx.expr());
+		Label then = createLabel(ctx.stat(0), "then");
+		Label end = createLabel(ctx, "endLabel");
+		if (ctx.stat().size() > 1) {
+			emit(OpCode.cbr, reg(ctx.expr()), then, createLabel(ctx.stat(1), "else"));
+			visit(ctx.stat(0));
+			
+			visit(ctx.stat(1));
+		} else {
+			
+			emit(OpCode.cbr, reg(ctx.expr()), then, end);
+			visit(ctx.stat(0));
+		}
+		
+		emit(end, OpCode.nop);
+		
+	}
+	
+	
+	
+	
 	/** Constructs an operation from the parameters 
 	 * and adds it to the program under construction. */
 	private Op emit(Label label, OpCode opCode, Operand... args) {
