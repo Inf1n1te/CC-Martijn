@@ -132,7 +132,7 @@ public class Checker extends SimplePascalBaseListener {
 
 	@Override
 	public void exitVar(VarContext ctx) {
-		for ( TerminalNode id : ctx.ID()) {
+		for (TerminalNode id : ctx.ID()) {
 //			setType(id, getType(ctx.type()));
 			if (!this.scope.put(id.getText(), getType(ctx.type()))) {
 				addError(ctx, "already declared");
@@ -145,7 +145,7 @@ public class Checker extends SimplePascalBaseListener {
 		checkType(ctx.expr(), getType(ctx.target()));
 		setEntry(ctx, ctx.expr());
 	}
-	
+
 	@Override
 	public void exitInStat(InStatContext ctx) {
 		checkType(ctx.target(), Type.INT);
@@ -156,7 +156,7 @@ public class Checker extends SimplePascalBaseListener {
 	public void exitOutStat(OutStatContext ctx) {
 		setEntry(ctx, ctx);
 	}
-	
+
 	@Override
 	public void exitIfStat(IfStatContext ctx) {
 		checkType(ctx.expr(), Type.BOOL);
@@ -170,21 +170,21 @@ public class Checker extends SimplePascalBaseListener {
 			addError(ctx, "Not declared");
 		} else {
 			setType(ctx, type);
-			setOffset(ctx,this.scope.offset(ctx.ID().getText()));
+			setOffset(ctx, this.scope.offset(ctx.ID().getText()));
 		}
 	}
-	
+
 	@Override
 	public void exitWhileStat(WhileStatContext ctx) {
 		checkType(ctx.expr(), Type.BOOL);
 		setEntry(ctx, ctx.expr());
 	}
-	
+
 	@Override
 	public void exitBlock(BlockContext ctx) {
 		setEntry(ctx, entry(ctx.stat(0)));
 	}
-	
+
 	@Override
 	public void exitBlockStat(BlockStatContext ctx) {
 		setEntry(ctx, entry(ctx.block()));

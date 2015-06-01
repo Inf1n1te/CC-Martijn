@@ -2,29 +2,15 @@ package pp.block5.cc.simple;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
-import org.antlr.v4.runtime.tree.TerminalNode;
-
-import pp.block5.cc.pascal.ArrayPascalParser.VarContext;
 import pp.block5.cc.pascal.SimplePascalBaseVisitor;
-import pp.block5.cc.pascal.SimplePascalParser.AssStatContext;
-import pp.block5.cc.pascal.SimplePascalParser.BlockContext;
-import pp.block5.cc.pascal.SimplePascalParser.BlockStatContext;
-import pp.block5.cc.pascal.SimplePascalParser.BodyContext;
-import pp.block5.cc.pascal.SimplePascalParser.IfStatContext;
-import pp.block5.cc.pascal.SimplePascalParser.ParExprContext;
-import pp.block5.cc.pascal.SimplePascalParser.ProgramContext;
-import pp.block5.cc.pascal.SimplePascalParser.StatContext;
-import pp.block5.cc.pascal.SimplePascalParser.VarDeclContext;
+import pp.block5.cc.pascal.SimplePascalParser;
+import pp.block5.cc.pascal.SimplePascalParser.*;
 import pp.iloc.Simulator;
-import pp.iloc.model.Label;
-import pp.iloc.model.Num;
-import pp.iloc.model.Op;
-import pp.iloc.model.OpCode;
-import pp.iloc.model.Operand;
-import pp.iloc.model.Program;
-import pp.iloc.model.Reg;
+import pp.iloc.model.*;
+
 /** Class to generate ILOC code for Simple Pascal. */
 public class Generator extends SimplePascalBaseVisitor<Op> {
 	/** The representation of the boolean value <code>false</code>. */
@@ -94,33 +80,48 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	@Override
 	public Op visitAssStat(AssStatContext ctx) {
 		visit(ctx.expr());
-		return emit(OpCode.storeAI, reg(ctx.expr()), arp, offset(ctx.target()));
+		return emit(label(ctx), OpCode.storeAI, reg(ctx.expr()), arp, offset(ctx.target()));
 	}
 	
 	@Override
 	public Op visitIfStat(IfStatContext ctx) {
-		visit(ctx.expr());
-		Label then = createLabel(ctx.stat(0), "then");
-		Label end = createLabel(ctx, "endLabel");
+		Op result = visit(ctx.expr());
+		Label end = createLabel(ctx, "end");
+		Label then = label(ctx.stat(0));
 		if (ctx.stat().size() > 1) {
-			emit(OpCode.cbr, reg(ctx.expr()), then, createLabel(ctx.stat(1), "else"));
+			Label elseL = label(ctx.stat(1));
+			emit(OpCode.cbr, reg(ctx.expr()), then, elseL);
 			visit(ctx.stat(0));
-			
+			emit(OpCode.jumpI, end);
 			visit(ctx.stat(1));
 		} else {
-			
 			emit(OpCode.cbr, reg(ctx.expr()), then, end);
 			visit(ctx.stat(0));
 		}
-		
 		emit(end, OpCode.nop);
-		
+		return result;
 	}
-	
-	
-	
-	
-	/** Constructs an operation from the parameters 
+
+	@Override
+	public Op visitWhileStat(@NotNull SimplePascalParser.WhileStatContext ctx) {
+		Op result = visit(ctx.expr());
+		Label end = createLabel(ctx, "end");
+		emit(OpCode.cbr, reg(ctx.expr()), label(ctx.stat()), end);
+		visit(ctx.stat());
+		emit(OpCode.jumpI, label(ctx.expr()));
+		emit(end, OpCode.nop);
+		return result;
+	}
+
+	@Override
+	public Op visitInStat(@NotNull SimplePascalParser.InStatContext ctx) {
+		String input = ctx.STR().getText().replaceAll("\"", "");
+		Op result = emit(label(ctx), OpCode.in, new Str(input), reg(ctx));
+		emit(OpCode.storeAI, reg(ctx), arp, offset(ctx));
+		return result;
+	}
+
+	/** Constructs an operation from the parameters
 	 * and adds it to the program under construction. */
 	private Op emit(Label label, OpCode opCode, Operand... args) {
 		Op result = new Op(label, opCode, args);
@@ -131,7 +132,7 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	/** Constructs an operation from the parameters 
 	 * and adds it to the program under construction. */
 	private Op emit(OpCode opCode, Operand... args) {
-		return emit((Label) null, opCode, args);
+		return emit(null, opCode, args);
 	}
 
 	/** 
