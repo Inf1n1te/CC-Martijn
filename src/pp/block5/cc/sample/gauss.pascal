@@ -3,6 +3,7 @@ Program gauss;
 Var arg, result, i: Integer;
 
 Begin
+	result := 0;
 	In("Upper bound? ", arg);
 	i := 1;
 	While i < x Do
