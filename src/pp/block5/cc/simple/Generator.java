@@ -5,6 +5,7 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
+
 import pp.block5.cc.pascal.SimplePascalBaseVisitor;
 import pp.block5.cc.pascal.SimplePascalParser;
 import pp.block5.cc.pascal.SimplePascalParser.*;
@@ -117,9 +118,121 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	public Op visitInStat(@NotNull SimplePascalParser.InStatContext ctx) {
 		String input = ctx.STR().getText().replaceAll("\"", "");
 		Op result = emit(label(ctx), OpCode.in, new Str(input), reg(ctx));
-		emit(OpCode.storeAI, reg(ctx), arp, offset(ctx));
+		emit(OpCode.storeAI, reg(ctx), arp, offset(ctx.target()));
 		return result;
 	}
+	
+	@Override
+	public Op visitOutStat(OutStatContext ctx) {
+		String str = ctx.STR().getText().replaceAll("\"", "");
+		visit(ctx.expr());
+		Op result = emit(label(ctx), OpCode.out, new Str(str), reg(ctx.expr()));
+		return result;
+	}
+	
+	@Override
+	public Op visitPrfExpr(PrfExprContext ctx) {
+		Op result;
+		visit(ctx.expr());
+		if (ctx.prfOp().getText().equalsIgnoreCase("NOT")) {
+			result = emit(OpCode.xorI, reg(ctx.expr()), TRUE_VALUE, reg(ctx));
+		} else {
+			result = emit(OpCode.multI, reg(ctx.expr()), new Num(-1), reg(ctx));
+		}
+		return result;
+	}
+	
+	@Override
+	public Op visitPlusExpr(PlusExprContext ctx) {
+		Op result;
+		visit(ctx.expr(0)); visit(ctx.expr(1));
+		if (ctx.plusOp().getText().equals("+")) {
+			result = emit(OpCode.add, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
+		} else {
+			result = emit(OpCode.sub, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
+		}
+		return result;
+	}
+	
+	@Override
+	public Op visitMultExpr(MultExprContext ctx) {
+		Op result;
+		visit(ctx.expr(0)); visit(ctx.expr(1));
+		if (ctx.multOp().getText().equals("*")) {
+			result = emit(OpCode.mult, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
+		} else {
+			result = emit(OpCode.div, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
+		}
+		return result;
+	}
+	
+	@Override
+	public Op visitBoolExpr(BoolExprContext ctx) {
+		Op result;
+		visit(ctx.expr(0)); visit(ctx.expr(1));
+		if (ctx.boolOp().getText().equalsIgnoreCase("AND")) {
+			result = emit(OpCode.and, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
+		} else {
+			result = emit(OpCode.or, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
+		}
+		return result;
+	}
+	
+	@Override
+	public Op visitCompExpr(CompExprContext ctx) {
+		Op result = null;
+		visit(ctx.expr(0)); visit(ctx.expr(1));
+		switch (ctx.compOp().getText()) {
+		case "<=":
+			result = emit(OpCode.cmp_LE, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
+			break;
+		case "<":
+			result = emit(OpCode.cmp_LT, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
+			break;
+		case ">=":
+			result = emit(OpCode.cmp_GE, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
+			break;
+		case ">":
+			result = emit(OpCode.cmp_GT, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
+			break;
+		case "=":
+			result = emit(OpCode.cmp_EQ, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
+			break;
+		case "<>":
+			result = emit(OpCode.cmp_NE, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
+			break;
+		default:
+			break;
+		}
+		return result;
+	}
+	
+	@Override
+	public Op visitParExpr(ParExprContext ctx) {
+		setReg(ctx, reg(ctx.expr()));
+		return visit(ctx.expr());
+	}
+	
+	@Override
+	public Op visitIdExpr(IdExprContext ctx) {
+		return emit(OpCode.loadAI, arp, offset(ctx), reg(ctx));
+	}
+	
+	@Override
+	public Op visitNumExpr(NumExprContext ctx) {
+		return emit(OpCode.loadI, new Num(Integer.parseInt(ctx.getText())), reg(ctx));
+	}
+	
+	@Override
+	public Op visitTrueExpr(TrueExprContext ctx) {
+		return emit(OpCode.loadI, TRUE_VALUE, reg(ctx));
+	}
+	
+	@Override
+	public Op visitFalseExpr(FalseExprContext ctx) {
+		return emit(OpCode.loadI, FALSE_VALUE, reg(ctx));
+	}
+	
 
 	/** Constructs an operation from the parameters
 	 * and adds it to the program under construction. */
