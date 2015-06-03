@@ -81,23 +81,23 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	@Override
 	public Op visitAssStat(AssStatContext ctx) {
 		visit(ctx.expr());
-		return emit(label(ctx), OpCode.storeAI, reg(ctx.expr()), arp, offset(ctx.target()));
+		return emit(OpCode.storeAI, reg(ctx.expr()), arp, offset(ctx.target()));
 	}
 	
 	@Override
 	public Op visitIfStat(IfStatContext ctx) {
 		Op result = visit(ctx.expr());
 		Label end = createLabel(ctx, "end");
-		Label then = label(ctx.stat(0));
+		Label then = createLabel(ctx, "then");
 		if (ctx.stat().size() > 1) {
-			Label elseL = label(ctx.stat(1));
+			Label elseL = createLabel(ctx, "else");
 			emit(OpCode.cbr, reg(ctx.expr()), then, elseL);
-			visit(ctx.stat(0));
+			visit(ctx.stat(0)).setLabel(then);;
 			emit(OpCode.jumpI, end);
-			visit(ctx.stat(1));
+			visit(ctx.stat(1)).setLabel(elseL);;
 		} else {
 			emit(OpCode.cbr, reg(ctx.expr()), then, end);
-			visit(ctx.stat(0));
+			visit(ctx.stat(0)).setLabel(then);
 		}
 		emit(end, OpCode.nop);
 		return result;
@@ -107,7 +107,9 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	public Op visitWhileStat(@NotNull SimplePascalParser.WhileStatContext ctx) {
 		Op result = visit(ctx.expr());
 		Label end = createLabel(ctx, "end");
-		emit(OpCode.cbr, reg(ctx.expr()), label(ctx.stat()), end);
+		Label whileBegin = createLabel(ctx, "whilebegin");
+		result.setLabel(whileBegin);
+		emit(OpCode.cbr, reg(ctx.expr()), whileBegin, end);
 		visit(ctx.stat());
 		emit(OpCode.jumpI, label(ctx.expr()));
 		emit(end, OpCode.nop);
@@ -117,7 +119,7 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	@Override
 	public Op visitInStat(@NotNull SimplePascalParser.InStatContext ctx) {
 		String input = ctx.STR().getText().replaceAll("\"", "");
-		Op result = emit(label(ctx), OpCode.in, new Str(input), reg(ctx));
+		Op result = emit(OpCode.in, new Str(input), reg(ctx));
 		emit(OpCode.storeAI, reg(ctx), arp, offset(ctx.target()));
 		return result;
 	}
@@ -126,7 +128,7 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	public Op visitOutStat(OutStatContext ctx) {
 		String str = ctx.STR().getText().replaceAll("\"", "");
 		visit(ctx.expr());
-		Op result = emit(label(ctx), OpCode.out, new Str(str), reg(ctx.expr()));
+		Op result = emit(OpCode.out, new Str(str), reg(ctx.expr()));
 		return result;
 	}
 	
@@ -134,7 +136,7 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	public Op visitPrfExpr(PrfExprContext ctx) {
 		Op result;
 		visit(ctx.expr());
-		if (ctx.prfOp().getText().equalsIgnoreCase("NOT")) {
+		if (ctx.prfOp().NOT() != null) {
 			result = emit(OpCode.xorI, reg(ctx.expr()), TRUE_VALUE, reg(ctx));
 		} else {
 			result = emit(OpCode.multI, reg(ctx.expr()), new Num(-1), reg(ctx));
@@ -146,7 +148,7 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	public Op visitPlusExpr(PlusExprContext ctx) {
 		Op result;
 		visit(ctx.expr(0)); visit(ctx.expr(1));
-		if (ctx.plusOp().getText().equals("+")) {
+		if (ctx.plusOp().PLUS() != null) {
 			result = emit(OpCode.add, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
 		} else {
 			result = emit(OpCode.sub, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
@@ -158,7 +160,7 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	public Op visitMultExpr(MultExprContext ctx) {
 		Op result;
 		visit(ctx.expr(0)); visit(ctx.expr(1));
-		if (ctx.multOp().getText().equals("*")) {
+		if (ctx.multOp().STAR() != null) {
 			result = emit(OpCode.mult, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
 		} else {
 			result = emit(OpCode.div, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
@@ -170,7 +172,7 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	public Op visitBoolExpr(BoolExprContext ctx) {
 		Op result;
 		visit(ctx.expr(0)); visit(ctx.expr(1));
-		if (ctx.boolOp().getText().equalsIgnoreCase("AND")) {
+		if (ctx.boolOp().AND() != null) {
 			result = emit(OpCode.and, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
 		} else {
 			result = emit(OpCode.or, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
@@ -181,24 +183,25 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	@Override
 	public Op visitCompExpr(CompExprContext ctx) {
 		Op result = null;
+		emit(label(ctx), OpCode.nop);
 		visit(ctx.expr(0)); visit(ctx.expr(1));
-		switch (ctx.compOp().getText()) {
-		case "<=":
+		switch (ctx.compOp().getStart().getType()) {
+		case SimplePascalParser.LE:
 			result = emit(OpCode.cmp_LE, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
 			break;
-		case "<":
+		case SimplePascalParser.LT:
 			result = emit(OpCode.cmp_LT, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
 			break;
-		case ">=":
+		case SimplePascalParser.GE:
 			result = emit(OpCode.cmp_GE, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
 			break;
-		case ">":
+		case SimplePascalParser.GT:
 			result = emit(OpCode.cmp_GT, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
 			break;
-		case "=":
+		case SimplePascalParser.EQ:
 			result = emit(OpCode.cmp_EQ, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
 			break;
-		case "<>":
+		case SimplePascalParser.NE:
 			result = emit(OpCode.cmp_NE, reg(ctx.expr(0)), reg(ctx.expr(1)), reg(ctx));
 			break;
 		default:
