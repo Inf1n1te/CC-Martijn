@@ -1,0 +1,37 @@
+start:		in "arg? " => r_arg
+			loadI #end => r_return_addr
+			push r_return_addr
+			push r_arg
+if:			pop => r_arg
+			push r_arg
+			loadI 1 => r_cmp
+			cmp_LE r_arg, r_cmp => r_cbr
+			cbr r_cbr -> then, else
+then:		pop => r_void
+			pop => r_return_addr
+			loadI 1 => r_return_val
+			push r_return_val
+			jump -> r_return_addr
+else:		pop => r_arg
+			push r_arg
+			loadI #proc1 => r_return_addr
+			push r_return_addr
+			subI r_arg, 1 => r_arg
+			push r_arg
+			jumpI -> if
+proc1:		pop => r_return_val
+			pop => r_arg
+			loadI #proc2 => r_return_addr
+			subI r_arg, 2 => r_arg
+			push r_return_val
+			push r_return_addr
+			push r_arg
+			jumpI -> if
+proc2:		pop => r_return_val_1
+			pop => r_return_val_2
+			pop => r_return_addr
+			add r_return_val_1, r_return_val_2 => r_return_val
+			push r_return_val
+			jump -> r_return_addr
+end:		pop => r_return_val
+			out "fib: ", r_return_val
