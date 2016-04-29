@@ -1,6 +1,6 @@
 grammar Arithmetic;
 
-@header{package pp.block2.cc.antlr.arithmetic;}
+//@header{package pp.block2.cc.antlr.arithmetic;}
 
 /* Expression */
 expr : '(' expr ')' #exprPar

@@ -1,6 +1,6 @@
 lexer grammar Musical;
 
-@header{package pp.block1.cc.antlr;}
+//@header{package pp.block1.cc.antlr;}
 
 fragment FLA : 'L' 'a'+ ' '* ;
 LA : FLA ;

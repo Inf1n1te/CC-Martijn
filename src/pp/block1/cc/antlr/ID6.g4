@@ -1,6 +1,6 @@
 lexer grammar ID6;
 
-@header{package pp.block1.cc.antlr;}
+//@header{package pp.block1.cc.antlr;}
 
 fragment LETTER : ('a'..'z'|'A'..'Z');
 fragment DIGIT : ('0'..'9');

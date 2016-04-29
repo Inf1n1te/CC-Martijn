@@ -1,3 +1,21 @@
+/src/pp/iloc/parse/ILOCBaseVisitor.java
+/src/pp/iloc/parse/ILOCVisitor.java
+/src/pp/block6/cc/pascal/FuncPascal6Visitor.java
+/src/pp/block6/cc/pascal/SimplePascal6Visitor.java
+/src/pp/block6/cc/pascal/FuncPascal6BaseVisitor.java
+/src/pp/block6/cc/pascal/SimplePascal6BaseVisitor.java
+/src/pp/block5/cc/antlr/NumWordGroupBaseVisitor.java
+/src/pp/block5/cc/antlr/NumWordGroupVisitor.java
+/src/pp/block4/cc/cfg/FragmentBaseVisitor.java
+/src/pp/block4/cc/cfg/FragmentVisitor.java
+/src/pp/block3/cc/antlr/operators/OperAttrBaseVisitor.java
+/src/pp/block3/cc/antlr/operators/OperAttrVisitor.java
+/src/pp/block3/cc/antlr/operators/OperVisitor.java
+/src/pp/block3/cc/antlr/operators/OperBaseVisitor.java
+/src/pp/block3/cc/antlr/CalcAttrBaseVisitor.java
+/src/pp/block3/cc/antlr/CalcVisitor.java
+/src/pp/block3/cc/antlr/CalcBaseVisitor.java
+/src/pp/block3/cc/antlr/CalcAttrVisitor.java
 # Created by .ignore support plugin (hsz.mobi)
 ### Linux template
 *~
