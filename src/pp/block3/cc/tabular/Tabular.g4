@@ -1,6 +1,6 @@
 grammar Tabular;
 
-@header{package pp.block3.cc.tabular;}
+//@header{package pp.block3.cc.tabular;}
 
 table	: TABLE_START row* TABLE_END
 		;

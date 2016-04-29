@@ -1,6 +1,5 @@
 lexer grammar If;
 
-
 IF : 'if' ;
 THEN : 'then' ;
 COND : 'cond' ;

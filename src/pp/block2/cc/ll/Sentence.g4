@@ -1,6 +1,5 @@
 lexer grammar Sentence;
 
-
 NOUN : 'students' | 'compilers' ;
 VERB : 'love' ;
 ADJECTIVE : 'all' | 'smart' | 'undergraduate' ;
