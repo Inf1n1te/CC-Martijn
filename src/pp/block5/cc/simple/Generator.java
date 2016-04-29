@@ -87,7 +87,7 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	@Override
 	public Op visitIfStat(IfStatContext ctx) {
 		Op result = visit(ctx.expr());
-		Label end = createLabel(ctx, "end");
+		Label end = createLabel(ctx, "ifend");
 		Label then = createLabel(ctx, "then");
 		if (ctx.stat().size() > 1) {
 			Label elseL = createLabel(ctx, "else");
@@ -106,7 +106,7 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	@Override
 	public Op visitWhileStat(@NotNull SimplePascalParser.WhileStatContext ctx) {
 		Op result = visit(ctx.expr());
-		Label end = createLabel(ctx, "end");
+		Label end = createLabel(ctx, "whileend");
 		Label whileBegin = createLabel(ctx, "whilebegin");
 		result.setLabel(whileBegin);
 		emit(OpCode.cbr, reg(ctx.expr()), whileBegin, end);
@@ -183,7 +183,6 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	@Override
 	public Op visitCompExpr(CompExprContext ctx) {
 		Op result = null;
-		emit(label(ctx), OpCode.nop);
 		visit(ctx.expr(0)); visit(ctx.expr(1));
 		switch (ctx.compOp().getStart().getType()) {
 		case SimplePascalParser.LE:

@@ -12,5 +12,6 @@ public class ID6Test {
 		tester.correct("a0a0a0");
 		tester.correct("A0a0a0");
 		tester.wrong("0a0a0a");
+		tester.wrong("a");
 	}
 }

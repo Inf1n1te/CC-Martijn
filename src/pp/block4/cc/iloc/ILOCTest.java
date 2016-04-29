@@ -61,6 +61,13 @@ public class ILOCTest {
 		System.out.println("R_FIB: " + vm.getReg("r_z"));
 		return vm.getReg("r_z");
 	}
+	
+	
+	private void testConvert(int input1, int input2) {
+		Program p = parse("src/pp/s1466895/q2_5/convert");
+		Simulator s = new Simulator(p);
+		s.run();
+	}
 
 	private Program parse(String filename) {
 		File file = new File(filename + ".iloc");
