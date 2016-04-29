@@ -1,13 +1,23 @@
 package pp.block6.cc.func;
 
-/** Pascal data type kind. */
+/**
+ * Pascal data type kind.
+ */
 public enum TypeKind {
-	/** Integer base type. */
+	/**
+	 * Integer base type.
+	 */
 	INT,
-	/** Boolean base type. */
+	/**
+	 * Boolean base type.
+	 */
 	BOOL,
-	/** Function type. */
+	/**
+	 * Function type.
+	 */
 	FUNC,
-	/** Array compound type. */
-	ARRAY;
+	/**
+	 * Array compound type.
+	 */
+	ARRAY
 }

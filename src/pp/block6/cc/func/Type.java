@@ -1,32 +1,45 @@
 package pp.block6.cc.func;
 
+import pp.iloc.eval.Machine;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import pp.iloc.eval.Machine;
-
-/** Pascal data type. */
+/**
+ * Pascal data type.
+ */
 abstract public class Type {
-	/** The singleton instance of the {@link Bool} type. */
+	/**
+	 * The singleton instance of the {@link Bool} type.
+	 */
 	public static final Type BOOL = new Bool();
-	/** The singleton instance of the {@link Int} type. */
+	/**
+	 * The singleton instance of the {@link Int} type.
+	 */
 	public static final Type INT = new Int();
 	private final TypeKind kind;
 
-	/** Constructor for subclasses. */
+	/**
+	 * Constructor for subclasses.
+	 */
 	protected Type(TypeKind kind) {
 		this.kind = kind;
 	}
 
-	/** Returns the kind of this type. */
+	/**
+	 * Returns the kind of this type.
+	 */
 	public TypeKind getKind() {
 		return this.kind;
 	}
-
-	/** returns the size (in bytes) of a value of this type. */
+	/**
+	 * returns the size (in bytes) of a value of this type.
+	 */
 	abstract public int size();
 
-	/** Representation of the Pascal Boolean type. */
+	/**
+	 * Representation of the Pascal Boolean type.
+	 */
 	static public class Bool extends Type {
 		private Bool() {
 			super(TypeKind.BOOL);
@@ -43,7 +56,9 @@ abstract public class Type {
 		}
 	}
 
-	/** Representation of the Pascal Integer type. */
+	/**
+	 * Representation of the Pascal Integer type.
+	 */
 	static public class Int extends Type {
 		private Int() {
 			super(TypeKind.INT);
@@ -60,26 +75,37 @@ abstract public class Type {
 		}
 	}
 
-	/** Representation of Pascal Function types. */
+	/**
+	 * Representation of Pascal Function types.
+	 */
 	static public class Func extends Type {
-		/** List of parameter types. */
+		/**
+		 * List of parameter types.
+		 */
 		private final List<Type> paramTypes;
-		/** Array element type. */
+		/**
+		 * Array element type.
+		 */
 		private final Type returnType;
 
-		/** Constructs a new function type. */
+		/**
+		 * Constructs a new function type.
+		 */
 		public Func(List<Type> paramTypes, Type returnType) {
 			super(TypeKind.FUNC);
 			this.paramTypes = new ArrayList<>(paramTypes);
 			this.returnType = returnType;
 		}
 
-		/** Returns the list of parameter types of this function type. */
+		/**
+		 * Returns the list of parameter types of this function type.
+		 */
 		public List<Type> getParamTypes() {
 			return this.paramTypes;
 		}
-
-		/** Returns the return type of this function type. */
+		/**
+		 * Returns the return type of this function type.
+		 */
 		public Type getReturnType() {
 			return this.returnType;
 		}
@@ -115,22 +141,30 @@ abstract public class Type {
 			if (!this.returnType.equals(other.returnType)) {
 				return false;
 			}
-			if (!this.paramTypes.equals(other.paramTypes)) {
-				return false;
-			}
-			return true;
+			return this.paramTypes.equals(other.paramTypes);
 		}
 	}
-	/** Representation of Pascal Array types. */
+
+	/**
+	 * Representation of Pascal Array types.
+	 */
 	static public class Array extends Type {
-		/** Array type lower bound. */
+		/**
+		 * Array type lower bound.
+		 */
 		private final int lower;
-		/** Array type upper bound. */
+		/**
+		 * Array type upper bound.
+		 */
 		private final int upper;
-		/** Array element type. */
+		/**
+		 * Array element type.
+		 */
 		private final Type elemType;
 
-		/** Constructs a new array type. */
+		/**
+		 * Constructs a new array type.
+		 */
 		public Array(int lower, int upper, Type elemType) {
 			super(TypeKind.ARRAY);
 			assert upper >= lower;
@@ -139,17 +173,22 @@ abstract public class Type {
 			this.elemType = elemType;
 		}
 
-		/** Returns the lower bound of this array type. */
+		/**
+		 * Returns the lower bound of this array type.
+		 */
 		public int getLower() {
 			return this.lower;
 		}
 
-		/** Returns the upper bound of this array type. */
+		/**
+		 * Returns the upper bound of this array type.
+		 */
 		public int getUpper() {
 			return this.upper;
 		}
-
-		/** Returns the element bound of this array type. */
+		/**
+		 * Returns the element bound of this array type.
+		 */
 		public Type getElemType() {
 			return this.elemType;
 		}
@@ -190,10 +229,7 @@ abstract public class Type {
 			if (this.lower != other.lower) {
 				return false;
 			}
-			if (this.upper != other.upper) {
-				return false;
-			}
-			return true;
+			return this.upper == other.upper;
 		}
 	}
 }

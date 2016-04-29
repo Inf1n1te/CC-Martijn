@@ -218,3 +218,11 @@ src/pp/block5/cc/pascal/ArrayPascalBaseVisitor.java
 src/pp/block5/cc/pascal/ProcPascalVisitor.java
 src/pp/block5/cc/pascal/SimplePascalVisitor.java
 src/pp/block5/cc/pascal/ProcPascalBaseVisitor.java
+src/pp/block6/cc/pascal/SimplePascal6Parser.java
+src/pp/block6/cc/pascal/FuncPascal6Listener.java
+src/pp/block6/cc/pascal/FuncPascal6BaseListener.java
+src/pp/block6/cc/pascal/FuncPascal6Parser.java
+src/pp/block6/cc/pascal/SimplePascal6Listener.java
+src/pp/block6/cc/pascal/SimplePascal6BaseListener.java
+src/pp/block6/cc/pascal/FuncPascal6Lexer.java
+src/pp/block6/cc/pascal/SimplePascal6Lexer.java
