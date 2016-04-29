@@ -1,0 +1,31 @@
+start:	in "Number? " 		=> 	r_in
+		in "Base? " 		=> 	r_bs
+		loadI #end			=>	r_ret
+		push 					r_ret
+		push					r_bs
+		push 					r_in
+cvrt:	pop					=>	r_nm
+		pop					=>	r_bs
+		div r_nm, r_bs		=>	r_rs
+		mult r_bs, r_rs		=>	r_rt
+		sub r_nm, r_rt		=>	r_rt
+		out "Next digit: ", r_rt
+		loadI 0				=>	r_0
+		cmp_EQ r_rs, r_0	=>	r_eq
+		cbr r_eq -> c_end2, c_end1
+c_end1:	loadI #c_end3		=>	r_rt1
+		push					r_rt1
+		push					r_bs
+		push					r_rs
+		jumpI				->	cvrt
+c_end2:	pop					=>	r_0
+		loadI 1				=>	r_rend
+		push					r_rend
+		jumpI				->	c_end3
+c_end3:	pop					=>	r_1
+		pop					=>	r_poi
+		addI r_1, 1			=>	r_2
+		push					r_2
+		jump				->	r_poi
+end:	pop					=>	r_1
+		out	"Length: ", r_1
