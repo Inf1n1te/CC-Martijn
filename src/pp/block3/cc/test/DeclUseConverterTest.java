@@ -30,11 +30,11 @@ public class DeclUseConverterTest {
 //        test("(D:Foo (U:Foo D:Bar) D:Baz (((U:Baz))))");
 //        test("(D:Foo (U:Foo U:Bar) D:Baz (((U:Bas))))", decl.new Error("U:Bar not declared", 1, 16), decl.new Error("U:Bas not declared", 1, 32));
 //        test("(\n\tD:aap \n\t(\n\t\tU:aap \n\t\tD:noot \n\t\tD:aap \n\t\t(\n\t\t\tU:noot\n\t\t) \n\t\t(\n\t\t\tD:noot \n\t\t\tU:noot\n\t\t)\n\t) \n\tD:aap\n)", decl.new Error("D:aap already declared", 15, 3));
-        test("../symbol/programs/DeclUse1.txt");
-        test("../symbol/programs/DeclUse2.txt");
-        test("../symbol/programs/DeclUse3.txt");
-        test("../symbol/programs/DeclUse4.txt");
-        test("../symbol/programs/DeclUse5.txt");
+        test("src/pp/block3/cc/symbol/test/DeclUse1.txt");
+        test("src/pp/block3/cc/symbol/test/DeclUse2.txt");
+        test("src/pp/block3/cc/symbol/test/DeclUse3.txt");
+        test("src/pp/block3/cc/symbol/test/DeclUse4.txt", decl.new Error("U:Bar not declared", 1, 16), decl.new Error("U:Bas not declared", 1, 32));
+        test("src/pp/block3/cc/symbol/test/DeclUse5.txt", decl.new Error("D:aap already declared", 15, 3));
     }
 
     private void test(String filename, Error... expected) {
