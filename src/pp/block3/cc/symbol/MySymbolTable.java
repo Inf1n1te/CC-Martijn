@@ -11,6 +11,10 @@ public class MySymbolTable implements SymbolTable {
 	private Stack<Map<String, Object>> stack = new Stack<Map<String, Object>>();
 	
 
+	public MySymbolTable() {
+		openScope(); // open global scope
+	}
+	
 	/**
 	 * Adds a next deeper scope level.
 	 */
@@ -46,10 +50,10 @@ public class MySymbolTable implements SymbolTable {
 		if (!stack.isEmpty() && !stack.peek().containsKey(id)) {
 			stack.peek().put(id, null);
 			isGood = true;
-		} else if (stack.isEmpty() && global.containsKey(id)) {
+		} /*else if (stack.isEmpty() && !global.containsKey(id)) {
 			global.put(id, null);
 			isGood = true;
-		}
+		}*/
 		return isGood;
 	}
 
@@ -66,9 +70,10 @@ public class MySymbolTable implements SymbolTable {
 		for (int i = 0; i < stack.size(); i++) {
 			if (stack.get(i).containsKey(id)) {
 				contained = true;
+				break;
 			}
 		}
-		contained = contained || global.containsKey(id);
+//		contained = contained || global.containsKey(id);
 		return contained;
 	}
 }

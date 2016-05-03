@@ -24,6 +24,8 @@ public class CalculatorTest {
 		assertEquals(BigInteger.valueOf(7450580596923827396L), calc.parse(scan("5^(3*(4+5))-3^(5^1+1)")));
 		assertEquals(BigInteger.valueOf(512), calc.parse(scan("2^3^2")));
 		assertEquals(BigInteger.valueOf(-10), calc.parse(scan("---10")));
+		assertEquals(BigInteger.valueOf(-12), calc.parse(scan("3-10+5")));
+		assertEquals(BigInteger.valueOf(7), calc.parse(scan("10-3")));
 	}
 
 	/**

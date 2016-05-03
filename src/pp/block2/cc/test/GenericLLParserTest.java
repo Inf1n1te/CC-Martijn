@@ -14,9 +14,11 @@ import org.junit.Test;
 import pp.block2.cc.AST;
 import pp.block2.cc.ParseException;
 import pp.block2.cc.Parser;
+import pp.block2.cc.ll.AbcParser;
 import pp.block2.cc.ll.GenericLLParser;
 import pp.block2.cc.ll.Grammars;
 import pp.block2.cc.ll.Sentence;
+import pp.block2.cc.ll.Abc;
 import pp.block2.cc.ll.SentenceParser;
 
 public class GenericLLParserTest {
@@ -30,6 +32,14 @@ public class GenericLLParserTest {
 		fails("all undergraduate students love all compilers");
 		fails("all undergraduate students love love.");
 		fails("all undergraduate students all compilers.");
+	}
+	
+	@Test
+	public void testAbc() {
+		lexerType = Abc.class;
+		parser1 = new AbcParser();
+		parser2 = new GenericLLParser(Grammars.makeAbc());
+		compare("abaa");
 	}
 
 	private void fails(String text) {
@@ -48,7 +58,7 @@ public class GenericLLParserTest {
 			// success
 		}
 	}
-
+	
 	private void compare(String text) {
 		AST ast1 = parse(parser1, text);
 		AST ast2 = parse(parser2, text);

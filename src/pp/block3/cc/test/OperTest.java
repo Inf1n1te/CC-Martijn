@@ -25,6 +25,7 @@ public class OperTest {
 		test("true", "2=2=true");
 		test("true", "\"x^2\"^3=\"x^2\"+\"x^2\"+\"x^2\"");
 		test("true", "(\"x^2\"^3=\"x^2\"+\"x^2\"+\"x^2\")+false");
+		test("false", "false + false");
 	}
 
 	private void test(String expected, String expr) {

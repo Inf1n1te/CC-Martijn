@@ -24,7 +24,4 @@ expr returns [ int val ]
      | { System.out.println("Evaluating NUMBER"); }
        NUMBER
        { $val = getValue($NUMBER.text); }
-     | { System.out.println("Evaluating Negative NUMBER"); }
-       MINUS NUMBER
-       { $val = -getValue($NUMBER.text); }
      ;
