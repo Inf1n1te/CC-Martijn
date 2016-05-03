@@ -10,10 +10,10 @@ public class MySymbolTable implements SymbolTable {
     private Map<String, Object> global = new HashMap<String, Object>();
     private Stack<Map<String, Object>> stack = new Stack<Map<String, Object>>();
 
-	public MySymbolTable() {
-		openScope(); // open global scope
-	}
-	
+    public MySymbolTable() {
+        openScope(); // open global scope
+    }
+
     /**
      * Adds a next deeper scope level.
      */
