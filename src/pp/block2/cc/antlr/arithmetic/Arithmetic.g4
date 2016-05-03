@@ -6,8 +6,8 @@ grammar Arithmetic;
 expr : '(' expr ')' #exprPar
 	| <assoc=right> expr OPERATORR expr #exprOpR
 	| expr OPERATORL1 expr #exprOpL1
-	| expr OPERATORL2 expr #exprOpL2
-	| expr OPERATORMIN expr #exprMin
+	| expr (OPERATORL2|OPERATORMIN) expr #exprOpL2
+	//| expr OPERATORMIN expr #exprMin
 	| num #exprNum
 	;
 /* Number */
