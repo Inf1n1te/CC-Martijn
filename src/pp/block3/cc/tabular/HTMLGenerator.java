@@ -20,6 +20,7 @@ import pp.block3.cc.tabular.TabularParser.TableContext;
 public class HTMLGenerator extends TabularBaseListener {
 	
 	String htmlfile = "";
+	TabularErrorListener tel;
 	
 	public String parse(String filename){
 		TabularLexer lexer;
@@ -27,7 +28,7 @@ public class HTMLGenerator extends TabularBaseListener {
 			lexer = new TabularLexer(new ANTLRFileStream(filename));
 			TabularParser parser = new TabularParser(new CommonTokenStream(lexer));
 			lexer.removeErrorListeners();
-			TabularErrorListener tel = new TabularErrorListener();
+			tel = new TabularErrorListener();
 			lexer.addErrorListener(tel);
 			ParseTree tree = parser.table();
 			new ParseTreeWalker().walk(this, tree);
@@ -44,7 +45,7 @@ public class HTMLGenerator extends TabularBaseListener {
 	
 	@Override
 	public void enterTable(TableContext ctx) {
-		htmlfile += "<html>\n<body>\n<table border = \"1\">\n";
+		htmlfile += "<html>\n<body>\n<table border = \"0\">\n";
 	}
 	
 	@Override
@@ -89,6 +90,9 @@ public class HTMLGenerator extends TabularBaseListener {
 		}
 	}
 	
+	public TabularErrorListener getErrorListener() {
+		return tel;
+	}
 	
 	
 	public static void main(String[] args) {
@@ -105,6 +109,12 @@ public class HTMLGenerator extends TabularBaseListener {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				}
+			}
+			TabularErrorListener err = generator.getErrorListener();
+			if (err.hasErrors()) {
+				for (String e : err.getAllErrors()) {
+					System.err.println(e);
 				}
 			}
 		} else {
