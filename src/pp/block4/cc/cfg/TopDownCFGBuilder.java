@@ -19,6 +19,10 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
      */
     private Graph graph;
 
+    
+    /**
+     * 
+     */
     private ParseTreeProperty<Node> entrances = new ParseTreeProperty<>();
     private ParseTreeProperty<Node> exits = new ParseTreeProperty<>();
 
@@ -80,8 +84,8 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
     public void enterProgram(ProgramContext ctx) {
         Node node = new Node(0, "program");
         for (FragmentParser.StatContext stat : ctx.stat()) {
-            Node childEntry = addNode(stat, stat.getText() + " entrance");
-            Node childExit = addNode(stat, stat.getText() + " exit");
+            Node childEntry = addNode(stat, stat.getText() + " <in>");
+            Node childExit = addNode(stat, stat.getText() + " <out>");
             entrances.put(stat, childEntry);
             exits.put(stat, childExit);
             node.addEdge(childEntry);
