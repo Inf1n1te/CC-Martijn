@@ -1,22 +1,18 @@
 package pp.iloc.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import pp.iloc.model.Num.NumKind;
 import pp.iloc.model.Operand.Type;
 import pp.iloc.parse.FormatException;
+
+import java.util.*;
 
 /** ILOC program.
  * @author Arend Rensink
  */
 public class Program {
-	/** Indexed list of all instructions in the program. */
+	/**
+	 * Indexed list of all instructions in the program.
+	 */
 	private final List<Instr> instrList;
 	/**
 	 * Indexed list of all operations in the program.
@@ -223,10 +219,7 @@ public class Program {
 			return false;
 		}
 		Program other = (Program) obj;
-		if (!this.instrList.equals(other.instrList)) {
-			return false;
-		}
-		return true;
+		return this.instrList.equals(other.instrList);
 	}
 
 	/** Returns a string consisting of this program in a nice layout.

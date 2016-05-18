@@ -2,7 +2,9 @@ package pp.iloc.eval;
 
 import java.util.Arrays;
 
-/** Simulated memory. */
+/**
+ * Simulated memory.
+ */
 public class Memory {
 	/** The default size of the memory, in number of bytes. */
 	public final static int DEFAULT_SIZE = 10000;

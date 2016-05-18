@@ -5,9 +5,13 @@ package pp.iloc.model;
  * @author Arend Rensink
  */
 public class Str extends Operand {
+	private final static String BSLASH = "\\";
+	private final static String DQUOTE = "\"";
 	private final String text;
 
-	/** Constructs a string operand with a given (string) value. */
+	/**
+	 * Constructs a string operand with a given (string) value.
+	 */
 	public Str(String value) {
 		super(Type.STR);
 		this.text = value;
@@ -37,12 +41,6 @@ public class Str extends Operand {
 			return false;
 		}
 		Str other = (Str) obj;
-		if (!getText().equals(other.getText())) {
-			return false;
-		}
-		return true;
+		return getText().equals(other.getText());
 	}
-
-	private final static String BSLASH = "\\";
-	private final static String DQUOTE = "\"";
 }

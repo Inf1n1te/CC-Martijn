@@ -1,6 +1,8 @@
 package pp.iloc.model;
 
-/** Abstract supertype of all kinds of operands. */
+/**
+ * Abstract supertype of all kinds of operands.
+ */
 abstract public class Operand {
 	private final Type type;
 
@@ -14,7 +16,7 @@ abstract public class Operand {
 	}
 
 	/** Enumeration of all available operand types. */
-	public static enum Type {
+	public enum Type {
 		/** Register-type operand; class {@link Reg}. */
 		REG,
 		/** Numeric operand; class {@link Num} or {@link Symb}. */
@@ -22,6 +24,6 @@ abstract public class Operand {
 		/** Label operand; class {@link Label}. */
 		LABEL,
 		/** Literal string operand; class {@link Str}. */
-		STR;
+		STR
 	}
 }

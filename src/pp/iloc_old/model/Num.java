@@ -5,7 +5,9 @@ package pp.iloc.model;
  * @author Arend Rensink
  */
 public class Num extends Operand {
-	/** Value of the numeric operand, if it is a literal. */
+	/**
+	 * Value of the numeric operand, if it is a literal.
+	 */
 	private final int value;
 	/** Name of the numeric operand, if it is a symbolic constant. */
 	private final String name;
@@ -68,12 +70,12 @@ public class Num extends Operand {
 	@Override
 	public String toString() {
 		switch (getKind()) {
-		case LAB:
-			return "#" + getLabel();
-		case LIT:
-			return "" + getValue();
-		case SYMB:
-			return '@' + getName();
+			case LAB:
+				return "#" + getLabel();
+			case LIT:
+				return "" + getValue();
+			case SYMB:
+				return '@' + getName();
 		default:
 			assert false;
 			return null;
@@ -85,11 +87,11 @@ public class Num extends Operand {
 		int prime = 31;
 		int result = prime * getKind().hashCode();
 		switch (getKind()) {
-		case LAB:
-			result += getLabel().hashCode();
-			break;
-		case LIT:
-			result += getValue();
+			case LAB:
+				result += getLabel().hashCode();
+				break;
+			case LIT:
+				result += getValue();
 			break;
 		case SYMB:
 			result += getName().hashCode();
@@ -110,15 +112,15 @@ public class Num extends Operand {
 			return false;
 		}
 		switch (getKind()) {
-		case LAB:
-			return getLabel().equals(other.getLabel());
-		case LIT:
-			return getValue() == other.getValue();
-		case SYMB:
-			return getName().equals(other.getName());
-		default:
-			assert false;
-			return false;
+			case LAB:
+				return getLabel().equals(other.getLabel());
+			case LIT:
+				return getValue() == other.getValue();
+			case SYMB:
+				return getName().equals(other.getName());
+			default:
+				assert false;
+				return false;
 		}
 	}
 
@@ -143,12 +145,12 @@ public class Num extends Operand {
 	}
 
 	/** Type class for numeric operands. */
-	public static enum NumKind {
+	public enum NumKind {
 		/** Literal constant. */
 		LIT,
 		/** Symbolic name. */
 		SYMB,
 		/** Label-based constant. */
-		LAB;
+		LAB
 	}
 }

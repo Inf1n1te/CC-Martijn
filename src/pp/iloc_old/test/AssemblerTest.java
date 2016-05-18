@@ -1,21 +1,23 @@
 package pp.iloc.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.Test;
+import pp.iloc.Assembler;
+import pp.iloc.model.Program;
+import pp.iloc.parse.FormatException;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.junit.Test;
-
-import pp.iloc.Assembler;
-import pp.iloc.model.Program;
-import pp.iloc.parse.FormatException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 @SuppressWarnings("javadoc")
 public class AssemblerTest {
+	private final static String BASE_DIR = "pp/iloc/sample/";
+	private final static boolean SHOW = true;
+
 	@Test
 	public void testFig13() {
 		Program p = parse("fig1-3");
@@ -65,7 +67,4 @@ public class AssemblerTest {
 			return null;
 		}
 	}
-
-	private final static String BASE_DIR = "pp/iloc/sample/";
-	private final static boolean SHOW = true;
 }

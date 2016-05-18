@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/** List of operations forming a single instruction. */
+/**
+ * List of operations forming a single instruction.
+ */
 public class OpList extends Instr {
+	private final static String LIST_PREFIX = "[   ";
+	private final static String LIST_POSTFIX = "]";
 	/** The internally stored list of operations. */
 	private final List<Op> opList;
 
@@ -47,7 +51,7 @@ public class OpList extends Instr {
 
 	/** Returns a string consisting of this operation list in a nice layout.
 	 * @param indent the number of columns by which the string should be indented.
-	 * All lines except the first will be indented by this number of spaces. 
+	 * All lines except the first will be indented by this number of spaces.
 	 */
 	@Override
 	public String prettyPrint(int labelSize, int sourceSize, int targetSize) {
@@ -90,12 +94,6 @@ public class OpList extends Instr {
 			return false;
 		}
 		OpList other = (OpList) obj;
-		if (!this.opList.equals(other.opList)) {
-			return false;
-		}
-		return true;
+		return this.opList.equals(other.opList);
 	}
-
-	private final static String LIST_PREFIX = "[   ";
-	private final static String LIST_POSTFIX = "]";
 }

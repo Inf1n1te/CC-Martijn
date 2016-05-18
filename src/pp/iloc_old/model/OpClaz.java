@@ -5,7 +5,9 @@ package pp.iloc.model;
  * @author Arend Rensink
  */
 public enum OpClaz {
-	/** A normal (non-control) operation. */
+	/**
+	 * A normal (non-control) operation.
+	 */
 	NORMAL("=>"),
 	/** A control operation, i.e., one that changes the PC. */
 	CONTROL("->"),
@@ -14,7 +16,7 @@ public enum OpClaz {
 
 	private final String arrow;
 
-	private OpClaz(String arrow) {
+	OpClaz(String arrow) {
 		this.arrow = arrow;
 	}
 

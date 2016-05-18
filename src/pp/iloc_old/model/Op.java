@@ -1,28 +1,28 @@
 package pp.iloc.model;
 
-import static pp.iloc.model.OpClaz.COMMENT;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
 import pp.iloc.model.Operand.Type;
+
+import java.util.*;
+
+import static pp.iloc.model.OpClaz.COMMENT;
 
 /**
  * ILOC operation
  * @author Arend Rensink
  */
 public class Op extends Instr {
-	/** Comment separator. */
+	/**
+	 * Comment separator.
+	 */
 	private final static String COMMENT_SEP = "// ";
 	/** Operand separator. */
 	private final static String OP_SEP = ",";
 
 	/** The operation code. */
 	private final OpCode opCode;
-	/** The list of arguments of this operation. */
+	/**
+	 * The list of arguments of this operation.
+	 */
 	private final List<Operand> args;
 	/** The optional comment for this operation. */
 	private String comment;
@@ -42,9 +42,11 @@ public class Op extends Instr {
 		this(label, opCode, Arrays.asList(args));
 	}
 
-	/** Constructs a labelled operation with a given opcode and arguments.
+	/**
+	 * Constructs a labelled operation with a given opcode and arguments.
+	 *
 	 * @throws IllegalArgumentException if one of the arguments
-	 * is not of the expected type 
+	 *                                  is not of the expected type
 	 */
 	public Op(Label label, OpCode opCode, List<Operand> args)
 			throws IllegalArgumentException {
@@ -269,9 +271,6 @@ public class Op extends Instr {
 		if (this.opCode != other.opCode) {
 			return false;
 		}
-		if (!this.args.equals(other.args)) {
-			return false;
-		}
-		return true;
+		return this.args.equals(other.args);
 	}
 }

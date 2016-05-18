@@ -1,18 +1,9 @@
 package pp.iloc.model;
 
-import static pp.iloc.model.OpClaz.COMMENT;
-import static pp.iloc.model.OpClaz.CONTROL;
-import static pp.iloc.model.OpClaz.NORMAL;
-import static pp.iloc.model.Operand.Type.LABEL;
-import static pp.iloc.model.Operand.Type.NUM;
-import static pp.iloc.model.Operand.Type.REG;
-import static pp.iloc.model.Operand.Type.STR;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static pp.iloc.model.OpClaz.*;
+import static pp.iloc.model.Operand.Type.*;
 
 /**
  * Code defining the type of a (non-control flow) operation.
@@ -20,7 +11,9 @@ import java.util.Map;
  */
 public enum OpCode {
 	// Placeholder
-	/** Placeholder (no operation). */
+	/**
+	 * Placeholder (no operation).
+	 */
 	nop(0),
 
 	// Register arithmetic
@@ -124,7 +117,7 @@ public enum OpCode {
 	cmp_NE(2, REG, REG, REG),
 
 	// Jump operations
-	/** Conditional branch (reg0 != 0 ? #label0 : #label1 => pc). */
+	/** Conditional branch (reg0 == 0 ? #label0 : #label1 => pc). */
 	cbr(CONTROL, 1, REG, LABEL, LABEL),
 	/** Immediate jump (#label0 => pc). */
 	jumpI(CONTROL, 0, LABEL),
@@ -134,55 +127,50 @@ public enum OpCode {
 	tbl(2, REG, LABEL),
 
 	// Extra ops for stack manipulation
-	/** Push the (4-byte integer) value of a register onto the stack. 
+	/** Push the value of a register onto the stack. 
 	 * Not official ILOC. */
 	push(1, REG),
-	/** Pop the (4-byte integer) stack top into a register.
+	/** Pop the stack top into a register.
 	 * Not official ILOC. */
 	pop(0, REG),
-	/** Push the (1-byte character) value of a register onto the stack. 
-	 * Not official ILOC. */
-	cpush(1, REG),
-	/** Pop the (1-byte character) stack top into a register.
-	 * Not official ILOC. */
-	cpop(0, REG),
 	// Extra ops for simulation and debugging
-	/** Value input (str0 => stdout and stdin => reg1).
+	/** Value input (str0 => reg1).
 	 * Not official ILOC. */
 	in(1, STR, REG),
-	/** Value output (str0 + reg1 => stdout).
+	/** Value output (str0 + reg1 =>).
 	 * Not official ILOC. */
 	out(2, STR, REG),
-	/** String input (str0 => stdout and stdin => stack).
-	 * The string is represented as length + chars (first char on top).
-	 * Not official ILOC. */
-	cin(1, STR),
-	/** Value output (str0 + stack => stdout).
-	 * The string is represented as length + chars (first char on top).
-	 * Not official ILOC. */
-	cout(1, STR),
 	/** Stand-alone program comment; effect = nop.
 	 * Not official ILOC. */
 	comment(COMMENT, 0);
 
 
+	private static final Map<String, OpCode> codeMap = new HashMap<>();
+
+	static {
+		for (OpCode op : values()) {
+			if (op.getClaz() != OpClaz.COMMENT) {
+				codeMap.put(op.name(), op);
+			}
+		}
+	}
+
 	/** The class that this opcode falls into. */
 	private final OpClaz claz;
-
 	/** The source operand types. */
 	private final List<Operand.Type> sourceSig;
-
 	/** The target operand types. */
 	private final List<Operand.Type> targetSig;
-
-	/** The operand types. */
+	/**
+	 * The operand types.
+	 */
 	private final List<Operand.Type> sig;
 
-	private OpCode(int sourceCount, Operand.Type... sig) {
+	OpCode(int sourceCount, Operand.Type... sig) {
 		this(NORMAL, sourceCount, sig);
 	}
 
-	private OpCode(OpClaz claz, int sourceCount, Operand.Type... sig) {
+	OpCode(OpClaz claz, int sourceCount, Operand.Type... sig) {
 		this.claz = claz;
 		this.sourceSig = new ArrayList<>(sourceCount);
 		for (int i = 0; i < sourceCount; i++) {
@@ -195,22 +183,33 @@ public enum OpCode {
 		this.sig = new ArrayList<>(Arrays.asList(sig));
 	}
 
+	/** Returns the {@link OpCode} for a given string, if any. */
+	public static OpCode parse(String code) {
+		return codeMap.get(code);
+	}
+
 	/** Returns the class of this opcode (normal or control flow). */
 	public OpClaz getClaz() {
 		return this.claz;
 	}
 
-	/** Returns the number of operands. */
+	/**
+	 * Returns the number of operands.
+	 */
 	public int getSigSize() {
 		return getSourceCount() + getTargetCount();
 	}
 
-	/** Returns the list of expected operand types. */
+	/**
+	 * Returns the list of expected operand types.
+	 */
 	public List<Operand.Type> getSig() {
 		return this.sig;
 	}
 
-	/** Returns the number of source operands. */
+	/**
+	 * Returns the number of source operands.
+	 */
 	public int getSourceCount() {
 		return getSourceSig().size();
 	}
@@ -220,7 +219,9 @@ public enum OpCode {
 		return this.sourceSig;
 	}
 
-	/** Returns the number of target operands. */
+	/**
+	 * Returns the number of target operands.
+	 */
 	public int getTargetCount() {
 		return getTargetSig().size();
 	}
@@ -228,19 +229,5 @@ public enum OpCode {
 	/** Returns the list of expected target operand types. */
 	public List<Operand.Type> getTargetSig() {
 		return this.targetSig;
-	}
-
-	/** Returns the {@link OpCode} for a given string, if any. */
-	public static OpCode parse(String code) {
-		return codeMap.get(code);
-	}
-
-	private static final Map<String, OpCode> codeMap = new HashMap<>();
-	static {
-		for (OpCode op : values()) {
-			if (op.getClaz() != OpClaz.COMMENT) {
-				codeMap.put(op.name(), op);
-			}
-		}
 	}
 }

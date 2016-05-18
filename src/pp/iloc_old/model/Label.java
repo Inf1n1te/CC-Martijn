@@ -4,7 +4,11 @@ package pp.iloc.model;
  * @author Arend Rensink
  */
 public class Label extends Operand {
-	/** Constructs a label object with a given label text. */
+	private final String value;
+
+	/**
+	 * Constructs a label object with a given label text.
+	 */
 	public Label(String value) {
 		super(Type.LABEL);
 		assert wellformed(value) : String.format(
@@ -16,8 +20,6 @@ public class Label extends Operand {
 	public String getValue() {
 		return this.value;
 	}
-
-	private final String value;
 
 	@Override
 	public String toString() {
@@ -38,10 +40,7 @@ public class Label extends Operand {
 			return false;
 		}
 		Label other = (Label) obj;
-		if (!getValue().equals(other.getValue())) {
-			return false;
-		}
-		return true;
+		return getValue().equals(other.getValue());
 	}
 
 	/** Tests if a string value is a well-formed label. */

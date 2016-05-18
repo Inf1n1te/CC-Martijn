@@ -7,12 +7,17 @@ import java.util.Iterator;
  * @author Arend Rensink
  */
 public abstract class Instr implements Iterable<Op> {
+	/**
+	 * Label separator.
+	 */
+	private final static String LABEL_SEP = ": ";
 	/** The line number of this instruction. */
 	private int line = -1;
 	/** The label of this instruction. */
 	private Label label;
 	/** The program in which this instruction occurs. */
 	private Program prog;
+
 	/** Returns the number of operations in this instruction. */
 	public abstract int size();
 
@@ -60,9 +65,9 @@ public abstract class Instr implements Iterable<Op> {
 		}
 		assert label != null && this.label == null || label.equals(this.label);
 		if (this.label == null) {
-		this.label = label;
-		if (this.prog != null) {
-			this.prog.registerLabel(this);
+			this.label = label;
+			if (this.prog != null) {
+				this.prog.registerLabel(this);
 		}
 		}
 	}
@@ -116,7 +121,4 @@ public abstract class Instr implements Iterable<Op> {
 		}
 		return true;
 	}
-
-	/** Label separator. */
-	private final static String LABEL_SEP = ": ";
 }

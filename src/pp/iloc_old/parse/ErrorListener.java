@@ -1,24 +1,26 @@
 package pp.iloc.parse;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.Token;
 
-/** Antlr error listener to collect errors rather than send them to stderr. */
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Antlr error listener to collect errors rather than send them to stderr.
+ */
 public class ErrorListener extends BaseErrorListener {
 	/** Errors collected by the listener. */
 	private final List<String> errors = new ArrayList<>();
 
 	@Override
 	public void syntaxError(Recognizer<?, ?> recognizer,
-			Object offendingSymbol, int line, int charPositionInLine,
-			String msg, RecognitionException e) {
+							Object offendingSymbol, int line, int charPositionInLine,
+							String msg, RecognitionException e) {
 		this.errors.add(String.format("Line %d:%d - %s", line,
-				charPositionInLine, msg));
+				charPositionInLine, offendingSymbol, msg));
 	}
 
 	/** Adds an error message during the tree visit stage. */

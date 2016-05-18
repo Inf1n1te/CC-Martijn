@@ -1,55 +1,26 @@
 package pp.iloc;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
-
-import pp.iloc.model.Instr;
-import pp.iloc.model.Label;
-import pp.iloc.model.Num;
-import pp.iloc.model.Op;
-import pp.iloc.model.OpCode;
-import pp.iloc.model.OpList;
-import pp.iloc.model.Operand;
+import pp.iloc.model.*;
 import pp.iloc.model.Operand.Type;
-import pp.iloc.model.Program;
-import pp.iloc.model.Reg;
-import pp.iloc.model.Str;
-import pp.iloc.parse.ErrorListener;
+import pp.iloc.parse.*;
 import pp.iloc.parse.FormatException;
-import pp.iloc.parse.ILOCBaseListener;
-import pp.iloc.parse.ILOCLexer;
-import pp.iloc.parse.ILOCParser;
-import pp.iloc.parse.ILOCParser.CommentContext;
-import pp.iloc.parse.ILOCParser.DeclContext;
-import pp.iloc.parse.ILOCParser.InstrContext;
-import pp.iloc.parse.ILOCParser.InstrListContext;
-import pp.iloc.parse.ILOCParser.OpCodeContext;
-import pp.iloc.parse.ILOCParser.OperandContext;
-import pp.iloc.parse.ILOCParser.ProgramContext;
-import pp.iloc.parse.ILOCParser.RealOpContext;
-import pp.iloc.parse.ILOCParser.SingleInstrContext;
-import pp.iloc.parse.ILOCParser.SourcesContext;
-import pp.iloc.parse.ILOCParser.TargetsContext;
+import pp.iloc.parse.ILOCParser.*;
 
-/** Assembler for the ILOC language. */
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
+
+/**
+ * Assembler for the ILOC language.
+ */
 public class Assembler {
+	private static final Assembler INSTANCE = new Assembler();
 	private final ILOCWalker walker;
 
 	/** Constructor for the singleton instance. */
@@ -57,24 +28,29 @@ public class Assembler {
 		this.walker = new ILOCWalker();
 	}
 
-	/** Parses a given ILOC program given as a string, 
-	 * and returns the parsed program. 
+	/** Returns the singleton assembler instance. */
+	public static final Assembler instance() {
+		return INSTANCE;
+	}
+
+	/** Parses a given ILOC program given as a string,
+	 * and returns the parsed program.
 	 * @throws FormatException if there was an error parsing the program
 	 */
 	public Program assemble(String program) throws FormatException {
 		return assemble(new ANTLRInputStream(program));
 	}
 
-	/** Parses a given ILOC program given as a file, 
-	 * and returns the parsed program. 
+	/** Parses a given ILOC program given as a file,
+	 * and returns the parsed program.
 	 * @throws FormatException if there was an error parsing the program
 	 */
 	public Program assemble(File file) throws FormatException, IOException {
 		return assemble(new ANTLRInputStream(new FileReader(file)));
 	}
 
-	/** Parses a given ILOC program given as a character stream, 
-	 * and returns the parsed program. 
+	/** Parses a given ILOC program given as a character stream,
+	 * and returns the parsed program.
 	 * @throws FormatException if there was an error parsing the program
 	 */
 	public Program assemble(CharStream chars) throws FormatException {
@@ -93,8 +69,8 @@ public class Assembler {
 		return assemble(tree);
 	}
 
-	/** Parses a given ILOC program given as a parse tree, 
-	 * and returns the parsed program. 
+	/** Parses a given ILOC program given as a parse tree,
+	 * and returns the parsed program.
 	 * @throws FormatException if there was an error parsing the program
 	 */
 	public Program assemble(ParseTree tree) throws FormatException {
@@ -102,13 +78,6 @@ public class Assembler {
 		result.check();
 		return result;
 	}
-
-	/** Returns the singleton assembler instance. */
-	public static final Assembler instance() {
-		return INSTANCE;
-	}
-
-	private static final Assembler INSTANCE = new Assembler();
 
 	private static class ILOCWalker extends ILOCBaseListener {
 		/** The program to be built. */
