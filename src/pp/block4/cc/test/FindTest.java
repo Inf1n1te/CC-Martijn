@@ -16,8 +16,8 @@ import static org.junit.Assert.fail;
 
 @SuppressWarnings("javadoc")
 public class FindTest {
-	private final static boolean SHOW = true;
-	private Assembler assembler = Assembler.instance();
+    private final static boolean SHOW = true;
+    private Assembler assembler = Assembler.instance();
 
 	@Test/*(timeout = 1000)*/
 	public void simulate() {
@@ -36,26 +36,26 @@ public class FindTest {
 		run(sim, 10, 3);
 	}
 
-	private void run(Simulator sim, int input, int output) {
-		Machine vm = sim.getVM();
-		vm.clear();
-		vm.setNum("alength", 3);
-		vm.setReg("r_arp", vm.init("a", 5, 2, 15));
-		sim.setIn(new ByteArrayInputStream(("" + input).getBytes()));
-		sim.run();
-		if (SHOW) {
-			System.out.println(vm);
-		}
-		assertEquals(output, vm.getReg("r_i"));
-	}
+    private void run(Simulator sim, int input, int output) {
+        Machine vm = sim.getVM();
+        vm.clear();
+        vm.setNum("alength", 3);
+        vm.setReg("r_arp", vm.init("a", 5, 2, 15));
+        sim.setIn(new ByteArrayInputStream(("" + input).getBytes()));
+        sim.run();
+        if (SHOW) {
+            System.out.println(vm);
+        }
+        assertEquals(output, vm.getReg("r_i"));
+    }
 
-	private Program assemble(String filename) {
-		File file = new File(filename + ".iloc");
-		try {
-			return this.assembler.assemble(file);
-		} catch (FormatException | IOException e) {
-			fail(e.getMessage());
-			return null;
-		}
-	}
+    private Program assemble(String filename) {
+        File file = new File(filename + ".iloc");
+        try {
+            return this.assembler.assemble(file);
+        } catch (FormatException | IOException e) {
+            fail(e.getMessage());
+            return null;
+        }
+    }
 }
