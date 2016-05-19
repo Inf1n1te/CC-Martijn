@@ -137,7 +137,7 @@ public class Graph implements Iterable<Node> {
 
 	// Define the nodes in the dot file and store node labels
 	for (Node node : this) {
-	sb.append(" ").append(i).append(" [penwidth=3,label=\"").append(node.getNr()).append("_").append(node.getId().replaceAll("[:%\"]"," ")).append("\",color=1, colorscheme=paired12] \r\n");
+	sb.append(" ").append(i).append(" [penwidth=3,label=\"").append(node.getNr()).append("_").append(node.getId().replaceAll("[\"]","\\\\\"")).append("\",color=1, colorscheme=paired12] \r\n");
 	nodeLabels.put(node, i);
 	i++;
 	}
