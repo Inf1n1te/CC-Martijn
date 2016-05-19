@@ -19,7 +19,7 @@ public class FindTest {
 	private final static boolean SHOW = true;
 	private Assembler assembler = Assembler.instance();
 
-	@Test(timeout = 1000)
+	@Test/*(timeout = 1000)*/
 	public void simulate() {
 		Program p = assemble("src/pp/block4/cc/iloc/find");
 		if (SHOW) {
@@ -28,7 +28,11 @@ public class FindTest {
 		Machine vm = new Machine();
 		Simulator sim = new Simulator(p, vm);
 		run(sim, 15, 2);
+		vm = new Machine();
+		sim = new Simulator(p, vm);
 		run(sim, 5, 0);
+		vm = new Machine();
+		sim = new Simulator(p, vm);
 		run(sim, 10, 3);
 	}
 

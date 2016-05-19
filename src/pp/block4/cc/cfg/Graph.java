@@ -1,5 +1,9 @@
 package pp.block4.cc.cfg;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -107,5 +111,52 @@ public class Graph implements Iterable<Node> {
 		}
 		Graph other = (Graph) obj;
 		return this.nodes.equals(other.nodes);
+	}
+	
+	
+	/**
+	* Writes the current graph in .dot (graphviz) format to <filename>.
+	* Google GraphViz for more information on the .dot format.
+	*
+	* @param filename Output filename for the destination of the DOT file
+	* @param directed If True, then the edges are written as directed edges.
+	* @throws IOException
+	*/
+	public void writeDOT(String filename, boolean directed) throws IOException {
+
+	StringBuffer sb = new StringBuffer();
+
+	int i = 0;
+	HashMap<Node, Integer> nodeLabels = new HashMap<>();
+	if (directed) {
+	sb.append("digraph G {\r\n");
+	}
+	else {
+	sb.append("graph G {\r\n");
+	}
+
+	// Define the nodes in the dot file and store node labels
+	for (Node node : this) {
+	sb.append(" ").append(i).append(" [penwidth=3,label=\"").append(node.getNr()).append("_").append(i).append("\",color=1, colorscheme=paired12] \r\n");
+	nodeLabels.put(node, i);
+	i++;
+	}
+
+	sb.append("\r\n");
+
+	// Define the edges of all nodes using their defined label names
+	for (Node node : this) {
+	for(Node t : node.getEdges()){
+	if(directed){
+	sb.append(" "+nodeLabels.get(node)+"->"+nodeLabels.get(t)+" [penwidth=2] \r\n");
+	} else {
+	sb.append(" "+nodeLabels.get(node)+"--"+nodeLabels.get(t)+" [penwidth=2] \r\n");
+	}
+	}
+	}
+
+	sb.append("}");
+	Files.write(Paths.get(filename), sb.toString().getBytes());
+	System.out.println("Wrote dot file " + filename);
 	}
 }

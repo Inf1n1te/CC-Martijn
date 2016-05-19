@@ -67,6 +67,12 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+			result.writeDOT("Dottopdown", true);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return result;
     }
 
@@ -107,16 +113,16 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
     public void enterIfStat(FragmentParser.IfStatContext ctx) {
         Node entrance = entrances.get(ctx);
         Node exit = exits.get(ctx);
-        Node ifEntry = addNode(ctx.stat(0), ctx.stat(0).getText() + " entrance");
-        Node ifExit = addNode(ctx.stat(0), ctx.stat(0).getText() + " exit");
+        Node ifEntry = addNode(ctx.stat(0), ctx.stat(0).getText() +  " <in>");
+        Node ifExit = addNode(ctx.stat(0), ctx.stat(0).getText() + " <out>");
         entrances.put(ctx.stat(0), ifEntry);
         exits.put(ctx.stat(0), ifExit);
         if (ctx.stat(1) == null) {
             entrance.addEdge(ifEntry);
             ifExit.addEdge(exit);
         } else {
-            Node elseEntry = addNode(ctx.stat(1), ctx.stat(1).getText() + " entrance");
-            Node elseExit = addNode(ctx.stat(1), ctx.stat(1).getText() + " exit");
+            Node elseEntry = addNode(ctx.stat(1), ctx.stat(1).getText() +  " <in>");
+            Node elseExit = addNode(ctx.stat(1), ctx.stat(1).getText() + " <out>");
             entrances.put(ctx.stat(1), elseEntry);
             exits.put(ctx.stat(1), elseExit);
             entrance.addEdge(ifEntry);
@@ -129,8 +135,8 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
     public void enterWhileStat(FragmentParser.WhileStatContext ctx) {
         Node entrance = entrances.get(ctx);
         Node exit = exits.get(ctx);
-        Node whileEntry = addNode(ctx.stat(), ctx.stat().getText() + " entrance");
-        Node whileExit = addNode(ctx.stat(), ctx.stat().getText() + " exit");
+        Node whileEntry = addNode(ctx.stat(), ctx.stat().getText() +  " <in>");
+        Node whileExit = addNode(ctx.stat(), ctx.stat().getText() + " <out>");
         entrances.put(ctx.stat(), whileEntry);
         exits.put(ctx.stat(), whileExit);
         entrance.addEdge(whileEntry);
@@ -144,8 +150,8 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
         Node exit = exits.get(ctx);
         Node node = entrance;
         for (FragmentParser.StatContext stat : ctx.stat()) {
-            Node blockEntry = addNode(stat, stat.getText() + " entrance");
-            Node blockExit = addNode(stat, stat.getText() + " exit");
+            Node blockEntry = addNode(stat, stat.getText() +  " <in>");
+            Node blockExit = addNode(stat, stat.getText() +" <out>");
             entrances.put(stat, blockEntry);
             exits.put(stat, blockExit);
             node.addEdge(blockEntry);

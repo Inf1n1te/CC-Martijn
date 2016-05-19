@@ -1,7 +1,6 @@
 start: loadI 0 => r_max           // Line 1: max = 0;
        loadI 0 => r_i             // Line 2: int i = 0;
        loadI @alength => r_len
-       out "R_ALENGTH: ", r_len
 while: cmp_LT r_i,r_len => r_cmp  // Line 3: while (i < a.length)
        cbr r_cmp -> body, end
 body:  i2i r_i => r_a             // compute address of a[i]

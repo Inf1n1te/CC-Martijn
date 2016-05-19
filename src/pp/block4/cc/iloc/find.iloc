@@ -1,4 +1,4 @@
-start: 		in "" => r_x
+start: 		in "" => r_x 				//Add comments
 			loadI 0 => r_i
 			loadI @alength => r_len
 for:		cmp_LT r_i, r_len => r_cmp

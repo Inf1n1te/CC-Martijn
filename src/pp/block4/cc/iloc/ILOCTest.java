@@ -30,8 +30,8 @@ public class ILOCTest {
 
 	@Test
 	public void testFib() {
-		int[] testValues = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 44, 45/*,46*/};
-		int[] testResults = new int[]{1, 1, 2, 3, 5, 8, 13, 21, 1134903170, 1836311903/*,2971215073*/};
+		int[] testValues = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 44, 45/*, 46*/};
+		int[] testResults = new int[]{1, 1, 2, 3, 5, 8, 13, 21, 1134903170, 1836311903/*, 2971215073*/};
 		for (int i = 0; i < testValues.length; i++) {
 			assertEquals(testResults[i], testFibMem(testValues[i]));
 			assertEquals(testResults[i], testFibReg(testValues[i]));
