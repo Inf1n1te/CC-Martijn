@@ -115,6 +115,7 @@ public class TopDownCFGBuilder extends FragmentBaseListener {
         Node exit = exits.get(ctx);
         Node ifEntry = addNode(ctx.stat(0), ctx.stat(0).getText() +  " <in>");
         Node ifExit = addNode(ctx.stat(0), ctx.stat(0).getText() + " <out>");
+        entrance.addEdge(exit);
         entrances.put(ctx.stat(0), ifEntry);
         exits.put(ctx.stat(0), ifExit);
         if (ctx.stat(1) == null) {
