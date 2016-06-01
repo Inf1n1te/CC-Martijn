@@ -86,7 +86,7 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	@Override
 	public Op visitIfStat(IfStatContext ctx) {
 		Op result = visit(ctx.expr());
-		Label end = createLabel(ctx, "ifend");
+		Label end = createLabel(ctx, "ifend"); // non-unique label
 		Label then = createLabel(ctx, "then");
 		if (ctx.stat().size() > 1) {
 			Label elseL = createLabel(ctx, "else");
@@ -106,7 +106,7 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	}
 
 	@Override
-	public Op visitWhileStat(@NotNull SimplePascalParser.WhileStatContext ctx) {
+	public Op visitWhileStat(SimplePascalParser.WhileStatContext ctx) {
 //<<<<<<< HEAD
 	//	Op result = visit(ctx.expr());
 	//	Label end = createLabel(ctx, "whileend");
@@ -135,7 +135,7 @@ public class Generator extends SimplePascalBaseVisitor<Op> {
 	}
 
 	@Override
-	public Op visitInStat(@NotNull SimplePascalParser.InStatContext ctx) {
+	public Op visitInStat(SimplePascalParser.InStatContext ctx) {
 		String input = ctx.STR().getText().replaceAll("\"", "");
 		Op result = emit(OpCode.in, new Str(input), reg(ctx));
 		emit(OpCode.storeAI, reg(ctx), arp, offset(ctx.target()));
