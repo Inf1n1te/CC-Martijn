@@ -6,7 +6,7 @@ Begin
 	result := 0;
 	In("Upper bound? ", arg);
 	i := 1;
-	While i < x Do
+	While i <= arg Do
 	Begin
 		result := result + i;
 		i := i + 1

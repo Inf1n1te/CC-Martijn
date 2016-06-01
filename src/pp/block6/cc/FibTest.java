@@ -30,6 +30,17 @@ public class FibTest {
 		testCase(8);
 		testCase(9);
 		testCase(10);
+		testCase(11);
+		testCase(12);
+		testCase(13);
+		testCase(14);
+		testCase(15);
+		testCase(16);
+		testCase(17);
+		testCase(18);
+		testCase(19);
+		testCase(20);
+		testCase(30);
 	}
 
 	private void testCase(int input) {

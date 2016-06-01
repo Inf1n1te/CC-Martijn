@@ -3,11 +3,9 @@ package pp.block3.cc.symbol;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-import java.util.Vector;
 
 public class MySymbolTable implements SymbolTable {
 
-    private Map<String, Object> global = new HashMap<String, Object>();
     private Stack<Map<String, Object>> stack = new Stack<Map<String, Object>>();
 
     public MySymbolTable() {
