@@ -1,5 +1,5 @@
-// Generated from /media/inf1n1te/Data/Workspace/CC-Martijn/src/pp/iloc/parse/ILOC.g4 by ANTLR 4.5.1
-package pp.iloc.parse;
+// Generated from ILOC.g4 by ANTLR 4.4
+package pp.iloc_old.parse;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class ILOCParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.4", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -19,6 +19,10 @@ public class ILOCParser extends Parser {
 	public static final int
 		T__0=1, MINUS=2, COMMA=3, SEMI=4, LSQ=5, RSQ=6, DARROW=7, ARROW=8, ASS=9, 
 		ID=10, SYMB=11, LAB=12, NUM=13, STR=14, COMMENT=15, WS=16, EOL=17;
+	public static final String[] tokenNames = {
+		"<INVALID>", "':'", "'-'", "','", "';'", "'['", "']'", "'=>'", "'->'", 
+		"'<-'", "ID", "SYMB", "LAB", "NUM", "STR", "COMMENT", "WS", "EOL"
+	};
 	public static final int
 		RULE_program = 0, RULE_decl = 1, RULE_instr = 2, RULE_op = 3, RULE_sources = 4, 
 		RULE_targets = 5, RULE_label = 6, RULE_opCode = 7, RULE_operand = 8;
@@ -27,48 +31,11 @@ public class ILOCParser extends Parser {
 		"operand"
 	};
 
-	private static final String[] _LITERAL_NAMES = {
-		null, "':'", "'-'", "','", "';'", "'['", "']'", "'=>'", "'->'", "'<-'"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, "MINUS", "COMMA", "SEMI", "LSQ", "RSQ", "DARROW", "ARROW", 
-		"ASS", "ID", "SYMB", "LAB", "NUM", "STR", "COMMENT", "WS", "EOL"
-	};
-	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
-
-	/**
-	 * @deprecated Use {@link #VOCABULARY} instead.
-	 */
-	@Deprecated
-	public static final String[] tokenNames;
-	static {
-		tokenNames = new String[_SYMBOLIC_NAMES.length];
-		for (int i = 0; i < tokenNames.length; i++) {
-			tokenNames[i] = VOCABULARY.getLiteralName(i);
-			if (tokenNames[i] == null) {
-				tokenNames[i] = VOCABULARY.getSymbolicName(i);
-			}
-
-			if (tokenNames[i] == null) {
-				tokenNames[i] = "<INVALID>";
-			}
-		}
-	}
-
-	@Override
-	@Deprecated
-	public String[] getTokenNames() {
-		return tokenNames;
-	}
-
-	@Override
-
-	public Vocabulary getVocabulary() {
-		return VOCABULARY;
-	}
-
 	@Override
 	public String getGrammarFileName() { return "ILOC.g4"; }
+
+	@Override
+	public String[] getTokenNames() { return tokenNames; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -84,22 +51,22 @@ public class ILOCParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class ProgramContext extends ParserRuleContext {
-		public List<InstrContext> instr() {
-			return getRuleContexts(InstrContext.class);
-		}
-		public InstrContext instr(int i) {
-			return getRuleContext(InstrContext.class,i);
+		public List<TerminalNode> EOL() { return getTokens(ILOCParser.EOL); }
+		public DeclContext decl(int i) {
+			return getRuleContext(DeclContext.class,i);
 		}
 		public TerminalNode EOF() { return getToken(ILOCParser.EOF, 0); }
 		public List<DeclContext> decl() {
 			return getRuleContexts(DeclContext.class);
 		}
-		public DeclContext decl(int i) {
-			return getRuleContext(DeclContext.class,i);
+		public InstrContext instr(int i) {
+			return getRuleContext(InstrContext.class,i);
 		}
-		public List<TerminalNode> EOL() { return getTokens(ILOCParser.EOL); }
 		public TerminalNode EOL(int i) {
 			return getToken(ILOCParser.EOL, i);
+		}
+		public List<InstrContext> instr() {
+			return getRuleContexts(InstrContext.class);
 		}
 		public ProgramContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -112,11 +79,6 @@ public class ILOCParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ILOCListener ) ((ILOCListener)listener).exitProgram(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ILOCVisitor ) return ((ILOCVisitor<? extends T>)visitor).visitProgram(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -135,8 +97,7 @@ public class ILOCParser extends Parser {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(18);
-					decl();
+					setState(18); decl();
 					}
 					} 
 				}
@@ -144,8 +105,7 @@ public class ILOCParser extends Parser {
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
 			}
-			setState(24);
-			instr();
+			setState(24); instr();
 			setState(33);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
@@ -159,16 +119,14 @@ public class ILOCParser extends Parser {
 					do {
 						{
 						{
-						setState(25);
-						match(EOL);
+						setState(25); match(EOL);
 						}
 						}
 						setState(28); 
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 					} while ( _la==EOL );
-					setState(30);
-					instr();
+					setState(30); instr();
 					}
 					} 
 				}
@@ -182,16 +140,14 @@ public class ILOCParser extends Parser {
 			while (_la==EOL) {
 				{
 				{
-				setState(36);
-				match(EOL);
+				setState(36); match(EOL);
 				}
 				}
 				setState(41);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(42);
-			match(EOF);
+			setState(42); match(EOF);
 			}
 		}
 		catch (RecognitionException re) {
@@ -206,14 +162,14 @@ public class ILOCParser extends Parser {
 	}
 
 	public static class DeclContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(ILOCParser.ID, 0); }
-		public TerminalNode ASS() { return getToken(ILOCParser.ASS, 0); }
-		public TerminalNode NUM() { return getToken(ILOCParser.NUM, 0); }
 		public TerminalNode COMMENT() { return getToken(ILOCParser.COMMENT, 0); }
+		public TerminalNode ID() { return getToken(ILOCParser.ID, 0); }
 		public List<TerminalNode> EOL() { return getTokens(ILOCParser.EOL); }
+		public TerminalNode NUM() { return getToken(ILOCParser.NUM, 0); }
 		public TerminalNode EOL(int i) {
 			return getToken(ILOCParser.EOL, i);
 		}
+		public TerminalNode ASS() { return getToken(ILOCParser.ASS, 0); }
 		public DeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -226,11 +182,6 @@ public class ILOCParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ILOCListener ) ((ILOCListener)listener).exitDecl(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ILOCVisitor ) return ((ILOCVisitor<? extends T>)visitor).visitDecl(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final DeclContext decl() throws RecognitionException {
@@ -240,18 +191,14 @@ public class ILOCParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(44);
-			match(ID);
-			setState(45);
-			match(ASS);
-			setState(46);
-			match(NUM);
+			setState(44); match(ID);
+			setState(45); match(ASS);
+			setState(46); match(NUM);
 			setState(48);
 			_la = _input.LA(1);
 			if (_la==COMMENT) {
 				{
-				setState(47);
-				match(COMMENT);
+				setState(47); match(COMMENT);
 				}
 			}
 
@@ -261,8 +208,7 @@ public class ILOCParser extends Parser {
 			do {
 				{
 				{
-				setState(50);
-				match(EOL);
+				setState(50); match(EOL);
 				}
 				}
 				setState(53); 
@@ -294,21 +240,21 @@ public class ILOCParser extends Parser {
 		}
 	}
 	public static class InstrListContext extends InstrContext {
-		public TerminalNode LSQ() { return getToken(ILOCParser.LSQ, 0); }
-		public List<OpContext> op() {
-			return getRuleContexts(OpContext.class);
-		}
 		public OpContext op(int i) {
 			return getRuleContext(OpContext.class,i);
 		}
+		public List<OpContext> op() {
+			return getRuleContexts(OpContext.class);
+		}
+		public List<TerminalNode> EOL() { return getTokens(ILOCParser.EOL); }
 		public TerminalNode RSQ() { return getToken(ILOCParser.RSQ, 0); }
 		public LabelContext label() {
 			return getRuleContext(LabelContext.class,0);
 		}
-		public List<TerminalNode> EOL() { return getTokens(ILOCParser.EOL); }
 		public TerminalNode EOL(int i) {
 			return getToken(ILOCParser.EOL, i);
 		}
+		public TerminalNode LSQ() { return getToken(ILOCParser.LSQ, 0); }
 		public InstrListContext(InstrContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -317,11 +263,6 @@ public class ILOCParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ILOCListener ) ((ILOCListener)listener).exitInstrList(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ILOCVisitor ) return ((ILOCVisitor<? extends T>)visitor).visitInstrList(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	public static class SingleInstrContext extends InstrContext {
@@ -339,11 +280,6 @@ public class ILOCParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ILOCListener ) ((ILOCListener)listener).exitSingleInstr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ILOCVisitor ) return ((ILOCVisitor<? extends T>)visitor).visitSingleInstr(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -363,15 +299,12 @@ public class ILOCParser extends Parser {
 				switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 				case 1:
 					{
-					setState(55);
-					label();
-					setState(56);
-					match(T__0);
+					setState(55); label();
+					setState(56); match(T__0);
 					}
 					break;
 				}
-				setState(60);
-				op();
+				setState(60); op();
 				}
 				break;
 			case 2:
@@ -382,31 +315,26 @@ public class ILOCParser extends Parser {
 				_la = _input.LA(1);
 				if (_la==ID) {
 					{
-					setState(61);
-					label();
-					setState(62);
-					match(T__0);
+					setState(61); label();
+					setState(62); match(T__0);
 					}
 				}
 
-				setState(66);
-				match(LSQ);
+				setState(66); match(LSQ);
 				setState(70);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==EOL) {
 					{
 					{
-					setState(67);
-					match(EOL);
+					setState(67); match(EOL);
 					}
 					}
 					setState(72);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(73);
-				op();
+				setState(73); op();
 				setState(82);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
@@ -420,16 +348,14 @@ public class ILOCParser extends Parser {
 						do {
 							{
 							{
-							setState(74);
-							match(EOL);
+							setState(74); match(EOL);
 							}
 							}
 							setState(77); 
 							_errHandler.sync(this);
 							_la = _input.LA(1);
 						} while ( _la==EOL );
-						setState(79);
-						op();
+						setState(79); op();
 						}
 						} 
 					}
@@ -443,16 +369,14 @@ public class ILOCParser extends Parser {
 				while (_la==EOL) {
 					{
 					{
-					setState(85);
-					match(EOL);
+					setState(85); match(EOL);
 					}
 					}
 					setState(90);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(91);
-				match(RSQ);
+				setState(91); match(RSQ);
 				}
 				break;
 			}
@@ -490,26 +414,21 @@ public class ILOCParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ILOCListener ) ((ILOCListener)listener).exitComment(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ILOCVisitor ) return ((ILOCVisitor<? extends T>)visitor).visitComment(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	public static class RealOpContext extends OpContext {
-		public OpCodeContext opCode() {
-			return getRuleContext(OpCodeContext.class,0);
+		public TerminalNode COMMENT() { return getToken(ILOCParser.COMMENT, 0); }
+		public TargetsContext targets() {
+			return getRuleContext(TargetsContext.class,0);
 		}
 		public SourcesContext sources() {
 			return getRuleContext(SourcesContext.class,0);
 		}
-		public TargetsContext targets() {
-			return getRuleContext(TargetsContext.class,0);
-		}
 		public TerminalNode SEMI() { return getToken(ILOCParser.SEMI, 0); }
-		public TerminalNode COMMENT() { return getToken(ILOCParser.COMMENT, 0); }
-		public TerminalNode ARROW() { return getToken(ILOCParser.ARROW, 0); }
 		public TerminalNode DARROW() { return getToken(ILOCParser.DARROW, 0); }
+		public OpCodeContext opCode() {
+			return getRuleContext(OpCodeContext.class,0);
+		}
+		public TerminalNode ARROW() { return getToken(ILOCParser.ARROW, 0); }
 		public RealOpContext(OpContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -518,11 +437,6 @@ public class ILOCParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ILOCListener ) ((ILOCListener)listener).exitRealOp(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ILOCVisitor ) return ((ILOCVisitor<? extends T>)visitor).visitRealOp(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -537,18 +451,15 @@ public class ILOCParser extends Parser {
 				_localctx = new CommentContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(95);
-				match(COMMENT);
+				setState(95); match(COMMENT);
 				}
 				break;
 			case ID:
 				_localctx = new RealOpContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(96);
-				opCode();
-				setState(97);
-				sources();
+				setState(96); opCode();
+				setState(97); sources();
 				setState(100);
 				_la = _input.LA(1);
 				if (_la==DARROW || _la==ARROW) {
@@ -557,11 +468,9 @@ public class ILOCParser extends Parser {
 					_la = _input.LA(1);
 					if ( !(_la==DARROW || _la==ARROW) ) {
 					_errHandler.recoverInline(this);
-					} else {
-						consume();
 					}
-					setState(99);
-					targets();
+					consume();
+					setState(99); targets();
 					}
 				}
 
@@ -569,8 +478,7 @@ public class ILOCParser extends Parser {
 				_la = _input.LA(1);
 				if (_la==SEMI) {
 					{
-					setState(102);
-					match(SEMI);
+					setState(102); match(SEMI);
 					}
 				}
 
@@ -578,8 +486,7 @@ public class ILOCParser extends Parser {
 				_la = _input.LA(1);
 				if (_la==COMMENT) {
 					{
-					setState(105);
-					match(COMMENT);
+					setState(105); match(COMMENT);
 					}
 				}
 
@@ -601,13 +508,13 @@ public class ILOCParser extends Parser {
 	}
 
 	public static class SourcesContext extends ParserRuleContext {
+		public List<TerminalNode> COMMA() { return getTokens(ILOCParser.COMMA); }
 		public List<OperandContext> operand() {
 			return getRuleContexts(OperandContext.class);
 		}
 		public OperandContext operand(int i) {
 			return getRuleContext(OperandContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ILOCParser.COMMA); }
 		public TerminalNode COMMA(int i) {
 			return getToken(ILOCParser.COMMA, i);
 		}
@@ -623,11 +530,6 @@ public class ILOCParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ILOCListener ) ((ILOCListener)listener).exitSources(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ILOCVisitor ) return ((ILOCVisitor<? extends T>)visitor).visitSources(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final SourcesContext sources() throws RecognitionException {
@@ -641,18 +543,15 @@ public class ILOCParser extends Parser {
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << ID) | (1L << SYMB) | (1L << LAB) | (1L << NUM) | (1L << STR))) != 0)) {
 				{
-				setState(110);
-				operand();
+				setState(110); operand();
 				setState(115);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==COMMA) {
 					{
 					{
-					setState(111);
-					match(COMMA);
-					setState(112);
-					operand();
+					setState(111); match(COMMA);
+					setState(112); operand();
 					}
 					}
 					setState(117);
@@ -676,13 +575,13 @@ public class ILOCParser extends Parser {
 	}
 
 	public static class TargetsContext extends ParserRuleContext {
+		public List<TerminalNode> COMMA() { return getTokens(ILOCParser.COMMA); }
 		public List<OperandContext> operand() {
 			return getRuleContexts(OperandContext.class);
 		}
 		public OperandContext operand(int i) {
 			return getRuleContext(OperandContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ILOCParser.COMMA); }
 		public TerminalNode COMMA(int i) {
 			return getToken(ILOCParser.COMMA, i);
 		}
@@ -698,11 +597,6 @@ public class ILOCParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ILOCListener ) ((ILOCListener)listener).exitTargets(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ILOCVisitor ) return ((ILOCVisitor<? extends T>)visitor).visitTargets(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final TargetsContext targets() throws RecognitionException {
@@ -712,18 +606,15 @@ public class ILOCParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(120);
-			operand();
+			setState(120); operand();
 			setState(125);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				setState(121);
-				match(COMMA);
-				setState(122);
-				operand();
+				setState(121); match(COMMA);
+				setState(122); operand();
 				}
 				}
 				setState(127);
@@ -757,11 +648,6 @@ public class ILOCParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ILOCListener ) ((ILOCListener)listener).exitLabel(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ILOCVisitor ) return ((ILOCVisitor<? extends T>)visitor).visitLabel(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final LabelContext label() throws RecognitionException {
@@ -770,8 +656,7 @@ public class ILOCParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(128);
-			match(ID);
+			setState(128); match(ID);
 			}
 		}
 		catch (RecognitionException re) {
@@ -799,11 +684,6 @@ public class ILOCParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ILOCListener ) ((ILOCListener)listener).exitOpCode(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ILOCVisitor ) return ((ILOCVisitor<? extends T>)visitor).visitOpCode(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final OpCodeContext opCode() throws RecognitionException {
@@ -812,8 +692,7 @@ public class ILOCParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(130);
-			match(ID);
+			setState(130); match(ID);
 			}
 		}
 		catch (RecognitionException re) {
@@ -829,10 +708,10 @@ public class ILOCParser extends Parser {
 
 	public static class OperandContext extends ParserRuleContext {
 		public TerminalNode ID() { return getToken(ILOCParser.ID, 0); }
-		public TerminalNode NUM() { return getToken(ILOCParser.NUM, 0); }
-		public TerminalNode SYMB() { return getToken(ILOCParser.SYMB, 0); }
-		public TerminalNode LAB() { return getToken(ILOCParser.LAB, 0); }
 		public TerminalNode STR() { return getToken(ILOCParser.STR, 0); }
+		public TerminalNode NUM() { return getToken(ILOCParser.NUM, 0); }
+		public TerminalNode LAB() { return getToken(ILOCParser.LAB, 0); }
+		public TerminalNode SYMB() { return getToken(ILOCParser.SYMB, 0); }
 		public OperandContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -844,11 +723,6 @@ public class ILOCParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ILOCListener ) ((ILOCListener)listener).exitOperand(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ILOCVisitor ) return ((ILOCVisitor<? extends T>)visitor).visitOperand(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -863,9 +737,8 @@ public class ILOCParser extends Parser {
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << ID) | (1L << SYMB) | (1L << LAB) | (1L << NUM) | (1L << STR))) != 0)) ) {
 			_errHandler.recoverInline(this);
-			} else {
-				consume();
 			}
+			consume();
 			}
 		}
 		catch (RecognitionException re) {

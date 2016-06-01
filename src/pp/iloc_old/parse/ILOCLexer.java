@@ -1,5 +1,5 @@
-// Generated from /media/inf1n1te/Data/Workspace/CC-Martijn/src/pp/iloc/parse/ILOC.g4 by ANTLR 4.5.1
-package pp.iloc.parse;
+// Generated from ILOC.g4 by ANTLR 4.4
+package pp.iloc_old.parse;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -11,7 +11,7 @@ import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class ILOCLexer extends Lexer {
-	static { RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.4", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -23,50 +23,15 @@ public class ILOCLexer extends Lexer {
 		"DEFAULT_MODE"
 	};
 
+	public static final String[] tokenNames = {
+		"'\\u0000'", "'\\u0001'", "'\\u0002'", "'\\u0003'", "'\\u0004'", "'\\u0005'", 
+		"'\\u0006'", "'\\u0007'", "'\b'", "'\t'", "'\n'", "'\\u000B'", "'\f'", 
+		"'\r'", "'\\u000E'", "'\\u000F'", "'\\u0010'", "'\\u0011'"
+	};
 	public static final String[] ruleNames = {
 		"T__0", "LETTER", "DIGIT", "MINUS", "COMMA", "SEMI", "LSQ", "RSQ", "DARROW", 
 		"ARROW", "ASS", "ID", "SYMB", "LAB", "NUM", "STR", "COMMENT", "WS", "EOL"
 	};
-
-	private static final String[] _LITERAL_NAMES = {
-		null, "':'", "'-'", "','", "';'", "'['", "']'", "'=>'", "'->'", "'<-'"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, "MINUS", "COMMA", "SEMI", "LSQ", "RSQ", "DARROW", "ARROW", 
-		"ASS", "ID", "SYMB", "LAB", "NUM", "STR", "COMMENT", "WS", "EOL"
-	};
-	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
-
-	/**
-	 * @deprecated Use {@link #VOCABULARY} instead.
-	 */
-	@Deprecated
-	public static final String[] tokenNames;
-	static {
-		tokenNames = new String[_SYMBOLIC_NAMES.length];
-		for (int i = 0; i < tokenNames.length; i++) {
-			tokenNames[i] = VOCABULARY.getLiteralName(i);
-			if (tokenNames[i] == null) {
-				tokenNames[i] = VOCABULARY.getSymbolicName(i);
-			}
-
-			if (tokenNames[i] == null) {
-				tokenNames[i] = "<INVALID>";
-			}
-		}
-	}
-
-	@Override
-	@Deprecated
-	public String[] getTokenNames() {
-		return tokenNames;
-	}
-
-	@Override
-
-	public Vocabulary getVocabulary() {
-		return VOCABULARY;
-	}
 
 
 	public ILOCLexer(CharStream input) {
@@ -76,6 +41,9 @@ public class ILOCLexer extends Lexer {
 
 	@Override
 	public String getGrammarFileName() { return "ILOC.g4"; }
+
+	@Override
+	public String[] getTokenNames() { return tokenNames; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }

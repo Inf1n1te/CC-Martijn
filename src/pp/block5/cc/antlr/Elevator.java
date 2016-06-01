@@ -36,7 +36,7 @@ public class Elevator extends BuildingBaseVisitor<Integer> {
 	public int traverse(String text) throws ParseException {
 		CharStream chars = new ANTLRInputStream(text);
 		ErrorListener listener = new ErrorListener();
-		Lexer lexer = new BuildingLexer(chars);
+		Lexer lexer	 = new BuildingLexer(chars);
 		lexer.removeErrorListeners();
 		lexer.addErrorListener(listener);
 		TokenStream tokens = new CommonTokenStream(lexer);

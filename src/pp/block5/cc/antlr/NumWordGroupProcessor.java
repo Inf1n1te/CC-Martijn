@@ -11,6 +11,11 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import pp.block5.cc.ErrorListener;
 import pp.block5.cc.ParseException;
+import pp.block5.cc.antlr.NumWordGroupParser.GroupContext;
+import pp.block5.cc.antlr.NumWordGroupParser.NumberContext;
+import pp.block5.cc.antlr.NumWordGroupParser.PenultimateGroupContext;
+import pp.block5.cc.antlr.NumWordGroupParser.SentenceContext;
+import pp.block5.cc.antlr.NumWordGroupParser.WordContext;
 
 /** Prettyprints a (number, word)-sentence and adds the numbers. */
 public class NumWordGroupProcessor extends NumWordGroupBaseListener {
@@ -39,6 +44,9 @@ public class NumWordGroupProcessor extends NumWordGroupBaseListener {
 
 	/** Mapping from parse tree nodes to (sums of) numbers. */
 	private ParseTreeProperty<Integer> values;
+	
+	private int total = 0;
+	private String sentence = "";
 
 	/** Groups a given sentence and prints it to stdout.
 	 * Returns the sum of the numbers in the sentence.
@@ -60,5 +68,33 @@ public class NumWordGroupProcessor extends NumWordGroupBaseListener {
 		return this.values.get(tree);
 	}
 
-	// Override the listener methods
+	@Override
+	public void exitGroup(GroupContext ctx) {
+		sentence += ", ";
+	}
+	
+	@Override
+	public void exitPenultimateGroup(PenultimateGroupContext ctx) {
+		sentence += " and ";
+	}
+	@Override
+	public void exitWord(WordContext ctx) {
+		sentence += ctx.getText() + " ";
+	}
+	
+	@Override
+	public void exitNumber(NumberContext ctx) {
+		total += Integer.parseInt(ctx.getText());
+		sentence += ctx.getText();
+	}
+	
+	@Override
+	public void enterSentence(SentenceContext ctx) {
+		total = 0;
+	}
+	
+	@Override
+	public void exitSentence(SentenceContext ctx) {
+		values.put(ctx, total);
+	}
 }
