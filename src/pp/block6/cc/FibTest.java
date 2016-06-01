@@ -33,7 +33,7 @@ public class FibTest {
 	}
 
 	private void testCase(int input) {
-		Program p = parse("src/pp/block6/cc/fib");
+		Program p = parse("src/pp/block6/cc/fib2016");
 		Simulator s = new Simulator(p);
 		Machine vm = s.getVM();
 		s.setIn(new ByteArrayInputStream(("" + input).getBytes()));
