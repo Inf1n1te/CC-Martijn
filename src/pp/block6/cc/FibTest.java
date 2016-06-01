@@ -19,7 +19,7 @@ public class FibTest {
 
 
 	@Test
-	public void test() {
+	public void tests() {
 		testCase(1);
 		testCase(2);
 		testCase(3);
@@ -43,7 +43,21 @@ public class FibTest {
 		testCase(30);
 	}
 
-	private void testCase(int input) {
+    private void testCase(int input) {
+        testCaseOld(input);
+        testCaseNew(input);
+    }
+
+    private void testCaseOld(int input) {
+        Program p = parse("src/pp/block6/cc/fib");
+        Simulator s = new Simulator(p);
+        Machine vm = s.getVM();
+        s.setIn(new ByteArrayInputStream(("" + input).getBytes()));
+        s.run();
+        assertEquals(fib(input), vm.getReg("r_return_val"));
+    }
+
+	private void testCaseNew(int input) {
 		Program p = parse("src/pp/block6/cc/fib2016");
 		Simulator s = new Simulator(p);
 		Machine vm = s.getVM();
